@@ -1,14 +1,14 @@
 # -*- mode:org; fill-column:79; -*-
 #+Title:Exercism Exercises
 #+Author:Pinecone062
-#+Date:Last updated 2019-05-13 12:02
+#+Date:Last updated 2019-05-13 12:35
 * Exercism Home
 - https://github.com/exercism
 
 ** Exercism Readme
 
 #+name:Exercism-Readme
-#+begin_src text :tangle Readme.md
+#+begin_src text :tangle README.md
   # Welcome to Exercism
 
   This is the central point of contact for Exercism.
@@ -98,7 +98,7 @@ This repo uses [[http://flake8.readthedocs.org/en/latest/][flake8]] with default
 
 ** Python README
 #+name:Readme-Python-track
-#+begin_src :tangle Python/Readme.md
+#+begin_src :tangle python/README.md
 # Exercism Python Track
 
 [![Build Status](https://travis-ci.org/exercism/python.svg?branch=master)](https://travis-ci.org/exercism/python) [![Requirements Status](https://pyup.io/repos/github/exercism/python/shield.svg)](https://pyup.io/repos/github/exercism/python/)
@@ -177,7 +177,7 @@ If you're new to Git, take a look at [this short guide](https://github.com/exerc
 This repository uses the [MIT License](/LICENSE).
 #+end_src
 
-** Hello World
+** Hello World Python
 
 Write a function that returns the string "Hello, World!"
 
@@ -194,98 +194,40 @@ latest version? Use this command:
 : Downloaded to
 : /usr/local/dev/programming/Exercism/python/hello-world
 
-*** README
-
-#+name:Python-Hello_World-Readme
-# Hello World
-
-The classical introductory exercise. Just say "Hello, World!".
-
-["Hello, World!"](http://en.wikipedia.org/wiki/%22Hello,_world!%22_program) is
-the traditional first program for beginning programming in a new language
-or environment.
-
-The objectives are simple:
-
-- Write a function that returns the string "Hello, World!".
-- Run the test suite and make sure that it succeeds.
-- Submit your solution and check it at the website.
-
-If everything goes well, you will be ready to fetch your first real exercise.
-
-## Exception messages
-
-Sometimes it is necessary to raise an exception. When you do this, you should include a meaningful error message to
-indicate what the source of the error is. This makes your code more readable and helps significantly with debugging. Not
-every exercise will require you to raise an exception, but for those that do, the tests will only pass if you include
-a message.
-
-To raise a message with an exception, just write it as an argument to the exception type. For example, instead of
-`raise Exception`, you should write:
-
-```python
-raise Exception("Meaningful message indicating the source of the error")
-```
-
-## Running the tests
-
-To run the tests, run the appropriate command below ([why they are different](https://github.com/pytest-dev/pytest/issues/1629#issue-161422224)):
-
-- Python 2.7: `py.test hello_world_test.py`
-- Python 3.4+: `pytest hello_world_test.py`
-
-Alternatively, you can tell Python to run the pytest module (allowing the same command to be used regardless of Python version):
-`python -m pytest hello_world_test.py`
-
-### Common `pytest` options
-
-- `-v` : enable verbose output
-- `-x` : stop running tests on first failure
-- `--ff` : run failures from previous test before running other test cases
-
-For other options, see `python -m pytest -h`
-
-## Submitting Exercises
-
-Note that, when trying to submit an exercise, make sure the solution is in the `$EXERCISM_WORKSPACE/python/hello-world` directory.
-
-You can find your Exercism workspace by running `exercism debug` and looking for the line that starts with `Workspace`.
-
-For more detailed information about running tests, code style and linting,
-please see [Running the Tests](http://exercism.io/tracks/python/tests).
-
-## Source
-
-This is an exercise to introduce users to using Exercism [http://en.wikipedia.org/wiki/%22Hello,_world!%22_program](http://en.wikipedia.org/wiki/%22Hello,_world!%22_program)
-
-## Submitting Incomplete Solutions
-
-It's possible to submit an incomplete solution so you can see how others have completed the exercise.
-#+end_src
-
-*** Solution Hello World
+*** Solution to Hello World
 
 #+name:hello_world.py
-#+begin_src python :tangle Python/hello-world/hello_world.py :mkdirp yes
+#+begin_src python :tangle python/hello-world/hello_world.py :mkdirp yes
 def hello():
     return "Hello, World!"
 #+end_src
+
+*** Test for Hello World
+
+#+name:Python-Hello-World-Test
+#+begin_src python :tangle python/hello-world/hello_world_test.py :mkdirp yes
+import unittest
+
+import hello_world
+
+# Tests adapted from `problem-specifications//canonical-data.json` @ v1.1.0
+
+class HelloWorldTest(unittest.TestCase):
+    def test_hello(self):
+        self.assertEqual(hello_world.hello(), 'Hello, World!')
+
+
+if __name__ == '__main__':
+    unittest.main()
+#+end_src
+
+*** Run Tests on Hello World
 
 #+begin_src sh :dir python/hello-world :results output :exports both
 python3 -m pytest hello_world_test.py
 #+end_src
 
-#+RESULTS:
-: ============================= test session starts ==============================
-: platform darwin -- Python 3.7.3, pytest-4.4.1, py-1.8.0, pluggy-0.9.0
-: rootdir: /usr/local/dev/programming/Exercism/python/hello-world
-: collected 1 item
-: 
-: hello_world_test.py .                                                    [100%]
-: 
-: =========================== 1 passed in 0.01 seconds ===========================
-
-** Two Fer
+** Two Fer Python
 Two-fer or 2-fer is short for two for one. One for you and one for me.
 
 : "One for X, one for me."
@@ -301,7 +243,7 @@ To run the tests:
 *** Solution for Two Fer
 
 #+name:Two-Fer-Solution
-#+begin_src python :tangle python/two-fer/two_fer.py
+#+begin_src python :tangle python/two-fer/two_fer.py :mkdirp yes
 def two_fer(name="you"):
     return "One for " + name + ", one for me."
 #+end_src
@@ -319,6 +261,55 @@ python3 -m pytest two_fer_test.py
 : two_fer_test.py ...                                                      [100%]
 : 
 : =========================== 3 passed in 0.01 seconds ===========================
+
+*** Test for Two Fer
+
+#+name:Python-Two-Fer-Test
+#+begin_src python :tangle python/two-fer/two_fer_test.py :mkdirp yes
+import unittest
+
+from two_fer import two_fer
+
+
+# Tests adapted from `problem-specifications//canonical-data.json` @ v1.2.0
+
+class TwoFerTest(unittest.TestCase):
+    def test_no_name_given(self):
+        self.assertEqual(two_fer(), 'One for you, one for me.')
+
+    def test_a_name_given(self):
+        self.assertEqual(two_fer("Alice"), "One for Alice, one for me.")
+
+    def test_another_name_given(self):
+        self.assertEqual(two_fer("Bob"), "One for Bob, one for me.")
+
+
+if __name__ == '__main__':
+    unittest.main()
+#+end_src
+
+*** Run Tests on Two Fer
+
+#+begin_src sh :dir python/two-fer :results output :exports both
+python3 -m pytest two_fer_test.py
+#+end_src
+
+* Exercism Makefile
+
+#+name:Exercism-Makefile
+#+begin_src makefile :tangle Makefile
+BASE_DIR := /usr/local/dev/programming/Languages/Exercism
+LANGUAGES = python
+
+.phony : dist-clean
+dist-clean :
+	cd $(BASE_DIR) && rm -vrf $(LANGUAGES) Exercism.html README.md
+
+.phony : world-clean
+world-clean : dist-clean
+	rm Makefile
+
+#+end_src
 
 * Export Settings                                                  :noexport:
 ** HTML Export
