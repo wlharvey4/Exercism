@@ -1,7 +1,7 @@
 # -*- mode:org; fill-column:79; -*-
 #+Title:Exercism Exercises
 #+Author:Pinecone062
-#+Date:Last updated 2019-05-15 12:30
+#+Date:Last updated 2019-05-19 10:30
 * Exercism Home
 - https://github.com/exercism
 
@@ -70,7 +70,13 @@ processor architecture at the [[https://github.com/exercism/cli/releases/latest]
 the binary in your path.
 
 Check the installed version with:
-: exercism version
+
+#+BEGIN_SRC sh :results output :exports both
+exercism version
+#+END_SRC
+
+#+RESULTS:
+: exercism version 3.0.11
 
 In order to configure the CLI, paste in the following text into your terminal:
 : exercism configure --token=b4b5ab41-b448-4762-a5ce-452ccd2eff08
@@ -81,9 +87,9 @@ In order to configure the CLI, paste in the following text into your terminal:
 #+begin_src
 You have configured the Exercism command-line client:
 
-Config dir:                       /Users/lolh/.config/exercism
+Config dir:                       ~/.config/exercism
 Token:         (-t, --token)      b4b5ab41-b448-4762-a5ce-452ccd2eff08
-Workspace:     (-w, --workspace)  /usr/local/dev/programming/Exercism
+Workspace:     (-w, --workspace)  <path-to>/Exercism
 API Base URL:  (-a, --api)        https://api.exercism.io/v1
 #+end_src
 
@@ -294,6 +300,16 @@ if __name__ == '__main__':
 python3 -m pytest two_fer_test.py
 #+end_src
 
+#+RESULTS:
+: ============================= test session starts ==============================
+: platform darwin -- Python 3.7.3, pytest-4.0.2, py-1.7.0, pluggy-0.8.0
+: rootdir: /Users/pine/Dev/Programming/Languages/Exercism/python/two-fer, inifile:
+: collected 3 items
+: 
+: two_fer_test.py ...                                                      [100%]
+: 
+: =========================== 3 passed in 0.03 seconds ===========================
+
 ** High Scores
 :PROPERTIES:
 :level:    easy
@@ -348,26 +364,43 @@ difference between the last and the highest scores.
 *** Solution to High Scores
 
 #+name:High_Scores_Python
-#+begin_src python :tangle python/high-scores/high_scores.py
-  class HighScores(object):
-      def __init__(self, scores):
-          self.scores = scores
+#+begin_src python :tangle python/high-scores/high_scores.py :mkdirp yes
+class HighScores(object):
+    def __init__(self, scores):
+        self.scores = scores
 
-      def latest(self):
-          return self.scores[-1]
+    def latest(self):
+        return self.scores[-1]
 
-      def person_best(self):
-          for score in self.scores:
-              if score > best:
-                  best = score
+    def personal_best(self):
+        best = 0
+        for score in self.scores:
+            if score > best:
+                best = score
 
-          return best
+        return best
+
+    def personal_top(self):
+        pt = self.scores[:]
+        pt.sort(reverse=True)
+        return pt[:3]
+
+    def report(self):
+        latest = self.scores[-1]
+        best = self.personal_best()
+        report = f"Your latest score was {latest}. "
+        if latest == best:
+            report += f"That's your personal best!"
+        else:
+            report += f"That's {best - latest} short of your personal best!"
+
+        return report
 #+end_src
 
 *** Tests for High Scores
 
 #+name:High_Scores_Python_Test
-#+begin_src python :tangle python/high-scores/high_scores_test.py
+#+begin_src python :tangle python/high-scores/high_scores_test.py :mkdirp yes
 import unittest
 
 from high_scores import HighScores
@@ -450,8 +483,18 @@ if __name__ == "__main__":
 
 #+name:Test_High_Score_Python
 #+begin_src sh :dir python/high-scores :results output :exports results
-python -m pytest high_score_test.py
+python3 -m pytest high_scores_test.py
 #+end_src
+
+#+RESULTS: Test_High_Score_Python
+: ============================= test session starts ==============================
+: platform darwin -- Python 3.7.3, pytest-4.0.2, py-1.7.0, pluggy-0.8.0
+: rootdir: /Users/pine/Dev/Programming/Languages/Exercism/python/high-scores, inifile:
+: collected 12 items
+: 
+: high_scores_test.py ............                                         [100%]
+: 
+: ========================== 12 passed in 0.02 seconds ===========================
 
 * Exercism Makefile
 
