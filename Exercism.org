@@ -1,14 +1,19 @@
 # -*- mode:org; fill-column:79; -*-
 #+Title:Exercism Exercises
 #+Author:Pinecone062
-#+Date:Last updated 2019-05-20 06:52
+#+Date:Last updated 2019-05-20 09:03
+#+Macro: version Version 0.1.1
+{{{title}}} {{{version}}} {{{date}}}
 * Exercism Home
+:PROPERTIES:
+:unnumbered: t
+:END:
 - https://github.com/exercism
 
 ** Exercism Readme
 
 #+name:Exercism-Readme
-#+begin_src text :tangle README.md
+#+BEGIN_SRC txt :tangle README.md
   # Welcome to Exercism
 
   This is the central point of contact for Exercism.
@@ -84,7 +89,7 @@ In order to configure the CLI, paste in the following text into your terminal:
  You should see a notification from the CLI that a configuration file has been
  written.
 
-#+begin_src
+#+begin_src txt
 You have configured the Exercism command-line client:
 
 Config dir:                       ~/.config/exercism
@@ -93,6 +98,12 @@ Workspace:     (-w, --workspace)  <path-to>/Exercism
 API Base URL:  (-a, --api)        https://api.exercism.io/v1
 #+end_src
 
+** Exercism Tangle
+This code extracts all of the Exercism files to disk upon Export.
+#+name:exercism-tangle
+#+BEGIN_SRC emacs-lisp :results output :exports both
+(org-babel-tangle-file "Exercism.org")
+#+END_SRC
 * Python Exercism Track
 - http://exercism.io/languages/python
 - https://github.com/exercism/python
@@ -183,8 +194,7 @@ If you're new to Git, take a look at [this short guide](https://github.com/exerc
 This repository uses the [MIT License](/LICENSE).
 #+end_src
 
-** Hello World Python
-
+** Python Hello World
 Write a function that returns the string "Hello, World!"
 
 You can tell Python to run the ~pytest~ module (allowing the same command to be
@@ -200,7 +210,7 @@ latest version? Use this command:
 : Downloaded to
 : /usr/local/dev/programming/Exercism/python/hello-world
 
-*** Solution to Hello World
+*** Python Hello World Solution
 
 #+name:hello_world.py
 #+begin_src python :tangle python/hello-world/hello_world.py :mkdirp yes
@@ -208,7 +218,20 @@ def hello():
     return "Hello, World!"
 #+end_src
 
-*** Test for Hello World
+#+name:python-hello-world-metadata
+#+BEGIN_SRC js :tangle python/hello-world/.exercism/metadata.json :mkdirp yes :exports none
+{
+    "track":"python",
+    "exercise":"hello-world",
+    "id":"86a587c4d6e34a078741d6be1edce608",
+    "url":"https://exercism.io/my/solutions/86a587c4d6e34a078741d6be1edce608",
+    "handle":"wlharvey4",
+    "is_requester":true,
+    "auto_approve":true
+}
+#+END_SRC
+
+*** Python Hello World Test
 
 #+name:Python-Hello-World-Test
 #+begin_src python :tangle python/hello-world/hello_world_test.py :mkdirp yes
@@ -227,13 +250,11 @@ if __name__ == '__main__':
     unittest.main()
 #+end_src
 
-*** Run Tests on Hello World
-
 #+begin_src sh :dir python/hello-world :results output :exports both
 python3 -m pytest hello_world_test.py
 #+end_src
 
-** Two Fer Python
+** Python Two Fer
 Two-fer or 2-fer is short for two for one. One for you and one for me.
 
 : "One for X, one for me."
@@ -246,8 +267,7 @@ If no name is given, the result should be "One for you, one for me."
 To run the tests:
 : python3 -m pytest two_fer_test.py
 
-*** Solution for Two Fer
-
+*** Python Two Fer Solution
 #+name:Two-Fer-Solution
 #+begin_src python :tangle python/two-fer/two_fer.py :mkdirp yes
 def two_fer(name="you"):
@@ -268,8 +288,20 @@ python3 -m pytest two_fer_test.py
 : 
 : =========================== 3 passed in 0.01 seconds ===========================
 
-*** Test for Two Fer
+#+name:python-two-fer-metadata
+#+BEGIN_SRC js :tangle python/two-fer/.exercism/metadata.json :mkdirp yes :exports none
+{
+    "track":"python",
+    "exercise":"two-fer",
+    "id":"80dbb050e4f041efa796149983871746",
+    "url":"https://exercism.io/my/solutions/80dbb050e4f041efa796149983871746",
+    "handle":"wlharvey4",
+    "is_requester":true,
+    "auto_approve":false
+}
+#+END_SRC
 
+*** Python Two Fer Test
 #+name:Python-Two-Fer-Test
 #+begin_src python :tangle python/two-fer/two_fer_test.py :mkdirp yes
 import unittest
@@ -293,8 +325,6 @@ class TwoFerTest(unittest.TestCase):
 if __name__ == '__main__':
     unittest.main()
 #+end_src
-
-*** Run Tests on Two Fer
 
 #+begin_src sh :dir python/two-fer :results output :exports both
 python3 -m pytest two_fer_test.py
@@ -361,8 +391,7 @@ difference between the last and the highest scores.
 
 #+end_src
 
-*** Solution to High Scores
-
+*** Python High Scores Code
 #+name:High_Scores_Python
 #+begin_src python :tangle python/high-scores/high_scores.py :mkdirp yes
 class HighScores(object):
@@ -397,8 +426,20 @@ class HighScores(object):
         return report
 #+end_src
 
-*** Tests for High Scores
+#+name:python-high-scores-metadata
+#+BEGIN_SRC js :tangle python/high-scores/.exercism/metadata.json :mkdirp yes :exports none
+{
+    "track":"python",
+    "exercise":"high-scores",
+    "id":"485c09d00b054d51b421c3d06a7cec30",
+    "url":"https://exercism.io/my/solutions/485c09d00b054d51b421c3d06a7cec30",
+    "handle":"wlharvey4",
+    "is_requester":true,
+    "auto_approve":false
+p}
+#+END_SRC
 
+*** Python High Scores Test
 #+name:High_Scores_Python_Test
 #+begin_src python :tangle python/high-scores/high_scores_test.py :mkdirp yes
 import unittest
@@ -479,8 +520,6 @@ if __name__ == "__main__":
     unittest.main()
 #+end_src
 
-*** Test High Score
-
 #+name:Test_High_Score_Python
 #+begin_src sh :dir python/high-scores :results output :exports results
 python3 -m pytest high_scores_test.py
@@ -544,6 +583,20 @@ sub hello {
 1;
 #+END_SRC
 
+#+name:perl5-hello-world-metadata
+#+header: :exports none
+#+BEGIN_SRC js :tangle perl5/hello-world/.exercism/metadata.json :mkdirp yes :exports none
+{
+    "track":"perl5",
+    "exercise":"hello-world",
+    "id":"55fe9523b94f4e1b9a0b7f8a438d0e45",
+    "url":"https://exercism.io/my/solutions/55fe9523b94f4e1b9a0b7f8a438d0e45",
+    "handle":"wlharvey4",
+    "is_requester":true,
+    "auto_approve":true
+}
+#+END_SRC
+
 *** Perl5 Hello World Test
 
 #+name:perl5-hello-world-test
@@ -575,20 +628,160 @@ prove ./t
 : All tests successful.
 : Files=1, Tests=2,  0 wallclock secs ( 0.02 usr  0.00 sys +  0.03 cusr  0.00 csys =  0.05 CPU)
 : Result: PASS
+** Perl5 Two Fer
+*** Perl5 Two Fer Readme
+#+name:perl5-two-fer-readme
+#+BEGIN_SRC :tangle perl5/two-fer/README.md
+# Two Fer
+
+`Two-fer` or `2-fer` is short for two for one. One for you and one for me.
+
+Given a name, return a string with the message:
+
+```text
+One for X, one for me.
+```
+
+Where X is the given name.
+
+However, if the name is missing, return the string:
+
+```text
+One for you, one for me.
+```
+
+Here are some examples:
+
+|Name    | String to return 
+|:------:|:-----------------: 
+|Alice   | One for Alice, one for me. 
+|Bob     | One for Bob, one for me.
+|        | One for you, one for me.
+|Zaphod  | One for Zaphod, one for me.
+## Source
+
+[https://github.com/exercism/problem-specifications/issues/757](https://github.com/exercism/problem-specifications/issues/757)
+
+## Submitting Incomplete Solutions
+It's possible to submit an incomplete solution so you can see how others have completed the exercise.
+#+END_SRC
+*** Perl5 Two Fer Solution
+#+name:perl5-two-fer-solution
+#+BEGIN_SRC perl :tangle perl5/two-fer/lib/TwoFer.pm :mkdirp yes
+package TwoFer;
+use strict;
+use warnings;
+use Exporter 'import';
+our @EXPORT_OK = qw(two_fer);
+
+sub two_fer {
+  my ($name) = @_;
+  $name = "you" unless $name;
+  return "One for $name, one for me.";
+}
+
+1;
+#+END_SRC
+
+#+name:perl5-two-fer-metadata
+#+header: :exports none
+#+BEGIN_SRC js :tangle perl5/two-fer/.exercism/metadata.json :mkdirp yes :exports none
+{
+    "track":"perl5",
+    "exercise":"two-fer",
+    "id":"4acecc77f2324da5aa5c59e52c0c0a6a",
+    "url":"https://exercism.io/my/solutions/4acecc77f2324da5aa5c59e52c0c0a6a",
+    "handle":"wlharvey4",
+    "is_requester":true,
+    "auto_approve":false
+}
+#+END_SRC
+
+*** Perl5 Two Fer Test
+#+perl5-two-fer-test
+#+BEGIN_SRC perl :tangle perl5/two-fer/t/two-fer.t :mkdirp yes
+#!/usr/bin/env perl
+use strict;
+use warnings;
+use Test::More tests => 4;
+use JSON::PP;
+use lib './lib';
+use TwoFer qw(two_fer);
+
+can_ok 'TwoFer', 'import' or BAIL_OUT 'Cannot import subroutines from module';
+
+my $C_DATA = do { local $/; decode_json(<DATA>); };
+foreach my $case (@{$C_DATA->{cases}}) {
+  is two_fer($case->{input}{name}), $case->{expected}, $case->{description};
+}
+
+__DATA__
+{
+  "exercise": "two-fer",
+  "version": "1.2.0",
+  "cases": [
+    {
+      "description": "no name given",
+      "property": "twoFer",
+      "input": {
+        "name": null
+      },
+      "expected": "One for you, one for me."
+    },
+    {
+      "description": "a name given",
+      "property": "twoFer",
+      "input": {
+        "name": "Alice"
+      },
+      "expected": "One for Alice, one for me."
+    },
+    {
+      "description": "another name given",
+      "property": "twoFer",
+      "input": {
+        "name": "Bob"
+      },
+      "expected": "One for Bob, one for me."
+    }
+  ]
+}
+#+END_SRC
+
+#+name:perl5-two-fer-run-test
+#+BEGIN_SRC sh :dir perl5/two-fer :results output :exports both
+prove ./t
+#+END_SRC
+
+#+RESULTS: perl5-two-fer-run-test
+: t/two-fer.t .. ok
+: All tests successful.
+: Files=1, Tests=4,  0 wallclock secs ( 0.02 usr  0.00 sys +  0.04 cusr  0.00 csys =  0.06 CPU)
+: Result: PASS
 
 * Exercism Makefile
 
 #+name:Exercism-Makefile
 #+begin_src makefile :tangle Makefile
-BASE_DIR := /usr/local/dev/programming/Languages/Exercism
-LANGUAGES = python
+BASE_DIR := ~/Dev/Programming/Languages/Exercism
+LANGUAGES = python perl5
+HTML_SRC = *.html
+TEXINFO_SRC = *.{texi,info}
+
+.phony : texinfo-clean
+texinfo-clean :
+	cd $(BASE_DIR) && rm -vrf $(TEXINFO_SRC)
+
+.phony : html-clean
+html-clean :
+	cd $(BASE_DIR) && rm -vrf $(HTML_SRC)
 
 .phony : dist-clean
 dist-clean :
-	cd $(BASE_DIR) && rm -vrf $(LANGUAGES) Exercism.html README.md
+	cd $(BASE_DIR) && rm -vrf $(LANGUAGES) README.md
 
 .phony : world-clean
-world-clean : dist-clean
+world-clean : dist-clean html-clean texinfo-clean
 	rm Makefile
 
 #+end_src
@@ -609,6 +802,15 @@ world-clean : dist-clean
 #+infojs_opt:
 #+creator: <a href="https://www.gnu.org/software/emacs/">Emacs</a> 26.1 (<a href="https://orgmode.org">Org</a> mode 9.2.2)
 #+latex_header:
+** TEXINFO Export                                                 :noexport:
+#+TEXINFO_FILENAME:Exercism.info
+#+TEXINFO_CLASS: info
+#+TEXINFO_HEADER:
+#+TEXINFO_POST_HEADER:
+#+TEXINFO_DIR_CATEGORY:Languages
+#+TEXINFO_DIR_TITLE:Exercism
+#+TEXINFO_DIR_DESC:Learning new languages through exercises
+#+TEXINFO_PRINTED_TITLE:Exercism Exercises
 
 * Local Variables                                                  :noexport:
 # Local Variables:
