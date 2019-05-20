@@ -1,7 +1,7 @@
 # -*- mode:org; fill-column:79; -*-
 #+Title:Exercism Exercises
 #+Author:Pinecone062
-#+Date:Last updated 2019-05-19 10:30
+#+Date:Last updated 2019-05-20 06:52
 * Exercism Home
 - https://github.com/exercism
 
@@ -495,6 +495,86 @@ python3 -m pytest high_scores_test.py
 : high_scores_test.py ............                                         [100%]
 : 
 : ========================== 12 passed in 0.02 seconds ===========================
+
+* Perl5 Exercism Track
+** Perl5 Hello World
+*** Perl5 Hello World Readme
+
+#+name:perl5-hello-world-readme
+#+BEGIN_SRC :tangle perl5 :mkdirp yes
+# Hello World
+
+The classical introductory exercise. Just say "Hello, World!".
+
+["Hello, World!"](http://en.wikipedia.org/wiki/%22Hello,_world!%22_program) is
+the traditional first program for beginning programming in a new language
+or environment.
+
+The objectives are simple:
+
+- Write a function that returns the string "Hello, World!".
+- Run the test suite and make sure that it succeeds.
+- Submit your solution and check it at the website.
+
+If everything goes well, you will be ready to fetch your first real exercise.
+## Source
+
+This is an exercise to introduce users to using Exercism
+[http://en.wikipedia.org/wiki/%22Hello,_world!%22_program](http://en.wikipedia.org/wiki/%22Hello,_world!%22_program)
+
+## Submitting Incomplete Solutions
+It's possible to submit an incomplete solution so you can see how others have completed the exercise.
+#+END_SRC
+
+*** Perl5 Hello World Solution
+
+#+name:perl5-hello-world-code
+#+BEGIN_SRC perl :tangle perl5/hello-world/lib/HelloWorld.pm :mkdirp yes
+# Declare package 'HelloWorld'
+package HelloWorld;
+use strict;
+use warnings;
+use Exporter 'import';
+our @EXPORT_OK = qw(hello);
+
+sub hello {
+  return "Hello, World!";
+}
+
+1;
+#+END_SRC
+
+*** Perl5 Hello World Test
+
+#+name:perl5-hello-world-test
+#+BEGIN_SRC perl :tangle perl5/hello-world/t/hello-world.t :mkdirp yes
+#!/usr/bin/env perl
+use strict;
+use warnings;
+use Test::More tests => 2; # This is how many tests we expect to run.
+use lib './lib';
+use HelloWorld qw(hello);
+
+can_ok 'HelloWorld', 'import' or BAIL_OUT 'Cannot import subroutines from module';
+
+# Run the 'is' subroutine from the 'Test::More' module, with three arguments.
+is(
+  hello,           # Run the 'hello' subroutine, which is imported from your module.
+  'Hello, World!', # The expected result to compare with 'hello'.
+  'Say Hi!'        # The test description.
+);
+#+END_SRC
+
+#+name:perl5-hello-world-run-test
+#+BEGIN_SRC sh :dir perl5/hello-world :results output :exports both
+prove ./t
+#+END_SRC
+
+#+RESULTS: perl5-hello-world-run-test
+: t/hello-world.t .. ok
+: All tests successful.
+: Files=1, Tests=2,  0 wallclock secs ( 0.02 usr  0.00 sys +  0.03 cusr  0.00 csys =  0.05 CPU)
+: Result: PASS
 
 * Exercism Makefile
 
