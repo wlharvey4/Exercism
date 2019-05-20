@@ -1,8 +1,8 @@
 # -*- mode:org; fill-column:79; -*-
 #+Title:Exercism Exercises
 #+Author:Pinecone062
-#+Date:Last updated 2019-05-20 09:03
-#+Macro: version Version 0.1.1
+#+Date:Last updated 2019-05-20 10:26
+#+Macro: version Version 0.1.2
 {{{title}}} {{{version}}} {{{date}}}
 * Exercism Home
 :PROPERTIES:
@@ -115,7 +115,7 @@ This repo uses [[http://flake8.readthedocs.org/en/latest/][flake8]] with default
 
 ** Python README
 #+name:Readme-Python-track
-#+begin_src :tangle python/README.md :mkdirp yes
+#+begin_src txt :tangle python/README.md :mkdirp yes
 # Exercism Python Track
 
 [![Build Status](https://travis-ci.org/exercism/python.svg?branch=master)](https://travis-ci.org/exercism/python) [![Requirements Status](https://pyup.io/repos/github/exercism/python/shield.svg)](https://pyup.io/repos/github/exercism/python/)
@@ -250,6 +250,7 @@ if __name__ == '__main__':
     unittest.main()
 #+end_src
 
+#+name:python-hello-world-test
 #+begin_src sh :dir python/hello-world :results output :exports both
 python3 -m pytest hello_world_test.py
 #+end_src
@@ -357,7 +358,7 @@ difference between the last and the highest scores.
 *** Readme for High Scores
 
 #+name:High_Scores_Python_Readme
-#+begin_src text :tangle python/high-scores/README.md :mkdirp yes
+#+begin_src txt :tangle python/high-scores/README.md :mkdirp yes
   # High Scores
 
   Manage a game player's High Score list.
@@ -521,7 +522,7 @@ if __name__ == "__main__":
 #+end_src
 
 #+name:Test_High_Score_Python
-#+begin_src sh :dir python/high-scores :results output :exports results
+#+begin_src sh :dir python/high-scores :results output :exports both
 python3 -m pytest high_scores_test.py
 #+end_src
 
@@ -537,10 +538,25 @@ python3 -m pytest high_scores_test.py
 
 * Perl5 Exercism Track
 ** Perl5 Hello World
-*** Perl5 Hello World Readme
+The classical introductory exercise. Just say "Hello, World!".
 
+"Hello, World!" (https://en.wikipedia.org/wiki/%22Hello%2c_World!%22_program)
+is the traditional first program for beginning programming in a new language or
+environment.
+
+{{{heading(Objectives)}}}
+
+The objectives are simple:
+- Write a function that returns the string "Hello, World!".
+- Run the test suite and make sure that it succeeds.
+- Submit your solution and check it at the website.
+
+
+If everything goes well, you will be ready to fetch your first real exercise.
+
+*** Perl5 Hello World Readme
 #+name:perl5-hello-world-readme
-#+BEGIN_SRC :tangle perl5 :mkdirp yes
+#+BEGIN_SRC txt :tangle perl5/README.md :mkdirp yes
 # Hello World
 
 The classical introductory exercise. Just say "Hello, World!".
@@ -566,9 +582,8 @@ It's possible to submit an incomplete solution so you can see how others have co
 #+END_SRC
 
 *** Perl5 Hello World Solution
-
 #+name:perl5-hello-world-code
-#+BEGIN_SRC perl :tangle perl5/hello-world/lib/HelloWorld.pm :mkdirp yes
+#+BEGIN_SRC perl -n :tangle perl5/hello-world/lib/HelloWorld.pm :mkdirp yes
 # Declare package 'HelloWorld'
 package HelloWorld;
 use strict;
@@ -598,9 +613,8 @@ sub hello {
 #+END_SRC
 
 *** Perl5 Hello World Test
-
 #+name:perl5-hello-world-test
-#+BEGIN_SRC perl :tangle perl5/hello-world/t/hello-world.t :mkdirp yes
+#+BEGIN_SRC perl -n :tangle perl5/hello-world/t/hello-world.t :mkdirp yes
 #!/usr/bin/env perl
 use strict;
 use warnings;
@@ -629,9 +643,20 @@ prove ./t
 : Files=1, Tests=2,  0 wallclock secs ( 0.02 usr  0.00 sys +  0.03 cusr  0.00 csys =  0.05 CPU)
 : Result: PASS
 ** Perl5 Two Fer
+"Two-fer" or "2-fer" is short for "two for one.  One for you and one for me."
+
+{{{heading(Objective)}}}
+
+Given a name, return a string with the message:
+: One for X, one for me.
+Where 'X' is the given name.
+
+However, if the name is missing, return the string:
+: One for you, one for me.
+
 *** Perl5 Two Fer Readme
 #+name:perl5-two-fer-readme
-#+BEGIN_SRC :tangle perl5/two-fer/README.md
+#+BEGIN_SRC txt :tangle perl5/two-fer/README.md
 # Two Fer
 
 `Two-fer` or `2-fer` is short for two for one. One for you and one for me.
@@ -667,7 +692,7 @@ It's possible to submit an incomplete solution so you can see how others have co
 #+END_SRC
 *** Perl5 Two Fer Solution
 #+name:perl5-two-fer-solution
-#+BEGIN_SRC perl :tangle perl5/two-fer/lib/TwoFer.pm :mkdirp yes
+#+BEGIN_SRC perl -n :tangle perl5/two-fer/lib/TwoFer.pm :mkdirp yes
 package TwoFer;
 use strict;
 use warnings;
@@ -699,7 +724,7 @@ sub two_fer {
 
 *** Perl5 Two Fer Test
 #+perl5-two-fer-test
-#+BEGIN_SRC perl :tangle perl5/two-fer/t/two-fer.t :mkdirp yes
+#+BEGIN_SRC perl -n :tangle perl5/two-fer/t/two-fer.t :mkdirp yes
 #!/usr/bin/env perl
 use strict;
 use warnings;
@@ -766,7 +791,8 @@ prove ./t
 BASE_DIR := ~/Dev/Programming/Languages/Exercism
 LANGUAGES = python perl5
 HTML_SRC = *.html
-TEXINFO_SRC = *.{texi,info}
+TEXINFO_SRC = *.{texi,info,pdf}
+DVI_SRC = *.{aux,log,toc}
 
 .phony : texinfo-clean
 texinfo-clean :
@@ -778,7 +804,7 @@ html-clean :
 
 .phony : dist-clean
 dist-clean :
-	cd $(BASE_DIR) && rm -vrf $(LANGUAGES) README.md
+	cd $(BASE_DIR) && rm -vrf $(LANGUAGES) README.md $(DVI_SRC)
 
 .phony : world-clean
 world-clean : dist-clean html-clean texinfo-clean
@@ -811,7 +837,9 @@ world-clean : dist-clean html-clean texinfo-clean
 #+TEXINFO_DIR_TITLE:Exercism
 #+TEXINFO_DIR_DESC:Learning new languages through exercises
 #+TEXINFO_PRINTED_TITLE:Exercism Exercises
-
+** MACROS                                                         :noexport:
+#+macro: heading @@texinfo:@heading @@$1
+#+macro: subheading @@texinfo:@subheading @@$1
 * Local Variables                                                  :noexport:
 # Local Variables:
 # time-stamp-pattern:"8/^\\#\\+[dD]ate:Last updated %:y-%02m-%02d %02H:%02M$"
