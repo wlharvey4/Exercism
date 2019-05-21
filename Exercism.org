@@ -1,8 +1,8 @@
 # -*- mode:org; fill-column:79; -*-
 #+Title:Exercism Exercises
 #+Author:Pinecone062
-#+Date:Last updated 2019-05-20 10:26
-#+Macro: version Version 0.1.2
+#+Date:Last updated 2019-05-20 21:15
+#+Macro: version Version 0.1.3
 {{{title}}} {{{version}}} {{{date}}}
 * Exercism Home
 :PROPERTIES:
@@ -113,7 +113,7 @@ stylized version http://pep8.org).
 
 This repo uses [[http://flake8.readthedocs.org/en/latest/][flake8]] with default settings to enforce the coding standard.
 
-** Python README
+** Python Exercism README
 #+name:Readme-Python-track
 #+begin_src txt :tangle python/README.md :mkdirp yes
 # Exercism Python Track
@@ -213,7 +213,7 @@ latest version? Use this command:
 *** Python Hello World Solution
 
 #+name:hello_world.py
-#+begin_src python :tangle python/hello-world/hello_world.py :mkdirp yes
+#+begin_src python -n :tangle python/hello-world/hello_world.py :mkdirp yes
 def hello():
     return "Hello, World!"
 #+end_src
@@ -255,6 +255,16 @@ if __name__ == '__main__':
 python3 -m pytest hello_world_test.py
 #+end_src
 
+#+RESULTS: python-hello-world-test
+: ============================= test session starts ==============================
+: platform darwin -- Python 3.7.3, pytest-4.4.1, py-1.8.0, pluggy-0.9.0
+: rootdir: /usr/local/dev/programming/Languages/Exercism/python/hello-world
+: collected 1 item
+: 
+: hello_world_test.py .                                                    [100%]
+: 
+: =========================== 1 passed in 0.10 seconds ===========================
+
 ** Python Two Fer
 Two-fer or 2-fer is short for two for one. One for you and one for me.
 
@@ -270,9 +280,9 @@ To run the tests:
 
 *** Python Two Fer Solution
 #+name:Two-Fer-Solution
-#+begin_src python :tangle python/two-fer/two_fer.py :mkdirp yes
+#+begin_src python -n :tangle python/two-fer/two_fer.py :mkdirp yes
 def two_fer(name="you"):
-    return "One for " + name + ", one for me."
+    return f"One for {name}, one for me."
 #+end_src
 
 #+begin_src sh :dir python/two-fer :results output
@@ -282,12 +292,12 @@ python3 -m pytest two_fer_test.py
 #+RESULTS:
 : ============================= test session starts ==============================
 : platform darwin -- Python 3.7.3, pytest-4.4.1, py-1.8.0, pluggy-0.9.0
-: rootdir: /usr/local/dev/programming/Exercism/python/two-fer
+: rootdir: /usr/local/dev/programming/Languages/Exercism/python/two-fer
 : collected 3 items
 : 
 : two_fer_test.py ...                                                      [100%]
 : 
-: =========================== 3 passed in 0.01 seconds ===========================
+: =========================== 3 passed in 0.02 seconds ===========================
 
 #+name:python-two-fer-metadata
 #+BEGIN_SRC js :tangle python/two-fer/.exercism/metadata.json :mkdirp yes :exports none
@@ -333,13 +343,13 @@ python3 -m pytest two_fer_test.py
 
 #+RESULTS:
 : ============================= test session starts ==============================
-: platform darwin -- Python 3.7.3, pytest-4.0.2, py-1.7.0, pluggy-0.8.0
-: rootdir: /Users/pine/Dev/Programming/Languages/Exercism/python/two-fer, inifile:
+: platform darwin -- Python 3.7.3, pytest-4.4.1, py-1.8.0, pluggy-0.9.0
+: rootdir: /usr/local/dev/programming/Languages/Exercism/python/two-fer
 : collected 3 items
 : 
 : two_fer_test.py ...                                                      [100%]
 : 
-: =========================== 3 passed in 0.03 seconds ===========================
+: =========================== 3 passed in 0.06 seconds ===========================
 
 ** High Scores
 :PROPERTIES:
@@ -394,7 +404,7 @@ difference between the last and the highest scores.
 
 *** Python High Scores Code
 #+name:High_Scores_Python
-#+begin_src python :tangle python/high-scores/high_scores.py :mkdirp yes
+#+begin_src python -n :tangle python/high-scores/high_scores.py :mkdirp yes
 class HighScores(object):
     def __init__(self, scores):
         self.scores = scores
@@ -528,13 +538,13 @@ python3 -m pytest high_scores_test.py
 
 #+RESULTS: Test_High_Score_Python
 : ============================= test session starts ==============================
-: platform darwin -- Python 3.7.3, pytest-4.0.2, py-1.7.0, pluggy-0.8.0
-: rootdir: /Users/pine/Dev/Programming/Languages/Exercism/python/high-scores, inifile:
+: platform darwin -- Python 3.7.3, pytest-4.4.1, py-1.8.0, pluggy-0.9.0
+: rootdir: /usr/local/dev/programming/Languages/Exercism/python/high-scores
 : collected 12 items
 : 
 : high_scores_test.py ............                                         [100%]
 : 
-: ========================== 12 passed in 0.02 seconds ===========================
+: ========================== 12 passed in 0.08 seconds ===========================
 
 * Perl5 Exercism Track
 ** Perl5 Hello World
@@ -656,7 +666,7 @@ However, if the name is missing, return the string:
 
 *** Perl5 Two Fer Readme
 #+name:perl5-two-fer-readme
-#+BEGIN_SRC txt :tangle perl5/two-fer/README.md
+#+BEGIN_SRC txt :tangle perl5/two-fer/README.md :mkdirp yes
 # Two Fer
 
 `Two-fer` or `2-fer` is short for two for one. One for you and one for me.
@@ -691,6 +701,14 @@ Here are some examples:
 It's possible to submit an incomplete solution so you can see how others have completed the exercise.
 #+END_SRC
 *** Perl5 Two Fer Solution
+
+#+CINDEX:defined-or operator (@code{//})
+#+CINDEX:@code{//}, defined-or operator
+The defined-or operator, =//=, tests the definedness of its operand.  Unlike
+=||=, which tests the truth of its operand, =//= evaluates to a =true= value
+even if its operand evaluates to a numeric zero or the empty string.  This is
+especially useful for setting default parameter values.
+
 #+name:perl5-two-fer-solution
 #+BEGIN_SRC perl -n :tangle perl5/two-fer/lib/TwoFer.pm :mkdirp yes
 package TwoFer;
@@ -700,9 +718,7 @@ use Exporter 'import';
 our @EXPORT_OK = qw(two_fer);
 
 sub two_fer {
-  my ($name) = @_;
-  $name = "you" unless $name;
-  return "One for $name, one for me.";
+  return "One for ". eval {pop // "you"}. ", one for me.";
 }
 
 1;
@@ -781,14 +797,15 @@ prove ./t
 #+RESULTS: perl5-two-fer-run-test
 : t/two-fer.t .. ok
 : All tests successful.
-: Files=1, Tests=4,  0 wallclock secs ( 0.02 usr  0.00 sys +  0.04 cusr  0.00 csys =  0.06 CPU)
+: Files=1, Tests=4,  0 wallclock secs ( 0.01 usr  0.01 sys +  0.05 cusr  0.00 csys =  0.07 CPU)
 : Result: PASS
 
 * Exercism Makefile
-
+*Note*: Make sure to export the environment variable
+ @@texinfo:@env{PROGRAMMING}@@.
 #+name:Exercism-Makefile
 #+begin_src makefile :tangle Makefile
-BASE_DIR := ~/Dev/Programming/Languages/Exercism
+BASE_DIR := $(PROGRAMMING)/Languages/Exercism
 LANGUAGES = python perl5
 HTML_SRC = *.html
 TEXINFO_SRC = *.{texi,info,pdf}
