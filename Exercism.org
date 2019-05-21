@@ -1,8 +1,8 @@
 # -*- mode:org; fill-column:79; -*-
 #+Title:Exercism Exercises
 #+Author:Pinecone062
-#+Date:Last updated 2019-05-21 00:22
-#+Macro: version Version 0.1.4
+#+Date:Last updated 2019-05-21 08:39
+#+Macro: version Version 0.1.5
 {{{title}}} {{{version}}} {{{date}}}
 * Exercism Home
 :PROPERTIES:
@@ -1129,6 +1129,90 @@ prove ./t
 : All tests successful.
 : Files=1, Tests=26,  0 wallclock secs ( 0.01 usr  0.01 sys +  0.06 cusr  0.00 csys =  0.08 CPU)
 : Result: PASS
+
+* Ocaml Exercism Track
+
+** Ocaml Getting Started
+To work on the exercises, you will need =Opam= and =Base=.  Consult [[https://opam.ocaml.org/][opam]]
+website for instructions on how to install =opam= for your OS.  Once =opam= is
+installed open a terminal window and run the following command to install
+=base=:
+
+: opam install base
+
+To run the tests you will need OUnit. Install it using opam:
+
+: opam install ounit
+
+*** Ocaml Installation
+- https://exercism.io/tracks/ocaml/installation
+
+
+1. Install the OCaml compiler (ocaml) and package manager (opam).
+
+   The excellent [[https://realworldocaml.org/][Real World OCaml]] book has [[https://github.com/realworldocaml/book/wiki/Installation-Instructions][installation instructions]] for a
+   variety of operating systems.
+
+2. If you followed the instructions from Real World OCaml, it is likely that
+   your system's OCaml compiler is not the latest version.  To see a list of
+   available versions and the one you have currently installed, run:
+
+   : opam switch
+
+   Note which version is the latest and install it by running:
+
+   : opam switch <version-number>
+
+   For example, if the latest version is 4.07.0, you will run:
+
+   : opam switch 4.07.0
+
+3. Install the =Core_kernel=, =Base= and =OUnit= packages, which are necessary in
+   order to run the exercise tests:
+
+   : opam install base core_kernel ounit
+
+*** Ocaml Running Tests
+A Makefile is provided with a default target to compile your solution and run
+the tests.  At the command line, type:
+
+: make
+
+*** Ocaml Interactive Shell
+=utop= is a command line program which allows you to run Ocaml code
+interactively.  The easiest way to install it is via =opam=:
+
+: opam install utop
+
+Consult utop for more detail.
+
+** Ocaml Hello World
+
+*** Ocaml Hello World Download
+#+name:ocaml-hello-world-download
+#+BEGIN_SRC sh :results output :exports none
+exercism download --exercise=hello-world --track=ocaml
+#+END_SRC
+
+#+RESULTS: ocaml-hello-world-download
+: /Users/pine/Dev/Programming/Languages/Exercism/ocaml/hello-world
+
+*** Ocaml Hello World Instruction
+The classical introductory exercise. Just say "Hello, World!".
+
+"Hello, World!" is the traditional first program for beginning programming in a
+new language or environment.
+
+The objectives are simple:
+
+- Write a function that returns the string "Hello, World!".
+
+- Run the test suite and make sure that it succeeds.
+
+- Submit your solution and check it at the website.
+
+
+If everything goes well, you will be ready to fetch your first real exercise.
 
 * Exercism Makefile
 *Note*: Make sure to export the environment variable
