@@ -1,8 +1,8 @@
 # -*- mode:org; fill-column:79; -*-
 #+Title:Exercism Exercises
 #+Author:Pinecone062
-#+Date:Last updated 2019-05-20 21:15
-#+Macro: version Version 0.1.3
+#+Date:Last updated 2019-05-21 00:22
+#+Macro: version Version 0.1.4
 {{{title}}} {{{version}}} {{{date}}}
 * Exercism Home
 :PROPERTIES:
@@ -798,6 +798,336 @@ prove ./t
 : t/two-fer.t .. ok
 : All tests successful.
 : Files=1, Tests=4,  0 wallclock secs ( 0.01 usr  0.01 sys +  0.05 cusr  0.00 csys =  0.07 CPU)
+: Result: PASS
+
+** Perl5 Bob
+*** Perl5 Bob Introduction
+Bob is a lackadaisical teenager. In conversation, his responses are very
+limited.
+
+Bob answers 'Sure.' if you ask him a question.
+
+He answers 'Whoa, chill out!' if you yell at him.
+
+He answers 'Calm down, I know what I'm doing!' if you yell a question at him.
+
+He says 'Fine. Be that way!' if you address him without actually saying
+anything.
+
+He answers 'Whatever.' to anything else.
+
+Bob's conversational partner is a purist when it comes to written communication
+and always follows normal rules regarding sentence punctuation in English.
+
+*** Perl5 Bob Inspirational Source
+Inspired by the 'Deaf Grandma' exercise in Chris Pine's Learn to Program
+tutorial:
+- http://pine.fm/LearnToProgram/?Chapter=06
+
+*** Perl5 Bob How to Download
+#+name:Perl5-Bob-Download
+#+begin_src sh :dir perl5
+exercism download --exercise=bob --track=perl5
+#+end_src
+
+#+RESULTS: Perl5-Bob-Download
+: /usr/local/dev/programming/Languages/Exercism/perl5/bob
+
+*** Perl5 Bob Solution
+#+name:Perl5-Bob-Solution
+#+begin_src perl -n :tangle perl5/bob/lib/Bob.pm :mkdirp yes
+  # Declare package 'Bob'
+  package Bob;
+  use strict;
+  use warnings;
+  use Exporter 'import';
+  our @EXPORT_OK = qw(hey);
+
+  sub hey {
+    my ($msg) = @_;
+
+    if ($msg =~ /^[\p{Space}]{0,}$/) {
+        return "Fine. Be that way!";
+    }
+
+    if ($msg =~ /^[\p{UPPERCASE_LETTER}]+[\p{UPPERCASE}\p{NUMBER}\s,%^*@#$(^!]*!?$/) {
+        return "Whoa, chill out!";
+    }
+
+    if ($msg =~ /[\p{UPPERCASE_LETTER}\p{NUMBER}\s,%^*@#$(^!]*[\p{UPPERCASE_LETTER}]+!?$/) {
+        return "Whoa, chill out!";
+    }
+
+    if ($msg =~ /^[\p{UPPERCASE_LETTER}\s]*[?]$/) {
+        return "Calm down, I know what I'm doing!";
+    }
+
+    if ($msg =~ /^[\p{LETTER}\p{NUMBER},\s]*$/) {
+        return "Whatever.";
+    }
+
+    if ($msg =~ /[\p{LETTER}\p{NUMBER}?]\s{0,}$/) {
+        return "Sure.";
+    }
+
+    if ($msg !~ /\p{LETTER}/) {
+        return "Whatever.";
+    }
+
+    return "Whatever.";
+  }
+
+  1;
+#+end_src
+
+#+name:Perl5-Bob-Metadata
+#+begin_src js :tangle perl5/bob/.exercism/metadata.json :mkdirp yes :exports none
+  {
+      "track":"perl5",
+      "exercise":"bob",
+      "id":"08f0b7ecdadd47f8a9baa2910b6558fc",
+      "url":"https://exercism.io/my/solutions/08f0b7ecdadd47f8a9baa2910b6558fc",
+      "handle":"wlharvey4",
+      "is_requester":true,
+      "auto_approve":false
+  }
+#+end_src
+
+*** Perl5 Bob Test
+#+name:Perl5-Bob-Tests
+#+begin_src perl :tangle perl5/bob/t/bob.t :mkdirp yes
+#!/usr/bin/env perl
+use strict;
+use warnings;
+use Test::More tests => 26; # This is how many tests we expect to run.
+use JSON::PP;
+use lib './lib';
+use Bob qw(hey);
+
+can_ok 'Bob', 'import' or BAIL_OUT 'Cannot import subroutines from module';
+
+my $C_DATA = do { local $/; decode_json(<DATA>); };
+is hey($_->{input}{heyBob}), $_->{expected}, $_->{description} foreach @{$C_DATA->{cases}};
+
+__DATA__
+{
+  "exercise": "bob",
+  "version": "1.4.0",
+  "cases": [
+    {
+      "description": "stating something",
+      "property": "response",
+      "input": {
+        "heyBob": "Tom-ay-to, tom-aaaah-to."
+      },
+      "expected": "Whatever."
+    },
+    {
+      "description": "shouting",
+      "property": "response",
+      "input": {
+        "heyBob": "WATCH OUT!"
+      },
+      "expected": "Whoa, chill out!"
+    },
+    {
+      "description": "shouting gibberish",
+      "property": "response",
+      "input": {
+        "heyBob": "FCECDFCAAB"
+      },
+      "expected": "Whoa, chill out!"
+    },
+    {
+      "description": "asking a question",
+      "property": "response",
+      "input": {
+        "heyBob": "Does this cryogenic chamber make me look fat?"
+      },
+      "expected": "Sure."
+    },
+    {
+      "description": "asking a numeric question",
+      "property": "response",
+      "input": {
+        "heyBob": "You are, what, like 15?"
+      },
+      "expected": "Sure."
+    },
+    {
+      "description": "asking gibberish",
+      "property": "response",
+      "input": {
+        "heyBob": "fffbbcbeab?"
+      },
+      "expected": "Sure."
+    },
+    {
+      "description": "talking forcefully",
+      "property": "response",
+      "input": {
+        "heyBob": "Let's go make out behind the gym!"
+      },
+      "expected": "Whatever."
+    },
+    {
+      "description": "using acronyms in regular speech",
+      "property": "response",
+      "input": {
+        "heyBob": "It's OK if you don't want to go to the DMV."
+      },
+      "expected": "Whatever."
+    },
+    {
+      "description": "forceful question",
+      "property": "response",
+      "input": {
+        "heyBob": "WHAT THE HELL WERE YOU THINKING?"
+      },
+      "expected": "Calm down, I know what I'm doing!"
+    },
+    {
+      "description": "shouting numbers",
+      "property": "response",
+      "input": {
+        "heyBob": "1, 2, 3 GO!"
+      },
+      "expected": "Whoa, chill out!"
+    },
+    {
+      "description": "no letters",
+      "property": "response",
+      "input": {
+        "heyBob": "1, 2, 3"
+      },
+      "expected": "Whatever."
+    },
+    {
+      "description": "question with no letters",
+      "property": "response",
+      "input": {
+        "heyBob": "4?"
+      },
+      "expected": "Sure."
+    },
+    {
+      "description": "shouting with special characters",
+      "property": "response",
+      "input": {
+        "heyBob": "ZOMG THE %^*@#$(*^ ZOMBIES ARE COMING!!11!!1!"
+      },
+      "expected": "Whoa, chill out!"
+    },
+    {
+      "description": "shouting with no exclamation mark",
+      "property": "response",
+      "input": {
+        "heyBob": "I HATE THE DMV"
+      },
+      "expected": "Whoa, chill out!"
+    },
+    {
+      "description": "statement containing question mark",
+      "property": "response",
+      "input": {
+        "heyBob": "Ending with ? means a question."
+      },
+      "expected": "Whatever."
+    },
+    {
+      "description": "non-letters with question",
+      "property": "response",
+      "input": {
+        "heyBob": ":) ?"
+      },
+      "expected": "Sure."
+    },
+    {
+      "description": "prattling on",
+      "property": "response",
+      "input": {
+        "heyBob": "Wait! Hang on. Are you going to be OK?"
+      },
+      "expected": "Sure."
+    },
+    {
+      "description": "silence",
+      "property": "response",
+      "input": {
+        "heyBob": ""
+      },
+      "expected": "Fine. Be that way!"
+    },
+    {
+      "description": "prolonged silence",
+      "property": "response",
+      "input": {
+        "heyBob": "          "
+      },
+      "expected": "Fine. Be that way!"
+    },
+    {
+      "description": "alternate silence",
+      "property": "response",
+      "input": {
+        "heyBob": "\t\t\t\t\t\t\t\t\t\t"
+      },
+      "expected": "Fine. Be that way!"
+    },
+    {
+      "description": "multiple line question",
+      "property": "response",
+      "input": {
+        "heyBob": "\nDoes this cryogenic chamber make me look fat?\nNo."
+      },
+      "expected": "Whatever."
+    },
+    {
+      "description": "starting with whitespace",
+      "property": "response",
+      "input": {
+        "heyBob": "         hmmmmmmm..."
+      },
+      "expected": "Whatever."
+    },
+    {
+      "description": "ending with whitespace",
+      "property": "response",
+      "input": {
+        "heyBob": "Okay if like my  spacebar  quite a bit?   "
+      },
+      "expected": "Sure."
+    },
+    {
+      "description": "other whitespace",
+      "property": "response",
+      "input": {
+        "heyBob": "\n\r \t"
+      },
+      "expected": "Fine. Be that way!"
+    },
+    {
+      "description": "non-question ending with whitespace",
+      "property": "response",
+      "input": {
+        "heyBob": "This is a statement ending with whitespace      "
+      },
+      "expected": "Whatever."
+    }
+  ]
+}
+
+#+end_src
+
+#+name:Perl5-Bob-Run-Tests
+#+begin_src sh :dir perl5/bob :results output :exports both
+prove ./t
+#+end_src
+
+#+RESULTS: Perl5-Bob-Run-Tests
+: t/bob.t .. ok
+: All tests successful.
+: Files=1, Tests=26,  0 wallclock secs ( 0.01 usr  0.01 sys +  0.06 cusr  0.00 csys =  0.08 CPU)
 : Result: PASS
 
 * Exercism Makefile
