@@ -1,8 +1,8 @@
 # -*- mode:org; fill-column:79; -*-
 #+Title:Exercism Exercises
 #+Author:Pinecone062
-#+Date:Last updated 2019-05-22 00:59
-#+Macro: version Version 0.1.7
+#+Date:Last updated 2019-05-22 13:04
+#+Macro: version Version 0.1.8
 {{{title}}} {{{version}}} {{{date}}}
 * Exercism Home
 :PROPERTIES:
@@ -1130,8 +1130,8 @@ prove ./t
 : Files=1, Tests=26,  0 wallclock secs ( 0.01 usr  0.01 sys +  0.06 cusr  0.00 csys =  0.08 CPU)
 : Result: PASS
 
-* Ocaml Exercism Track
-** Ocaml Getting Started
+* OCaml Exercism Track
+** OCaml Getting Started
 To work on the exercises, you will need =Opam= and =Base=.  Consult [[https://opam.ocaml.org/][opam]]
 website for instructions on how to install =opam= for your OS.
 
@@ -1158,7 +1158,7 @@ To run the tests you will need =OUnit=.  Install it using =opam=:
 
 : opam install ounit
 
-*** Ocaml Installation
+*** OCaml Installation
 - https://exercism.io/tracks/ocaml/installation
 
 
@@ -1186,7 +1186,7 @@ To run the tests you will need =OUnit=.  Install it using =opam=:
 
    : opam install base core_kernel ounit
 
-*** Ocaml Running Tests
+*** OCaml Running Tests
 Because OCaml is a compiled language you need to compile your submission and
 the test code before you can run the tests.  We use =jbuilder= to build.  Each
 folder has a =jbuild= file specifying how to build and also a Makefile which
@@ -1197,14 +1197,14 @@ the tests.  At the command line, type:
 
 : make
 
-*** Ocaml Interactive Shell
-=utop= is a command line program which allows you to run Ocaml code
+*** OCaml Interactive Shell
+=utop= is a command line program which allows you to run OCaml code
 interactively.  The easiest way to install it is via =opam=:
 
 : opam install utop
 
 Consult utop for more detail.
-*** Ocaml Learning Resources
+*** OCaml Learning Resources
 
 - [[http://caml.inria.fr/pub/docs/manual-ocaml/libref/index.html][Documentation for the Standard Library]]
 
@@ -1240,8 +1240,8 @@ library =List= module and Core's =List=.  A piece of advice: focus on the Core
 library and ignore the standard library unless you really can't find what you
 need in Core.
 
-** Ocaml Hello World
-*** Ocaml Hello World Download
+** OCaml Hello World
+*** OCaml Hello World Download
 #+name:ocaml-hello-world-download
 #+BEGIN_SRC sh :results output :exports code
 exercism download --exercise=hello-world --track=ocaml
@@ -1250,7 +1250,7 @@ exercism download --exercise=hello-world --track=ocaml
 #+RESULTS: ocaml-hello-world-download
 : /Users/pine/Dev/Programming/Languages/Exercism/ocaml/hello-world
 
-*** Ocaml Hello World Instruction
+*** OCaml Hello World Instruction
 The classical introductory exercise. Just say "Hello, World!".
 
 "Hello, World!" is the traditional first program for beginning programming in a
@@ -1267,7 +1267,7 @@ The objectives are simple:
 
 If everything goes well, you will be ready to fetch your first real exercise.
 
-*** Ocaml Hello World README
+*** OCaml Hello World README
 #+name:ocaml-hello-world-README
 #+BEGIN_SRC markdown :tangle ocaml/hello-world/README.md
 # Hello World
@@ -1315,7 +1315,7 @@ make
 ```
 
 ## Interactive Shell
-`utop` is a command line program which allows you to run Ocaml code
+`utop` is a command line program which allows you to run OCaml code
 interactively. The easiest way to install it is via opam:
 
 ```bash
@@ -1325,7 +1325,7 @@ Consult [utop](https://github.com/diml/utop/blob/master/README.md) for more deta
 
 ## Feedback, Issues, Pull Requests
 The [exercism/ocaml](https://github.com/exercism/ocaml) repository on
-GitHub is the home for all of the Ocaml exercises.
+GitHub is the home for all of the OCaml exercises.
 
 If you have feedback about an exercise, or want to help implementing a new
 one, head over there and create an issue.  We'll do our best to help you!
@@ -1340,7 +1340,7 @@ It's possible to submit an incomplete solution so you can see how
 others have completed the exercise.
 #+END_SRC
 
-*** Ocaml Hello World Solution
+*** OCaml Hello World Solution
 #+name:ocaml-hello-world-solution
 #+BEGIN_SRC ocaml :tangle ocaml/hello-world/hello_world.ml :mkdirp yes
 let hello = "Hello, World!"
@@ -1367,7 +1367,7 @@ val hello: string
 }
 #+END_SRC
 
-*** Ocaml Hello World Tests
+*** OCaml Hello World Tests
 #+name:ocaml-hello-world-tests
 #+BEGIN_SRC ocaml :tangle ocaml/hello-world/test.ml :mkdirp yes
 open OUnit2
@@ -1383,16 +1383,16 @@ let () =
   run_test_tt_main ("Hello World tests" >::: tests)
 #+END_SRC
 
-{{{heading(Testing Ocaml Hello World)}}}
+{{{heading(Testing OCaml Hello World)}}}
 
 #+name:ocaml-hello-world-run-tests
 #+BEGIN_SRC sh :dir ocaml/hello-world :results output :exports results
-echo Running Ocaml tests now...
+echo Running OCaml tests now...
 make 2>&1
 #+END_SRC
 
 #+RESULTS: ocaml-hello-world-run-tests
-: Running Ocaml tests now...
+: Running OCaml tests now...
 : make clean...
 : dune clean
 : make test...
@@ -1402,7 +1402,7 @@ make 2>&1
 : Ran: 1 tests in: 0.11 seconds.
 : OK
 
-*** Ocaml Hello World Dune Project
+*** OCaml Hello World Dune Project
 #+name:ocaml-hello-world-dune
 #+BEGIN_SRC ocaml :tangle ocaml/hello-world/dune :mkdirp yes
 (executable
@@ -1420,7 +1420,7 @@ make 2>&1
 (lang dune 1.1)
 #+END_SRC
 
-*** Ocaml Hello World Makefile
+*** OCaml Hello World Makefile
 #+name:ocaml-hello-world-makefile
 #+BEGIN_SRC make :tangle ocaml/hello-world/Makefile :mkdirp yes
 default: clean test
@@ -1434,6 +1434,202 @@ clean:
 	dune clean
 
 .PHONY: clean
+#+END_SRC
+
+** OCaml Leap
+
+*** OCaml Leap Download
+#+name:ocaml-leap-download
+#+BEGIN_SRC sh :results output
+exercism download --exercise=leap --track=ocaml
+#+END_SRC
+
+#+RESULTS: ocaml-leap-download
+: /Users/pine/Dev/Programming/Languages/Exercism/ocaml/leap
+
+*** OCaml Leap README
+#+name:ocaml-leap-readme
+#+BEGIN_SRC markdown
+# Leap
+
+Given a year, report if it is a leap year.
+
+The tricky thing here is that a leap year in the Gregorian calendar occurs:
+
+```text
+on every year that is evenly divisible by 4
+  except every year that is evenly divisible by 100
+    unless the year is also evenly divisible by 400
+```
+
+For example, 1997 is not a leap year, but 1996 is.  1900 is not a leap
+year, but 2000 is.
+
+If your language provides a method in the standard library that does
+this look-up, pretend it doesn't exist and implement it yourself.
+
+## Notes
+
+Though our exercise adopts some very simple rules, there is more to
+learn!
+
+For a delightful, four minute explanation of the whole leap year
+phenomenon, go watch [this youtube video][video].
+
+[video]: http://www.youtube.com/watch?v=xX96xng7sAE
+
+## Getting Started
+For installation and learning resources, refer to the
+[exercism help page](http://exercism.io/languages/ocaml).
+
+## Installation
+To work on the exercises, you will need `Opam` and `Base`.  Consult
+[opam](https://opam.ocaml.org) website for instructions on how to
+install `opam` for your OS.  Once `opam` is installed open a terminal
+window and run the following command to install base:
+
+```bash
+opam install base
+```
+
+To run the tests you will need `OUnit`. Install it using `opam`:
+
+```bash
+opam install ounit
+```
+
+## Running Tests
+A Makefile is provided with a default target to compile your solution and run the tests. At the command line, type:
+
+```bash
+make
+```
+
+## Interactive Shell
+`utop` is a command line program which allows you to run Ocaml code interactively. The easiest way to install it is via opam:
+```bash
+opam install utop
+```
+Consult [utop](https://github.com/diml/utop/blob/master/README.md) for more detail.
+
+## Feedback, Issues, Pull Requests
+The [exercism/ocaml](https://github.com/exercism/ocaml) repository on
+GitHub is the home for all of the Ocaml exercises.
+
+If you have feedback about an exercise, or want to help implementing a new
+one, head over there and create an issue.  We'll do our best to help you!
+
+## Source
+
+JavaRanch Cattle Drive, exercise 3 [http://www.javaranch.com/leap.jsp](http://www.javaranch.com/leap.jsp)
+
+## Submitting Incomplete Solutions
+It's possible to submit an incomplete solution so you can see how others have completed the exercise.
+
+#+END_SRC
+
+*** OCaml Leap Solution
+#+name:ocaml-leap-solution
+#+BEGIN_SRC ocaml :tangle ocaml/leap/leap.ml :mkdirp yes
+open Base
+
+let leap_year year =
+  let year = Float.of_int year in
+  let even_div div_num =
+    if (Float.compare (Float.Parts.fractional (Float.modf div_num)) 0.) = 0 then
+      true else false in
+  let div_by_4   = even_div (year /. 4.) in
+  let div_by_100 = even_div (year /. 100.) in
+  let div_by_400 = even_div (year /. 400.) in
+  div_by_4 && ((not div_by_100) || div_by_400);;
+#+END_SRC
+
+#+name:ocaml-leap-solution-interface
+#+BEGIN_SRC ocaml :tangle ocaml/leap/leap.mli :mkdirp yes
+val leap_year: int -> bool
+#+END_SRC
+
+#+name:ocaml-leap-metadata
+#+BEGIN_SRC js :tangle ocaml/leap/.exercism/metadata.json :mkdirp yes :exports none
+{
+    "track":"ocaml",
+    "exercise":"leap",
+    "id":"e02b0d61e88c451897a35598f9023b70",
+    "url":"https://exercism.io/my/solutions/e02b0d61e88c451897a35598f9023b70",
+    "handle":"wlharvey4",
+    "is_requester":true,
+    "auto_approve":false
+}
+#+END_SRC
+
+#+name:ocaml-leap-solution-submit
+#+BEGIN_SRC sh
+exercism submit ocaml/leap/leap.ml
+#+END_SRC
+
+#+RESULTS: ocaml-leap-solution-submit
+: https://exercism.io/my/solutions/e02b0d61e88c451897a35598f9023b70
+
+*** OCaml Leap Tests
+#+name:ocaml-leap-tests
+#+BEGIN_SRC ocaml :tangle ocaml/leap/test.ml :mkdirp yes
+open OUnit2
+open Leap
+
+let ae exp got _test_ctxt = assert_equal exp got ~printer:string_of_bool
+
+let tests = [
+  "year not divisible by 4: common year" >::
+    ae false (leap_year 2015);
+  "year divisible by 4, not divisible by 100: leap year" >::
+    ae true (leap_year 1996);
+  "year divisible by 100, not divisible by 400: common year" >::
+    ae false (leap_year 2100);
+  "year divisible by 400: leap year" >::
+    ae true (leap_year 2000);
+  "year divisible by 200, not divisible by 400: common year" >::
+    ae false (leap_year 1800);
+]
+
+let () =
+  run_test_tt_main ("leap tests" >::: tests)
+#+END_SRC
+
+#+name:ocaml-leap-makefile
+#+BEGIN_SRC make :tangle ocaml/leap/Makefile :mkdirp yes
+default: clean test
+
+test:
+	dune runtest
+
+clean:
+	dune clean
+
+.PHONY: clean
+#+END_SRC
+
+#+name:ocaml-leap-make
+#+BEGIN_SRC sh :dir ocaml/leap :results output :exports results
+make 2>&1
+#+END_SRC
+
+*** Ocaml Leap Dune Project
+#+name:ocaml-leap-dune
+#+BEGIN_SRC ocaml :tangle ocaml/leap/dune :mkdirp yes
+(executable
+ (name test)
+ (libraries base oUnit))
+
+(alias
+  (name    runtest)
+  (deps    (:x test.exe))
+  (action  (run %{x})))
+#+END_SRC
+
+#+name:ocaml-leap-dune-project
+#+BEGIN_SRC ocaml :tangle ocaml/leap/dune-project :mkdirp yes
+(lang dune 1.1)
+(version 1.4.0)
 #+END_SRC
 * Exercism Makefile
 *Note*: Make sure to export the environment variable
