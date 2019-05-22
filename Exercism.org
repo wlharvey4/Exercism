@@ -1,8 +1,8 @@
 # -*- mode:org; fill-column:79; -*-
 #+Title:Exercism Exercises
 #+Author:Pinecone062
-#+Date:Last updated 2019-05-21 08:39
-#+Macro: version Version 0.1.5
+#+Date:Last updated 2019-05-22 00:50
+#+Macro: version Version 0.1.6
 {{{title}}} {{{version}}} {{{date}}}
 * Exercism Home
 :PROPERTIES:
@@ -1131,16 +1131,30 @@ prove ./t
 : Result: PASS
 
 * Ocaml Exercism Track
-
 ** Ocaml Getting Started
 To work on the exercises, you will need =Opam= and =Base=.  Consult [[https://opam.ocaml.org/][opam]]
-website for instructions on how to install =opam= for your OS.  Once =opam= is
-installed open a terminal window and run the following command to install
-=base=:
+website for instructions on how to install =opam= for your OS.
 
-: opam install base
+#+name:ocaml-version-info
+#+BEGIN_SRC sh :results output :exports both
+opam --version
+opam switch
+ocaml --version
+#+END_SRC
 
-To run the tests you will need OUnit. Install it using opam:
+#+RESULTS: ocaml-version-info
+: 2.0.4
+: #  switch               compiler                    description
+:    default              ocaml-base-compiler.4.07.0  default
+: →  ocaml-base-compiler  ocaml-base-compiler.4.07.1  ocaml-base-compiler
+: The OCaml toplevel, version 4.07.1
+
+Once =opam= is installed open a terminal window and run the following command
+to install =base= and =core_kernel=:
+
+: opam install base core_kernel
+
+To run the tests you will need =OUnit=.  Install it using =opam=:
 
 : opam install ounit
 
@@ -1173,6 +1187,11 @@ To run the tests you will need OUnit. Install it using opam:
    : opam install base core_kernel ounit
 
 *** Ocaml Running Tests
+Because OCaml is a compiled language you need to compile your submission and
+the test code before you can run the tests.  We use =jbuilder= to build.  Each
+folder has a =jbuild= file specifying how to build and also a Makefile which
+delegates to =jbuild=.
+
 A Makefile is provided with a default target to compile your solution and run
 the tests.  At the command line, type:
 
@@ -1185,12 +1204,46 @@ interactively.  The easiest way to install it is via =opam=:
 : opam install utop
 
 Consult utop for more detail.
+*** Ocaml Learning Resources
+
+- [[http://caml.inria.fr/pub/docs/manual-ocaml/libref/index.html][Documentation for the Standard Library]]
+
+- [[https://ocaml.janestreet.com/][OCaml at JaneStreet]]
+
+- [[https://ocaml.janestreet.com/ocaml-core/latest/doc/core/index.html][Documentation for the Core Library]]
+
+- [[http://caml.inria.fr/resources/doc/guides/guidelines.en.html][Caml programming guidelines]]
+
+
+OCaml's documentation is spread over multiple projects and can be hard to find
+because there is what is sometimes called the "standard" library (the rather
+minimal library that comes with the compiler) and a "Core" library (a separate
+project by Jane Street that aims to provide a more complete and consistent
+standard library).
+
+Confusingly the standard library is sometimes referred to as the "core" library
+(though rarely as the Core library).
+
+The Core library from Jane Street is required for a few exercises, but can be
+useful for all.  It's divided into three
+- Base
+- Core_kernel
+- Core
+
+
+each extending the previous.  Base is all you'll need for most exercises, but
+for a few (using dates for instance, Core_kernel is needed).  To use Core, put
+~open Base~ or ~open Core_kernel~ at the top of your code.
+
+There are some subtle and not so subtle differences between the standard
+library =List= module and Core's =List=.  A piece of advice: focus on the Core
+library and ignore the standard library unless you really can't find what you
+need in Core.
 
 ** Ocaml Hello World
-
 *** Ocaml Hello World Download
 #+name:ocaml-hello-world-download
-#+BEGIN_SRC sh :results output :exports none
+#+BEGIN_SRC sh :results output :exports code
 exercism download --exercise=hello-world --track=ocaml
 #+END_SRC
 
@@ -1214,13 +1267,168 @@ The objectives are simple:
 
 If everything goes well, you will be ready to fetch your first real exercise.
 
+*** Ocaml Hello World README
+#+name:ocaml-hello-world-README
+#+BEGIN_SRC markdown :tangle ocaml/hello-world/README.md
+# Hello World
+
+The classical introductory exercise. Just say "Hello, World!".
+
+["Hello, World!"](http://en.wikipedia.org/wiki/%22Hello,_world!%22_program) is
+the traditional first program for beginning programming in a new language
+or environment.
+
+The objectives are simple:
+
+- Write a function that returns the string "Hello, World!".
+- Run the test suite and make sure that it succeeds.
+- Submit your solution and check it at the website.
+
+If everything goes well, you will be ready to fetch your first real exercise.
+
+## Getting Started
+For installation and learning resources, refer to the
+[exercism help page](http://exercism.io/languages/ocaml).
+
+## Installation
+To work on the exercises, you will need `Opam` and `Base`. Consult
+[opam](https://opam.ocaml.org) website for instructions on how to
+install `opam` for your OS. Once `opam` is installed open a terminal
+window and run the following command to install base:
+
+```bash
+opam install base
+```
+
+To run the tests you will need `OUnit`. Install it using `opam`:
+
+```bash
+opam install ounit
+```
+
+## Running Tests
+A Makefile is provided with a default target to compile your solution
+and run the tests. At the command line, type:
+
+```bash
+make
+```
+
+## Interactive Shell
+`utop` is a command line program which allows you to run Ocaml code
+interactively. The easiest way to install it is via opam:
+
+```bash
+opam install utop
+```
+Consult [utop](https://github.com/diml/utop/blob/master/README.md) for more detail.
+
+## Feedback, Issues, Pull Requests
+The [exercism/ocaml](https://github.com/exercism/ocaml) repository on
+GitHub is the home for all of the Ocaml exercises.
+
+If you have feedback about an exercise, or want to help implementing a new
+one, head over there and create an issue.  We'll do our best to help you!
+
+## Source
+
+This is an exercise to introduce users to using Exercism
+[http://en.wikipedia.org/wiki/%22Hello,_world!%22_program](http://en.wikipedia.org/wiki/%22Hello,_world!%22_program)
+
+## Submitting Incomplete Solutions
+It's possible to submit an incomplete solution so you can see how
+others have completed the exercise.
+#+END_SRC
+
+*** Ocaml Hello World Solution
+#+name:ocaml-hello-world-solution
+#+BEGIN_SRC ocaml :tangle ocaml/hello-world/hello_world.ml :mkdirp yes
+let hello = "Hello, World!"
+#+END_SRC
+
+#+name:ocaml-hello-world-solution-interface
+#+BEGIN_SRC ocaml :tangle ocaml/hello-world/hello_world.mli :mkdirp yes
+(*
+   Returns "Hello, World!"
+*)
+val hello: string
+#+END_SRC
+
+*** Ocaml Hello World Tests
+#+name:ocaml-hello-world-tests
+#+BEGIN_SRC ocaml :tangle ocaml/hello-world/test.ml :mkdirp yes
+open OUnit2
+open Hello_world
+
+let ae exp got _test_ctxt = assert_equal ~printer:(fun x -> x) exp got
+
+let tests = [
+     "Say Hi!" >:: ae "Hello, World!" hello;
+]
+
+let () =
+  run_test_tt_main ("Hello World tests" >::: tests)
+#+END_SRC
+
+{{{heading(Testing Ocaml Hello World)}}}
+
+#+name:ocaml-hello-world-run-tests
+#+BEGIN_SRC sh :dir ocaml/hello-world :results output :exports results
+echo Running Ocaml tests now...
+make 2>&1
+#+END_SRC
+
+#+RESULTS: ocaml-hello-world-run-tests
+: Running Ocaml tests now...
+: make clean...
+: dune clean
+: make test...
+: dune runtest
+:         test alias runtest
+: .
+: Ran: 1 tests in: 0.11 seconds.
+: OK
+
+*** Ocaml Hello World Dune Project
+#+name:ocaml-hello-world-dune
+#+BEGIN_SRC ocaml :tangle ocaml/hello-world/dune :mkdirp yes
+(executable
+ (name test)
+ (libraries base oUnit))
+
+(alias
+  (name    runtest)
+  (deps    (:x test.exe))
+  (action  (run %{x})))
+#+END_SRC
+
+#+name:ocaml-hello-world-dune-project
+#+BEGIN_SRC ocaml :tangle ocaml/hello-world/dune-project :mkdirp yes
+(lang dune 1.1)
+#+END_SRC
+
+*** Ocaml Hello World Makefile
+#+name:ocaml-hello-world-makefile
+#+BEGIN_SRC make :tangle ocaml/hello-world/Makefile :mkdirp yes
+default: clean test
+
+test:
+	@echo make test...
+	dune runtest
+
+clean:
+	@echo make clean...
+	dune clean
+
+.PHONY: clean
+#+END_SRC
 * Exercism Makefile
 *Note*: Make sure to export the environment variable
  @@texinfo:@env{PROGRAMMING}@@.
 #+name:Exercism-Makefile
 #+begin_src makefile :tangle Makefile
 BASE_DIR := $(PROGRAMMING)/Languages/Exercism
-LANGUAGES = python perl5
+LANGUAGES = python perl5 ocaml
 HTML_SRC = *.html
 TEXINFO_SRC = *.{texi,info,pdf}
 DVI_SRC = *.{aux,log,toc}
