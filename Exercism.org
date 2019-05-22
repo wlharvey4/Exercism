@@ -1,8 +1,8 @@
 # -*- mode:org; fill-column:79; -*-
 #+Title:Exercism Exercises
 #+Author:Pinecone062
-#+Date:Last updated 2019-05-22 00:50
-#+Macro: version Version 0.1.6
+#+Date:Last updated 2019-05-22 00:59
+#+Macro: version Version 0.1.7
 {{{title}}} {{{version}}} {{{date}}}
 * Exercism Home
 :PROPERTIES:
@@ -1352,6 +1352,19 @@ let hello = "Hello, World!"
    Returns "Hello, World!"
 *)
 val hello: string
+#+END_SRC
+
+#+name:ocaml-hello-world-metadata
+#+BEGIN_SRC js :tangle ocaml/hello-world/.exercism/metadata.json :mkdirp yes :exports none
+{
+    "track":"ocaml",
+    "exercise":"hello-world",
+    "id":"87d3187606a5489eb60b63cbf0ec9af4",
+    "url":"https://exercism.io/my/solutions/87d3187606a5489eb60b63cbf0ec9af4",
+    "handle":"wlharvey4",
+    "is_requester":true,
+    "auto_approve":true
+}
 #+END_SRC
 
 *** Ocaml Hello World Tests
