@@ -1,8 +1,8 @@
 # -*- mode:org; fill-column:79; -*-
 #+Title:Exercism Exercises
 #+Author:Pinecone062
-#+Date:Last updated 2019-05-22 13:04
-#+Macro: version Version 0.1.8
+#+Date:Last updated 2019-05-22 21:02
+#+Macro: version Version 0.1.9
 {{{title}}} {{{version}}} {{{date}}}
 * Exercism Home
 :PROPERTIES:
@@ -1132,8 +1132,8 @@ prove ./t
 
 * OCaml Exercism Track
 ** OCaml Getting Started
-To work on the exercises, you will need =Opam= and =Base=.  Consult [[https://opam.ocaml.org/][opam]]
-website for instructions on how to install =opam= for your OS.
+To work on the exercises, you will need [[https://opam.ocaml.org][Opam]] and [[https://opensource.janestreet.com/base/][Base]].  Consult [[https://opam.ocaml.org/doc/Install.html][opam]] website
+for instructions on how to install =opam= for your OS.
 
 #+name:ocaml-version-info
 #+BEGIN_SRC sh :results output :exports both
@@ -1206,11 +1206,13 @@ interactively.  The easiest way to install it is via =opam=:
 Consult utop for more detail.
 *** OCaml Learning Resources
 
-- [[http://caml.inria.fr/pub/docs/manual-ocaml/libref/index.html][Documentation for the Standard Library]]
+- [[http://caml.inria.fr/pub/docs/manual-ocaml/libref/index.html][Documentation for the OCaml Standard Library]]
 
-- [[https://ocaml.janestreet.com/][OCaml at JaneStreet]]
+- [[https://ocaml.janestreet.com/][OCaml at JaneStreet]] and [[https://opensource.janestreet.com][Open Source Jane Street]]
 
-- [[https://ocaml.janestreet.com/ocaml-core/latest/doc/core/index.html][Documentation for the Core Library]]
+- [[https://opensource.janestreet.com/base/][Documentation for the Jane Street Base Library]]
+
+- [[https://opensource.janestreet.com/core/][Documentation for the Jane Street Core Library]]
 
 - [[http://caml.inria.fr/resources/doc/guides/guidelines.en.html][Caml programming guidelines]]
 
@@ -1534,14 +1536,10 @@ It's possible to submit an incomplete solution so you can see how others have co
 open Base
 
 let leap_year year =
-  let year = Float.of_int year in
-  let even_div div_num =
-    if (Float.compare (Float.Parts.fractional (Float.modf div_num)) 0.) = 0 then
-      true else false in
-  let div_by_4   = even_div (year /. 4.) in
-  let div_by_100 = even_div (year /. 100.) in
-  let div_by_400 = even_div (year /. 400.) in
-  div_by_4 && ((not div_by_100) || div_by_400);;
+  let div4   = year %   4 = 0 in
+  let div100 = year % 100 = 0 in
+  let div400 = year % 400 = 0 in
+  div4 && not (div100 && not div400);;
 #+END_SRC
 
 #+name:ocaml-leap-solution-interface
@@ -1612,6 +1610,14 @@ clean:
 #+BEGIN_SRC sh :dir ocaml/leap :results output :exports results
 make 2>&1
 #+END_SRC
+
+#+RESULTS: ocaml-leap-make
+: dune clean
+: dune runtest
+:         test alias runtest
+: .....
+: Ran: 5 tests in: 0.10 seconds.
+: OK
 
 *** Ocaml Leap Dune Project
 #+name:ocaml-leap-dune
