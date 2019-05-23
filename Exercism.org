@@ -1,8 +1,8 @@
 # -*- mode:org; fill-column:79; -*-
 #+Title:Exercism Exercises
 #+Author:Pinecone062
-#+Date:Last updated 2019-05-23 12:40
-#+Macro: version Version 0.1.12
+#+Date:Last updated 2019-05-23 12:47
+#+Macro: version Version 0.1.13
 {{{title}}} {{{version}}} {{{date}}}
 * Exercism Home
 :PROPERTIES:
@@ -619,6 +619,15 @@ exercism download --exercise=two-fer --track=javascript
 #+RESULTS: javascript-two-fer-download
 : /Users/pine/Dev/Programming/Languages/Exercism/javascript/two-fer
 
+When ready to submit working code:
+#+name:javascript-two-fer-submit
+#+3begin_src sh :dir javascript/two-fer :results output
+exercism submit ./two-fer.js
+#+end_src
+
+#+RESULTS: javascript-two-fer-submit
+:     https://exercism.io/my/solutions/0d6a508dc6cb4f2282e2cfc2f5274acf
+
 *** JavaScript Two Fer Files
 **** JS Two Fer README
 #+name:javascript-two-fer-readme
@@ -800,10 +809,7 @@ describe('twoFer()', () => {
 **** JS Two Fer Solution
 #+name:javascript-two-fer-solution
 #+begin_src js :tangle javascript/two-fer/two-fer.js :mkdirp yes
-export const twoFer = (name) => {
-    if (typeof name == 'undefined') {
-        name = 'you';
-    }
+export const twoFer = (name="you") => {
     return (`One for ${name}, one for me.`);
 }
 #+end_src
@@ -839,15 +845,15 @@ $ eslint . && jest --no-cache ./*
 PASS ./two-fer.spec.js
   twoFer()
     ✓ no name given (3ms)
-    ✓ a name given
+    ✓ a name given (1ms)
     ✓ another name given
 
 Test Suites: 1 passed, 1 total
 Tests:       3 passed, 3 total
 Snapshots:   0 total
-Time:        0.845s
+Time:        0.856s
 Ran all test suites matching /.\/README.md|.\/babel.config.js|.\/node_modules|.\/package.json|.\/two-fer.js|.\/two-fer.spec.js|.\/yarn.lock/i.
-Done in 1.92s.
+Done in 1.95s.
 #+end_example
 
 * Python Exercism Track
