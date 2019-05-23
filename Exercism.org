@@ -1,13 +1,14 @@
 # -*- mode:org; fill-column:79; -*-
 #+Title:Exercism Exercises
 #+Author:Pinecone062
-#+Date:Last updated 2019-05-22 22:13
-#+Macro: version Version 0.1.10
+#+Date:Last updated 2019-05-23 11:27
+#+Macro: version Version 0.1.11
 {{{title}}} {{{version}}} {{{date}}}
 * Exercism Home
 :PROPERTIES:
 :unnumbered: t
 :END:
+- https://exercism.io
 - https://github.com/exercism
 
 ** Exercism Readme
@@ -104,6 +105,505 @@ This code extracts all of the Exercism files to disk upon Export.
 #+BEGIN_SRC emacs-lisp :results output :exports both
 (org-babel-tangle-file "Exercism.org")
 #+END_SRC
+* JavaScript Exercism Track
+- https://exercism.io/my/tracks/javascript
+** Installing JavaScript
+Install [[https://nodejs.org/en/][Node.js]] from its [[https://nodejs.org/en/download/][Downloads]] page
+
+or
+
+from a [[https://nodejs.org/en/download/package-manager/][package manager]].
+** Required Tools for the JavaScript Track
+Each assignment needs some tools to run the tests.  *NOTE* that they can be
+installed by running the following command from within each assignment
+directory:
+
+: npm install
+
+- [[https://facebook.github.io/jest/][Jest]]: a test runner based on Jasmine; to install globally for CLI usage:
+
+  #+begin_example
+  yarn global add jest
+
+  success Installed "jest@24.8.0" with binaries:
+      - jest
+  ✨  Done in 13.66s.
+  #+end_example
+- [[https://github.com/babel/babel][Babel]] and [[https://babeljs.io][Babel.js]]: to transpile ECMAScript 2015 code to ECMAScript 5
+
+  While you can install Babel CLI globally on your machine, it's much better to
+  install it locally project by project, because:
+
+  1. Different projects on the same machine can depend on different versions of
+     Babel allowing you to update one at a time.
+
+  2. It means you do not have an implicit dependency on the environment you are
+     working in.  Making your project far more portable and easier to setup.
+
+  {{{heading(Install Babel CLI Locally)}}}
+
+  Install Babel CLI locally by running:
+  : yarn add --dev @babel/core @babel/cli
+
+  If you do not have a ~package.json~, create one before installing.  This will
+  ensure proper interaction with the ~npx~ command.
+
+  After that finishes installing, your ~package.json~ file should include:
+
+  #+begin_example
+    {
+      "devDependencies": {
+  +     "@babel/cli": "^7.0.0",
+  +     "@babel/core": "^7.0.0"
+      }
+    }
+  #+end_example
+
+  {{{heading(Setup Babel build Scripts)}}}
+
+  Instead of running Babel directly from the command line we're going to put
+  our commands in ~npm~ scripts which will use our local version.  Add a
+  =scripts= field to your ~package.json~ and put the ~babel~ command inside
+  there as =build=.
+
+  #+begin_example
+    {
+      "name": "my-project",
+      "version": "1.0.0",
+  +   "scripts": {
+  +     "build": "babel src -d lib"
+  +   },
+      "devDependencies": {
+        "babel-cli": "^6.0.0"
+      }
+    }
+  #+end_example
+
+  From your terminal you can run:
+  : yarn run build
+
+  This will run Babel the same way as before and the output will be present in
+  ~lib~ directory, only now we are using a local copy.
+
+  Alternatively, you can reference the babel cli inside of node_modules.
+  : ./node_modules/.bin/babel src -d lib
+
+  {{{heading(Enable the env Plugin and Create a babelrc File)}}}
+
+  You've configured Babel but you haven't made it actually do anything.  Create
+  a ~.babelrc~ config in your project root and enable some plugins.  To start,
+  you can use the =env= preset, which enables transforms for ES2015+.
+  : yarn add @babel/preset-env --dev
+
+  In order to enable the preset you have to define it in your ~.babelrc~ file,
+  like this:
+
+  #+begin_example
+  {
+    "presets": ["@babel/preset-env"]
+  }
+  #+end_example
+
+- [[http://eslint.org/][ESLint]] (optional): to perform several static analysis and coding style checks
+  to your JavaScript code.
+
+  {{{heading(Installing ESLint Locally)}}}
+
+  If you want to include ESLint as part of your project’s build system, we
+  recommend installing it locally.  You can do so using ~yarn~:
+
+  : yarn add eslint --dev
+
+  You should then setup a configuration file:
+
+  : ./node_modules/.bin/eslint --init
+
+  After that, you can run ESLint in your project’s root directory like this:
+
+  : ./node_modules/.bin/eslint yourfile.js
+
+  Instead of navigating to ~./node_modules/.bin/~ you may also use ~npx~ to run
+  eslint:
+
+  : npx eslint
+
+  Any plugins or shareable configs that you use must also be installed locally
+  to work with a locally-installed ESLint.
+
+  {{{heading(ESLine Configuration)}}}
+
+  After running ~eslint --init~, you’ll have an ~.eslintrc~ file in your
+  directory.  In it, you’ll see some rules configured like this:
+
+  #+begin_example
+   # .eslintrc
+   {
+       "rules": {
+           "semi": ["error", "always"],
+           "quotes": ["error", "double"]
+       }
+   }
+  #+end_example
+
+  The names "semi" and "quotes" are the names of rules in ESLint.  The first
+  value is the error level of the rule and can be one of these values:
+
+  - "off" or 0 - turn the rule off
+
+  - "warn" or 1 - turn the rule on as a warning (doesn’t affect exit code)
+
+  - "error" or 2 - turn the rule on as an error (exit code will be 1)
+
+  Your ~.eslintrc~ configuration file will also include the line:
+
+  : "extends": "eslint:recommended"
+
+  Because of this line, all of the rules marked “OK” on the rules page will be
+  turned on.  ESLint will not lint your code unless you extend from a shared
+  configuration or explicitly turn rules on in your configuration.
+** Running the Tests
+Execute the tests with:
+
+: yarn run lint-test
+
+You can also run Jest in "watch" mode, which will re-run your tests
+automatically when you save changes to the code or test module:
+
+: yarn run watch
+
+{{{heading(Understanding Skip Tests)}}}
+
+The skip method instructs the test suite to not run a test, this function could
+be used also under the aliases:
+
+- ~it.skip(name, fn)~
+- ~xit(name, fn)~
+- ~xtest(name, fn)~
+
+
+They are skipped so as to enable users to concentrate on one test at a time and
+enable one by one as they evolve the solution.
+
+To enable skipping, change ~xtest~ to ~test~.
+
+#+begin_src js
+test('title cased phrases', () => {
+  expect(Acronyms.parse('Portable Network Graphics')).toEqual('PNG');
+});
+#+end_src
+
+{{{heading(Making Your First JavaScript 2015 Module)}}}
+
+Usually, tests on this track will load your implementation by importing it as a
+JavaScript module:
+
+: import { Bob } from './bob.js';
+
+You just need to export your implementation from the referenced file, bob.js:
+
+#+begin_src js
+export class Bob {
+  hey(message) {
+    //
+    // Your solution to the exercise goes here
+    //
+  }
+}
+#+end_src
+
+To make it easier to get started, there is a skeleton JavaScript file in the
+directory for the first exercise.
+
+#+caption:Skeleton JavaScript File
+#+name:javascript-skeleton-file
+#+begin_src js
+//
+// This is only a SKELETON file for the 'Hello World' exercise. It's been provided as a
+// convenience to get you started writing code faster.
+//
+
+export const hello = () => {
+  //
+  // YOUR CODE GOES HERE
+  //
+};
+
+#+end_src
+
+** JavaScript Hello World
+*** JavaScript Hello World Introduction
+The objectives are simple:
+
+- Write a function that returns the string "Hello, World!".
+- Run the test suite and make sure that it succeeds.
+- Submit your solution and check it at the website.
+
+
+{{{heading(Download the Exercise)}}}
+
+This step is done only once for initial setup; thereafter, this Org file will
+install the project automatically upon an export.
+
+#+name:javascript-hello-world-download
+#+begin_src sh :results output :exports code
+exercism download --exercise=hello-world --track=javascript
+#+end_src
+
+#+RESULTS: javascript-hello-world-download
+: /Users/pine/Dev/Programming/Languages/Exercism/javascript/hello-world
+
+{{{heading(Submit the Working Code)}}}
+
+This step should be done manually after this Org file correctly installs the
+project and successfully runs the test.
+
+#+name:javascript-hello-world-submit
+#+begin_src sh :dir javascript/hello-world :results output
+exercism submit $PWD/hello-world.js
+#+end_src
+
+*** JavaScript Hello World Setup and Tests
+1. Go through the setup instructions for Javascript to install the necessary
+   dependencies:
+   - https://exercism.io/tracks/javascript/installation
+
+2. Install assignment dependencies:
+   This step will run automatically upon an export of this Org file.
+
+   #+name:javascript-hello-world-install
+   #+begin_src sh :dir javascript/hello-world :results output :exports both
+   yarn install
+   #+end_src
+
+   #+RESULTS: javascript-hello-world-install
+   : yarn install v1.16.0
+   : info No lockfile found.
+   : [1/4] Resolving packages...
+   : [2/4] Fetching packages...
+   : [3/4] Linking dependencies...
+   : [4/4] Building fresh packages...
+   : success Saved lockfile.
+   : Done in 9.77s.
+
+3. After completing the code challenge, Execute the tests.
+
+   This step will also run automatically upon an export of this Org file.
+
+   #+name:javascript-hello-world-run-lint-test
+   #+begin_src sh :dir javascript/hello-world :results output :exports both
+   yarn lint-test 2>&1
+   #+end_src
+
+   #+RESULTS: javascript-hello-world-run-lint-test
+   #+begin_example
+   yarn run v1.16.0
+   $ eslint . && jest --no-cache ./* 
+   PASS ./hello-world.spec.js
+     Hello World
+       ✓ says hello (3ms)
+
+   Test Suites: 1 passed, 1 total
+   Tests:       1 passed, 1 total
+   Snapshots:   0 total
+   Time:        0.842s
+   Ran all test suites matching /.\/README.md|.\/babel.config.js|.\/hello-world.js|.\/hello-world.spec.js|.\/node_modules|.\/package.json|.\/yarn.lock/i.
+   Done in 1.91s.
+   #+end_example
+
+   In the test suites all tests but the first have been skipped.  Once you get
+   a test passing, you can enable the next one by changing ~xtest~ to ~test~.
+
+*** JavaScript Hello World Files
+**** JS Hello World README
+
+#+name:javascript-hello-world-readme
+#+begin_src markdown :tangle javascript/hello-world/README.md :mkdirp yes
+# Hello World
+
+The classical introductory exercise. Just say "Hello, World!".
+
+["Hello, World!"](http://en.wikipedia.org/wiki/%22Hello,_world!%22_program) is
+the traditional first program for beginning programming in a new language
+or environment.
+
+The objectives are simple:
+
+- Write a function that returns the string "Hello, World!".
+- Run the test suite and make sure that it succeeds.
+- Submit your solution and check it at the website.
+
+If everything goes well, you will be ready to fetch your first real exercise.
+
+## Setup
+
+Go through the setup instructions for Javascript to install the necessary
+dependencies:
+
+[https://exercism.io/tracks/javascript/installation](https://exercism.io/tracks/javascript/installation)
+
+## Requirements
+
+Install assignment dependencies:
+
+```bash
+$ npm install
+```
+
+## Making the test suite pass
+
+Execute the tests with:
+
+```bash
+$ npm test
+```
+
+In the test suites all tests but the first have been skipped.
+
+Once you get a test passing, you can enable the next one by changing `xtest` to
+`test`.
+
+## Source
+
+This is an exercise to introduce users to using Exercism [http://en.wikipedia.org/wiki/%22Hello,_world!%22_program](http://en.wikipedia.org/wiki/%22Hello,_world!%22_program)
+
+## Submitting Incomplete Solutions
+
+It's possible to submit an incomplete solution so you can see how others have
+completed the exercise.
+#+end_src
+
+**** JS Hello World package.json
+
+#+name:javascript-hello-world-package.json
+#+begin_src js :tangle javascript/hello-world/package.json :mkdirp yes
+{
+  "name": "exercism-javascript",
+  "version": "0.0.0",
+  "description": "Exercism exercises in Javascript.",
+  "author": "Katrina Owen",
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/exercism/javascript"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.2.3",
+    "@babel/core": "^7.4.0",
+    "@babel/preset-env": "^7.4.2",
+    "babel-eslint": "^10.0.1",
+    "babel-jest": "^24.5.0",
+    "eslint": "^5.15.3",
+    "eslint-plugin-import": "^2.16.0",
+    "jest": "^24.5.0"
+  },
+  "jest": {
+    "modulePathIgnorePatterns": [
+      "package.json"
+    ]
+  },
+  "scripts": {
+    "test": "jest --no-cache ./*",
+    "watch": "jest --no-cache --watch ./*",
+    "lint": "eslint .",
+    "lint-test": "eslint . && jest --no-cache ./* "
+  },
+  "license": "MIT",
+  "dependencies": {}
+}
+#+end_src
+
+**** JS Hello World Babel config
+
+#+name:javascript-hello-world-babel.config.js
+#+begin_src js :tangle javascript/hello-world/babel.config.js :mkdirp yes
+module.exports = {
+  presets: [
+    [
+      '@babel/env',
+      {
+        targets: {
+          node: 'current',
+        },
+        useBuiltIns: false,
+      },
+
+    ],
+  ],
+};
+#+end_src
+
+**** JS Hello World ESLint config
+
+#+name:javascript-hello-world-eslint-config
+#+begin_src js :tangle javascript/hello-world/.eslintrc :mkdirp yes
+{
+  "root": true,
+  "parser": "babel-eslint",
+  "parserOptions": {
+    "ecmaVersion": 7,
+    "sourceType": "module"
+  },
+  "env": {
+    "es6": true,
+    "node": true,
+    "jest": true
+  },
+  "extends": [
+    "eslint:recommended",
+    "plugin:import/errors",
+    "plugin:import/warnings"
+  ],
+  "rules": {
+    "linebreak-style": "off",
+
+    "import/extensions": "off",
+    "import/no-default-export": "off",
+    "import/no-unresolved": "off",
+    "import/prefer-default-export": "off"
+  }
+}
+#+end_src
+
+**** JS Hello World Jest Spec
+
+#+name:javascript-hello-world-spec
+#+begin_src js :tangle javascript/hello-world/hello-world.spec.js :mkdirp yes
+import { hello } from './hello-world';
+
+describe('Hello World', () => {
+  test('says hello', () => {
+    expect(hello()).toEqual('Hello, World!');
+  });
+});
+#+end_src
+
+**** JS Hello World Solution
+
+#+name:javascript-hello-world-solution
+#+begin_src js :tangle javascript/hello-world/hello-world.js :mkdirp yes
+//
+// This is only a SKELETON file for the 'Hello World' exercise. It's been provided as a
+// convenience to get you started writing code faster.
+//
+
+export const hello = () => {
+    return "Hello, World!";
+};
+#+end_src
+
+#+name:javascript-hello-world-exercism-metadata
+#+begin_src js :tangle javascript/hello-world/.exercism/metadata.json :mkdirp yes :exports none
+{
+    "track":"javascript",
+    "exercise":"hello-world",
+    "id":"3e83e95453cb4b2e8d0a68027687fe72",
+    "url":"https://exercism.io/my/solutions/3e83e95453cb4b2e8d0a68027687fe72",
+    "handle":"wlharvey4",
+    "is_requester":true,
+    "auto_approve":true
+}
+#+end_src
+
 * Python Exercism Track
 - http://exercism.io/languages/python
 - https://github.com/exercism/python
@@ -1271,7 +1771,7 @@ If everything goes well, you will be ready to fetch your first real exercise.
 
 *** OCaml Hello World README
 #+name:ocaml-hello-world-README
-#+BEGIN_SRC markdown :tangle ocaml/hello-world/README.md
+#+BEGIN_SRC markdown :tangle ocaml/hello-world/README.md :mkdirp yes
 # Hello World
 
 The classical introductory exercise. Just say "Hello, World!".
@@ -1642,7 +2142,7 @@ make 2>&1
 #+name:Exercism-Makefile
 #+begin_src makefile :tangle Makefile
 BASE_DIR := $(shell cat ~/.config/exercism/user.json | sed -n '/workspace/ s///p' | tr -d '": ')
-LANGUAGES = python perl5 ocaml
+LANGUAGES = javascript python perl5 ocaml
 HTML_SRC = *.html
 TEXINFO_SRC = *.{texi,info,pdf}
 DVI_SRC = *.{aux,log,toc}
