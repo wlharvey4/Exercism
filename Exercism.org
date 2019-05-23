@@ -1,8 +1,8 @@
 # -*- mode:org; fill-column:79; -*-
 #+Title:Exercism Exercises
 #+Author:Pinecone062
-#+Date:Last updated 2019-05-23 11:27
-#+Macro: version Version 0.1.11
+#+Date:Last updated 2019-05-23 12:40
+#+Macro: version Version 0.1.12
 {{{title}}} {{{version}}} {{{date}}}
 * Exercism Home
 :PROPERTIES:
@@ -352,16 +352,6 @@ exercism download --exercise=hello-world --track=javascript
 #+RESULTS: javascript-hello-world-download
 : /Users/pine/Dev/Programming/Languages/Exercism/javascript/hello-world
 
-{{{heading(Submit the Working Code)}}}
-
-This step should be done manually after this Org file correctly installs the
-project and successfully runs the test.
-
-#+name:javascript-hello-world-submit
-#+begin_src sh :dir javascript/hello-world :results output
-exercism submit $PWD/hello-world.js
-#+end_src
-
 *** JavaScript Hello World Setup and Tests
 1. Go through the setup instructions for Javascript to install the necessary
    dependencies:
@@ -412,6 +402,19 @@ exercism submit $PWD/hello-world.js
 
    In the test suites all tests but the first have been skipped.  Once you get
    a test passing, you can enable the next one by changing ~xtest~ to ~test~.
+
+4. Submit Passing code to Exercism
+
+  This step should be done manually after this Org file correctly installs the
+  project and successfully runs the test.
+
+  #+name:javascript-hello-world-submit
+  #+begin_src sh :dir javascript/hello-world :results output
+  exercism submit $PWD/hello-world.js
+  #+end_src
+
+  #+RESULTS: javascript-hello-world-submit
+  :     https://exercism.io/my/solutions/3e83e95453cb4b2e8d0a68027687fe72
 
 *** JavaScript Hello World Files
 **** JS Hello World README
@@ -603,6 +606,249 @@ export const hello = () => {
     "auto_approve":true
 }
 #+end_src
+
+** JavaScript Two Fer
+- https://exercism.io/my/solutions/0d6a508dc6cb4f2282e2cfc2f5274acf
+
+To download the code manually:
+#+name:javascript-two-fer-download
+#+begin_src sh :results output
+exercism download --exercise=two-fer --track=javascript
+#+end_src
+
+#+RESULTS: javascript-two-fer-download
+: /Users/pine/Dev/Programming/Languages/Exercism/javascript/two-fer
+
+*** JavaScript Two Fer Files
+**** JS Two Fer README
+#+name:javascript-two-fer-readme
+#+begin_src markdown :tangle javascript/two-fer/README.md :mkdirp yes
+# Two Fer
+
+`Two-fer` or `2-fer` is short for two for one. One for you and one for me.
+
+Given a name, return a string with the message:
+
+```text
+One for X, one for me.
+```
+
+Where X is the given name.
+
+However, if the name is missing, return the string:
+
+```text
+One for you, one for me.
+```
+
+Here are some examples:
+
+|Name    |String to return 
+|:-------|:------------------
+|Alice   |One for Alice, one for me. 
+|Bob     |One for Bob, one for me.
+|        |One for you, one for me.
+|Zaphod  |One for Zaphod, one for me.
+
+## Setup
+
+Go through the setup instructions for Javascript to install the necessary
+dependencies:
+
+[https://exercism.io/tracks/javascript/installation](https://exercism.io/tracks/javascript/installation)
+
+## Requirements
+
+Install assignment dependencies:
+
+```bash
+$ npm install
+```
+
+## Making the test suite pass
+
+Execute the tests with:
+
+```bash
+$ npm test
+```
+
+In the test suites all tests but the first have been skipped.
+
+Once you get a test passing, you can enable the next one by changing `xtest` to
+`test`.
+
+## Source
+
+[https://github.com/exercism/problem-specifications/issues/757](https://github.com/exercism/problem-specifications/issues/757)
+
+## Submitting Incomplete Solutions
+
+It's possible to submit an incomplete solution so you can see how others have
+completed the exercise.
+#+end_src
+
+**** JS Two Fer Package config
+#+name:javascript-two-fer-package-config
+#+begin_src js :tangle javascript/two-fer/package.json :mkdirp yes
+{
+  "name": "exercism-javascript",
+  "version": "0.0.0",
+  "description": "Exercism exercises in Javascript.",
+  "author": "Katrina Owen",
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/exercism/javascript"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.2.3",
+    "@babel/core": "^7.4.0",
+    "@babel/preset-env": "^7.4.2",
+    "babel-eslint": "^10.0.1",
+    "babel-jest": "^24.5.0",
+    "eslint": "^5.15.3",
+    "eslint-plugin-import": "^2.16.0",
+    "jest": "^24.5.0"
+  },
+  "jest": {
+    "modulePathIgnorePatterns": [
+      "package.json"
+    ]
+  },
+  "scripts": {
+    "test": "jest --no-cache ./*",
+    "watch": "jest --no-cache --watch ./*",
+    "lint": "eslint .",
+    "lint-test": "eslint . && jest --no-cache ./* "
+  },
+  "license": "MIT",
+  "dependencies": {}
+}
+#+end_src
+
+**** JS Two Fer Babel config
+#+name:javascript-two-fer-babel-config
+#+begin_src js :tangle javascript/two-fer/babel.config.js :mkdirp yes
+module.exports = {
+  presets: [
+    [
+      '@babel/env',
+      {
+        targets: {
+          node: 'current',
+        },
+        useBuiltIns: false,
+      },
+
+    ],
+  ],
+};
+#+end_src
+
+**** JS Two Fer ESLint config
+#+name:javascript-two-fer-eslint-config
+#+begin_src js :tangle javascript/two-fer/.eslintrc :mkdirp yes
+{
+  "root": true,
+  "parser": "babel-eslint",
+  "parserOptions": {
+    "ecmaVersion": 7,
+    "sourceType": "module"
+  },
+  "env": {
+    "es6": true,
+    "node": true,
+    "jest": true
+  },
+  "extends": [
+    "eslint:recommended",
+    "plugin:import/errors",
+    "plugin:import/warnings"
+  ],
+  "rules": {
+    "linebreak-style": "off",
+
+    "import/extensions": "off",
+    "import/no-default-export": "off",
+    "import/no-unresolved": "off",
+    "import/prefer-default-export": "off"
+  }
+}
+#+end_src
+
+**** JS Two Fer Test Spec
+#+name:javascript-two-fer-test-spec
+#+begin_src js :tangle javascript/two-fer/two-fer.spec.js :mkdirp yes
+import { twoFer } from './two-fer'
+
+describe('twoFer()', () => {
+  test('no name given', () => {
+    expect(twoFer()).toEqual("One for you, one for me.")
+  })
+
+  test('a name given', () => {
+    expect(twoFer("Alice")).toEqual("One for Alice, one for me.")
+  })
+
+  test('another name given', () => {
+    expect(twoFer("Bob")).toEqual("One for Bob, one for me.")
+  })
+})
+#+end_src
+
+**** JS Two Fer Solution
+#+name:javascript-two-fer-solution
+#+begin_src js :tangle javascript/two-fer/two-fer.js :mkdirp yes
+export const twoFer = (name) => {
+    if (typeof name == 'undefined') {
+        name = 'you';
+    }
+    return (`One for ${name}, one for me.`);
+}
+#+end_src
+
+#+name:javascript-two-fer-exercism-metadata
+#+begin_src js :tangle javascript/two-fer/.exercism/metadata.json :mkdirp yes :exports none
+{
+    "track":"javascript",
+    "exercise":"two-fer",
+    "id":"0d6a508dc6cb4f2282e2cfc2f5274acf",
+    "url":"https://exercism.io/my/solutions/0d6a508dc6cb4f2282e2cfc2f5274acf",
+    "handle":"wlharvey4",
+    "is_requester":true,
+    "auto_approve":false
+}
+#+end_src
+
+*** JavaScript Two Fer Installation and Testing
+#+name:javascript-two-fer-package-installation
+#+begin_src sh :dir javascript/two-fer :results output :exports both
+yarn
+#+end_src
+
+#+name:javascript-two-fer-testing
+#+begin_src sh :dir javascript/two-fer :results output :exports both
+yarn lint-test 2>&1
+#+end_src
+
+#+RESULTS: javascript-two-fer-testing
+#+begin_example
+yarn run v1.16.0
+$ eslint . && jest --no-cache ./* 
+PASS ./two-fer.spec.js
+  twoFer()
+    ✓ no name given (3ms)
+    ✓ a name given
+    ✓ another name given
+
+Test Suites: 1 passed, 1 total
+Tests:       3 passed, 3 total
+Snapshots:   0 total
+Time:        0.845s
+Ran all test suites matching /.\/README.md|.\/babel.config.js|.\/node_modules|.\/package.json|.\/two-fer.js|.\/two-fer.spec.js|.\/yarn.lock/i.
+Done in 1.92s.
+#+end_example
 
 * Python Exercism Track
 - http://exercism.io/languages/python
@@ -2166,9 +2412,11 @@ world-clean : dist-clean html-clean texinfo-clean
 #+end_src
 
 * Export Settings                                                  :noexport:
-** HTML Export
+** Options
+#+options: H:4
 #+options: html-link-use-abs-url:nil html-postamble:auto html-preamble:t
 #+options: html-scripts:t html-style:t html5-fancy:t tex:t
+** HTML Export
 #+html_doctype: html5
 #+html_container: div
 #+description:Exercises from Exercism.io Python language
