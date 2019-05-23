@@ -1,8 +1,8 @@
 # -*- mode:org; fill-column:79; -*-
 #+Title:Exercism Exercises
 #+Author:Pinecone062
-#+Date:Last updated 2019-05-22 21:02
-#+Macro: version Version 0.1.9
+#+Date:Last updated 2019-05-22 22:13
+#+Macro: version Version 0.1.10
 {{{title}}} {{{version}}} {{{date}}}
 * Exercism Home
 :PROPERTIES:
@@ -1638,11 +1638,10 @@ make 2>&1
 (version 1.4.0)
 #+END_SRC
 * Exercism Makefile
-*Note*: Make sure to export the environment variable
- @@texinfo:@env{PROGRAMMING}@@.
+
 #+name:Exercism-Makefile
 #+begin_src makefile :tangle Makefile
-BASE_DIR := $(PROGRAMMING)/Languages/Exercism
+BASE_DIR := $(shell cat ~/.config/exercism/user.json | sed -n '/workspace/ s///p' | tr -d '": ')
 LANGUAGES = python perl5 ocaml
 HTML_SRC = *.html
 TEXINFO_SRC = *.{texi,info,pdf}
