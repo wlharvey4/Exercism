@@ -1,8 +1,8 @@
 # -*- mode:org; fill-column:79; -*-
 #+Title:Exercism Exercises
 #+Author:Pinecone062
-#+Date:Last updated 2019-05-24 12:11
-#+Macro: version Version 0.1.14
+#+Date:Last updated 2019-05-24 12:28
+#+Macro: version Version 0.1.15
 {{{title}}} {{{version}}} {{{date}}}
 * Exercism Home
 :PROPERTIES:
@@ -894,17 +894,19 @@ Org file.
 exercism download --exercise=resistor-color --track=javascript
 #+end_src
 
+#+RESULTS: javascript-resistor-color-download
+: /Users/pine/Dev/Programming/Languages/Exercism/javascript/resistor-color
+
 {{{heading(Submit)}}}
 
 This step is done only once, after all the tests are passing.
 
 #+name:javascript-resistor-color-submit
 #+begin_src sh :dir javascript/resistor-color :results output
-exercism submit resister-color.js
+exercism submit resistor-color.js
 #+end_src
 
-#+RESULTS: javascript-resistor-color-download
-: /Users/pine/Dev/Programming/Languages/Exercism/javascript/resistor-color
+#+RESULTS: javascript-resistor-color-submit
 
 {{{heading(Install Dependencies)}}}
 
