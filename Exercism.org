@@ -1,8 +1,8 @@
 # -*- mode:org; fill-column:79; -*-
 #+Title:Exercism Exercises
 #+Author:Pinecone062
-#+Date:Last updated 2019-05-24 12:28
-#+Macro: version Version 0.1.15
+#+Date:Last updated 2019-05-25 13:34
+#+Macro: version Version 0.2.0
 {{{title}}} {{{version}}} {{{date}}}
 * Exercism Home
 :PROPERTIES:
@@ -2194,6 +2194,8 @@ prove ./t
 : Result: PASS
 
 * OCaml Exercism Track
+- https://exercism.io/my/tracks/ocaml
+
 ** OCaml Getting Started
 To work on the exercises, you will need [[https://opam.ocaml.org][Opam]] and [[https://opensource.janestreet.com/base/][Base]].  Consult [[https://opam.ocaml.org/doc/Install.html][opam]] website
 for instructions on how to install =opam= for your OS.
@@ -2267,6 +2269,7 @@ interactively.  The easiest way to install it is via =opam=:
 : opam install utop
 
 Consult utop for more detail.
+
 *** OCaml Learning Resources
 
 - [[http://caml.inria.fr/pub/docs/manual-ocaml/libref/index.html][Documentation for the OCaml Standard Library]]
@@ -2502,7 +2505,6 @@ clean:
 #+END_SRC
 
 ** OCaml Leap
-
 *** OCaml Leap Download
 #+name:ocaml-leap-download
 #+BEGIN_SRC sh :results output
@@ -2700,6 +2702,303 @@ make 2>&1
 (lang dune 1.1)
 (version 1.4.0)
 #+END_SRC
+** OCaml Hamming
+- https://exercism.io/my/solutions/0cdcb15b087c451a8e0e71ba614b6ca9
+
+Calculate the Hamming difference between two DNA strands.
+
+Inspired by "The Calculating Point Mutations problem at Rosalind
+http://rosalind.info/problems/hamm/"
+
+A mutation is simply a mistake that occurs during the creation or copying of a
+nucleic acid, in particular DNA.  Because nucleic acids are vital to cellular
+functions, mutations tend to cause a ripple effect throughout the cell.
+Although mutations are technically mistakes, a very rare mutation may equip the
+cell with a beneficial attribute.  In fact, the macro effects of evolution are
+attributable by the accumulated result of beneficial microscopic mutations over
+many generations.
+
+The simplest and most common type of nucleic acid mutation is a point mutation,
+which replaces one base with another at a single nucleotide.
+
+By counting the number of differences between two homologous DNA strands taken
+from different genomes with a common ancestor, we get a measure of the minimum
+number of point mutations that could have occurred on the evolutionary path
+between the two strands.
+
+This is called the 'Hamming distance'.
+
+It is found by comparing two DNA strands and counting how many of the
+nucleotides are different from their equivalent in the other string.
+
+#+begin_example
+GAGCCTACTAACGGGAT
+CATCGTAATGACGGCCT
+^ ^ ^  ^ ^    ^^
+#+end_example
+
+The Hamming distance between these two DNA strands is 7.
+
+The Hamming distance is only defined for sequences of equal length.  This means
+that based on the definition, each language could deal with getting sequences
+of equal length differently.
+
+*** OCaml Hamming Scripts
+
+**** OCaml Hamming Download
+#+name:ocaml-hamming-download
+#+begin_src sh :results output
+exercism download --exercise=hamming --track=ocaml
+#+end_src
+
+#+RESULTS: ocaml-hamming-download
+: /Users/pine/Dev/Programming/Languages/Exercism/ocaml/hamming
+
+**** OCaml Hamming Submit
+#+name:ocaml-hamming-submit
+#+begin_src sh :results output :dir ocaml/hamming
+exercism submit hamming.ml
+#+end_src
+
+#+RESULTS: ocaml-hamming-submit
+:     https://exercism.io/my/solutions/0cdcb15b087c451a8e0e71ba614b6ca9
+
+**** OCaml Hamming Run Tests
+#+name:ocaml-hamming-run-tests
+#+begin_src sh :results output :exports both :dir ocaml/hamming
+make 2>&1
+#+end_src
+
+#+RESULTS: ocaml-hamming-run-tests
+: dune clean
+: dune runtest
+:         test alias runtest
+: ...............
+: Ran: 15 tests in: 0.11 seconds.
+: OK
+
+*** OCaml Hamming Source Files
+**** OCaml Hamming Solution
+#+name:ocaml-hamming-solution
+#+begin_src ocaml :tangle ocaml/hamming/hamming.ml :mkdirp yes
+open Base;;
+
+type nucleotide = A | C | G | T;;
+
+let hamming_distance nl1 nl2 =
+  let ham = fun acc n1 n2 -> if phys_equal n1 n2 then acc else acc + 1 in
+  try (Some (List.fold2_exn nl1 nl2 ~init:0 ~f:ham))
+  with
+  | _ -> None;;
+#+end_src
+
+**** OCaml Hamming Solution Interface
+#+name:ocaml-hamming-solution-interface
+#+begin_src ocaml :tangle ocaml/hamming/hamming.mli :mkdirp yes
+type nucleotide = A | C | G | T
+
+(** Compute the hamming distance between the two lists. *)
+val hamming_distance : nucleotide list -> nucleotide list -> int option
+#+end_src
+
+**** OCaml Hamming Tests
+#+name:ocaml-hamming-tests
+#+begin_src ocaml :tangle ocaml/hamming/test.ml :mkdirp yes
+open Base
+open OUnit2
+open Hamming
+
+let printer = function
+| None -> "None"
+| Some x -> Int.to_string x
+
+let ae exp got _test_ctxt = assert_equal ~printer exp got
+
+let dna_of_string s =
+  let f = function
+    | 'A' -> A
+    | 'C' -> C
+    | 'G' -> G
+    | 'T' -> T
+    | _   -> failwith "Big news! New nucleotide discovered" in
+  String.to_list s |> List.map ~f
+
+let hamdist a b = hamming_distance (dna_of_string a) (dna_of_string b)
+
+let tests = [
+   "empty strands" >::
+      ae (Some 0) (hamdist "" "");
+   "identical strands" >::
+      ae (Some 0) (hamdist "A" "A");
+   "long identical strands" >::
+      ae (Some 0) (hamdist "GGACTGA" "GGACTGA");
+   "complete distance in single nucleotide strands" >::
+      ae (Some 1) (hamdist "A" "G");
+   "complete distance in small strands" >::
+      ae (Some 2) (hamdist "AG" "CT");
+   "small distance in small strands" >::
+      ae (Some 1) (hamdist "AT" "CT");
+   "small distance" >::
+      ae (Some 1) (hamdist "GGACG" "GGTCG");
+   "small distance in long strands" >::
+      ae (Some 2) (hamdist "ACCAGGG" "ACTATGG");
+   "non-unique character in first strand" >::
+      ae (Some 1) (hamdist "AAG" "AAA");
+   "non-unique character in second strand" >::
+      ae (Some 1) (hamdist "AAA" "AAG");
+   "same nucleotides in different positions" >::
+      ae (Some 2) (hamdist "TAG" "GAT");
+   "large distance" >::
+      ae (Some 4) (hamdist "GATACA" "GCATAA");
+   "large distance in off-by-one strand" >::
+      ae (Some 9) (hamdist "GGACGGATTCTG" "AGGACGGATTCT");
+   "disallow first strand longer" >::
+      ae None (hamdist "AATG" "AAA");
+   "disallow second strand longer" >::
+      ae None (hamdist "ATA" "AGTG");
+]
+
+let () =
+  run_test_tt_main ("hamming tests" >::: tests)
+#+end_src
+
+**** OCaml Hamming Build
+{{{heading(Makefile)}}}
+
+#+name:ocaml-hamming-makefile
+#+begin_src make :tangle ocaml/hamming/Makefile :mkdirp yesn
+default: clean test
+
+test:
+	dune runtest
+
+clean:
+	dune clean
+
+.PHONY: clean
+#+end_src
+
+{{{heading(Dune)}}}
+
+#+name:ocaml-hamming-dune
+#+begin_src ocaml :tangle ocaml/hamming/dune :mkdirp yes
+(executable
+ (name test)
+ (libraries base oUnit))
+
+(alias
+  (name    runtest)
+  (deps    (:x test.exe))
+  (action  (run %{x})))
+#+end_src
+
+{{{heading(Dune Project)}}}
+
+#+name:ocaml-hamming-dune-project
+#+begin_src ocaml :tangle ocaml/hamming/dune-project :mkdirp yes
+(lang dune 1.1)
+#+end_src
+
+**** OCaml Hamming Readme
+#+name:ocaml-hamming-readme
+#+begin_src markdown :tangle ocaml/hamming/README.md :mkdirp yes
+# Hamming
+
+Calculate the Hamming difference between two DNA strands.
+
+A mutation is simply a mistake that occurs during the creation or
+copying of a nucleic acid, in particular DNA. Because nucleic acids are
+vital to cellular functions, mutations tend to cause a ripple effect
+throughout the cell. Although mutations are technically mistakes, a very
+rare mutation may equip the cell with a beneficial attribute. In fact,
+the macro effects of evolution are attributable by the accumulated
+result of beneficial microscopic mutations over many generations.
+
+The simplest and most common type of nucleic acid mutation is a point
+mutation, which replaces one base with another at a single nucleotide.
+
+By counting the number of differences between two homologous DNA strands
+taken from different genomes with a common ancestor, we get a measure of
+the minimum number of point mutations that could have occurred on the
+evolutionary path between the two strands.
+
+This is called the 'Hamming distance'.
+
+It is found by comparing two DNA strands and counting how many of the
+nucleotides are different from their equivalent in the other string.
+
+    GAGCCTACTAACGGGAT
+    CATCGTAATGACGGCCT
+    ^ ^ ^  ^ ^    ^^
+
+The Hamming distance between these two DNA strands is 7.
+
+# Implementation notes
+
+The Hamming distance is only defined for sequences of equal length. This means
+that based on the definition, each language could deal with getting sequences
+of equal length differently.
+
+## Getting Started
+For installation and learning resources, refer to the
+[exercism help page](http://exercism.io/languages/ocaml).
+
+## Installation
+To work on the exercises, you will need `Opam` and `Base`. Consult [opam](https://opam.ocaml.org) website for instructions on how to install `opam` for your OS. Once `opam` is installed open a terminal window and run the following command to install base:
+
+```bash
+opam install base
+```
+
+To run the tests you will need `OUnit`. Install it using `opam`:
+
+```bash
+opam install ounit
+```
+
+## Running Tests
+A Makefile is provided with a default target to compile your solution and run the tests. At the command line, type:
+
+```bash
+make
+```
+
+## Interactive Shell
+`utop` is a command line program which allows you to run Ocaml code interactively. The easiest way to install it is via opam:
+```bash
+opam install utop
+```
+Consult [utop](https://github.com/diml/utop/blob/master/README.md) for more detail.
+
+## Feedback, Issues, Pull Requests
+The [exercism/ocaml](https://github.com/exercism/ocaml) repository on
+GitHub is the home for all of the Ocaml exercises.
+
+If you have feedback about an exercise, or want to help implementing a new
+one, head over there and create an issue.  We'll do our best to help you!
+
+## Source
+
+The Calculating Point Mutations problem at Rosalind [http://rosalind.info/problems/hamm/](http://rosalind.info/problems/hamm/)
+
+## Submitting Incomplete Solutions
+It's possible to submit an incomplete solution so you can see how others have completed the exercise.
+#+end_src
+
+**** OCaml Hamming Metadata
+#+name:ocaml-hamming-metadata
+#+begin_src js :tangle ocaml/hamming/.exercism/metadata.json :mkdirp yes :exports none
+{
+    "track":"ocaml",
+    "exercise":"hamming",
+    "id":"0cdcb15b087c451a8e0e71ba614b6ca9",
+    "url":"https://exercism.io/my/solutions/0cdcb15b087c451a8e0e71ba614b6ca9",
+    "handle":"wlharvey4",
+    "is_requester":true,
+    "auto_approve":false
+}
+#+end_src
+
 * Exercism Makefile
 
 #+name:Exercism-Makefile
