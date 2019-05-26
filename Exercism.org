@@ -1,8 +1,8 @@
 # -*- mode:org; fill-column:79; -*-
 #+Title:Exercism Exercises
 #+Author:Pinecone062
-#+Date:Last updated 2019-05-26 06:29
-#+Macro: version Version 0.2.3
+#+Date:Last updated 2019-05-26 15:54
+#+Macro: version Version 0.2.4
 {{{title}}} {{{version}}} {{{date}}}
 * Exercism Home
 :PROPERTIES:
@@ -3252,11 +3252,13 @@ exercism submit bash/two-fer/two_fer.sh
 *** Bash Two Fer Code
 **** Bash Two Fer Solution
 #+name:bash-two-fer-solution
+#+header: :shebang "#!/usr/bin/env bash"
 #+begin_src sh :tangle bash/two-fer/two_fer.sh :mkdirp yes
 two_fer() {
     input=${1:-you}
     echo "One for $input, one for me."
 }
+
 two_fer "$@"
 #+end_src
 
@@ -3287,8 +3289,8 @@ bats ./two_fer_test.sh
 
 **** Bash Two Fer Test
 #+name:bash-two-fer-test
-#+begin_src sh :tangle bash/two-fer/two_fer_test.sh :mkdirp yes
-#!/usr/bin/env bash
+#+header: :mkdirp yes :shebang "#!/usr/bin/env bats"
+#+begin_src sh :tangle bash/two-fer/two_fer_test.sh
 
 @test "no name given" {
   #skip
@@ -3311,6 +3313,17 @@ bats ./two_fer_test.sh
   [ "$output" == "One for Bob, one for me." ]
 }
 #+end_src
+
+#+BEGIN_SRC sh :dir bash/two-fer :results output
+./two_fer_test.sh
+#+END_SRC
+
+#+RESULTS:
+: 1..3
+: ok 1 no name given
+: ok 2 a name given
+: ok 3 another name given
+
 * Exercism Makefile
 
 #+name:Exercism-Makefile
