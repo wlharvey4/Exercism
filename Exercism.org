@@ -1,8 +1,8 @@
 # -*- mode:org; fill-column:79; -*-
 #+Title:Exercism Exercises
 #+Author:Pinecone062
-#+Date:Last updated 2019-05-25 16:19
-#+Macro: version Version 0.2.2
+#+Date:Last updated 2019-05-26 06:29
+#+Macro: version Version 0.2.3
 {{{title}}} {{{version}}} {{{date}}}
 * Exercism Home
 :PROPERTIES:
@@ -3245,17 +3245,19 @@ exercism download --exercise=two-fer --track=bash
 #+begin_src sh :results output
 exercism submit bash/two-fer/two_fer.sh
 #+end_src
+
+#+RESULTS: bash-two-fer-submit
+:     https://exercism.io/my/solutions/e55799ac20db44a4a2d544a1073c1ab6
+
 *** Bash Two Fer Code
 **** Bash Two Fer Solution
 #+name:bash-two-fer-solution
 #+begin_src sh :tangle bash/two-fer/two_fer.sh :mkdirp yes
-set -o errexit
-set -o nounset
-main() {
+two_fer() {
     input=${1:-you}
     echo "One for $input, one for me."
 }
-main "$@"
+two_fer "$@"
 #+end_src
 
 {{{heading(Run Tests)}}}
