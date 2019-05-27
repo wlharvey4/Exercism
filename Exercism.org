@@ -1,8 +1,8 @@
 # -*- mode:org; fill-column:79; -*-
 #+Title:Exercism Exercises
 #+Author:Pinecone062
-#+Date:Last updated 2019-05-27 07:22
-#+Macro: version Version 0.2.5
+#+Date:Last updated 2019-05-27 08:05
+#+Macro: version Version 0.3.0
 {{{title}}} {{{version}}} {{{date}}}
 * Exercism Home
 :PROPERTIES:
@@ -3505,6 +3505,188 @@ bats error_handling_test.sh
   [ "$status" -eq 0 ]
   [ "$output" = "Hello, " ]
 }
+#+end_src
+
+* Emacs Lisp Track
+- [[http://www.gnu.org/software/emacs/manual/html_node/emacs/index.html][Emacs manual]] on the Web
+- [[https://www.emacswiki.org][Emacs Wiki]]
+
+Emacs Lisp is the extension language of the Emacs text editor.  You can easily
+create you own extensions, which include preference files, but also
+full-fledged applications that use Emacs as a running environment in a fully
+integrated way.
+
+{{{heading(About Emacs Lisp)}}}
+
+Emacs Lisp is the language at the core of Emacs, the iconic text editor that is
+at the beginning of the Free Software movement.  Emacs is made of more than a
+million lines of Emacs Lisp, and all the applications that run inside Emacs
+(IDEs for various programming languages, games, planners, etc.) are written in
+Emacs Lisp.  User preferences are also lists of Emacs Lisp expressions.
+
+Knowing Emacs Lisp is the first step into Lisp, the second oldest programming
+language still used (just turned 60 in 2018) and also a language that still
+influences so many other programming languages.
+
+** About Emacs Lisp for Exercism
+*** Running the Tests
+Elisp tests are run using ~ERT~, an Emacs Lisp library for regression/unit
+testing.  Tests can be run several ways:
+
+1. Interactively and individually, with ~M-x ert RET test-name RET~
+2. Interactively and all at once, with ~M-x ert RET t RET~
+3. From the terminal, in batch mode, with
+   : emacs -batch -l ert -l my-test.el -f ert-run-tests-batch-and-exit
+4. Other options can be found in the docs, ~C-h i m ert RET~
+
+
+Interactive testing is great while you're working on an exercise, but batch
+mode testing is preferable for when you want to check that an exercise is ready
+for submission.  The above command is a bit unwieldy, so if you like:
+
+1. Create a file on your ~$PATH~ called ~ert-run~
+2. The contents of the file should be as follows:
+   #+begin_src emacs-lisp
+   #!/usr/bin/env bash
+   emacs -batch -l ert -l $1 -f ert-run-tests-batch-and-exit
+   #+end_src
+3. Make the file executable with ~chmod +x ert-run~
+
+
+You should be able to simply call ~ert-run exercise-test.el~ and run the tests
+in batch mode.
+
+*** Working on Exercises
+Since Emacs is, itself, an elisp interpreter, your working code is always in
+its native execution environment.  You can evaluate any form by pressing ~C-x
+e~ at the end of the form, or a selection with ~M-x eval-region~ or the whole
+buffer with ~M-x eval-buffer~.  This can be extremely useful for quickly
+debugging your code.
+
+*** Suggestions on Developing Code
+Since both your code and tests are valid elisp, it is suggested to work with
+your exercise code in a buffer pane side-by side with its test, like so:
+
+Split the frame vertically with ~C-x 3~, switch to the new window with ~C-x o~,
+and open the file with ~C-x C-f /path/to/file~.
+
+** Emacs Lisp Hello World
+The classical introductory exercise. Just say "Hello, World!".
+
+"Hello, World!" is the traditional first program for beginning programming in a
+new language or environment.
+
+The objectives are simple:
+
+- Write a function that returns the string "Hello, World!".
+- Run the test suite and make sure that it succeeds.
+- Submit your solution and check it at the website.
+
+
+If everything goes well, you will be ready to fetch your first real exercise.
+
+*** Emacs Lisp Hello World Readme
+#+name:elisp-hello-world-readme
+#+begin_src markdown :tangle elisp/hello-world/README.md :mkdirp yes
+# Hello World
+
+The classical introductory exercise. Just say "Hello, World!".
+
+["Hello, World!"](http://en.wikipedia.org/wiki/%22Hello,_world!%22_program) is
+the traditional first program for beginning programming in a new language
+or environment.
+
+The objectives are simple:
+
+- Write a function that returns the string "Hello, World!".
+- Run the test suite and make sure that it succeeds.
+- Submit your solution and check it at the website.
+
+If everything goes well, you will be ready to fetch your first real exercise.
+## Source
+
+This is an exercise to introduce users to using Exercism [http://en.wikipedia.org/wiki/%22Hello,_world!%22_program](http://en.wikipedia.org/wiki/%22Hello,_world!%22_program)
+
+## Submitting Incomplete Solutions
+It's possible to submit an incomplete solution so you can see how others have completed the exercise.
+#+end_src
+*** Emacs Lisp Hello World Scripts
+
+**** Emacs Lisp Hello World Download
+#+elisp-hello-world-download
+#+begin_src sh :results output
+exercism download --exercise=hello-world --track=elisp
+#+end_src
+
+#+RESULTS:
+: /usr/local/dev/programming/Languages/Exercism/elisp/hello-world
+
+**** Emacs Lisp Hello World Submit
+#+name:elisp-hello-world-submit
+#+begin_src sh :results output
+exercism submit elisp/hello-world/hello-world.el
+#+end_src
+
+#+RESULTS: elisp-hello-world-submit
+:     https://exercism.io/my/solutions/894f5e31a6fd4db3a967b6a19580a171
+
+#+name:elisp-hello-world-exercism-metadata
+#+begin_src js :tangle elisp/hello-world/.exercism/metadata.json :mkdirp yes :exports none
+{
+    "track":"elisp",
+    "exercise":"hello-world",
+    "id":"894f5e31a6fd4db3a967b6a19580a171",
+    "url":"https://exercism.io/my/solutions/894f5e31a6fd4db3a967b6a19580a171",
+    "handle":"wlharvey4",
+    "is_requester":true,
+    "auto_approve":true
+}
+#+end_src
+
+*** Emacs Lisp Hello World Code
+#+name:elisp-hello-world-code
+#+begin_src emacs-lisp :tangle elisp/hello-world/hello-world.el :mkdirp yes
+  ;;; hello-world.el --- Hello World Exercise (exercism)
+
+  ;;; Commentary:
+
+  ;;; Code:
+  (defun hello ()
+    (print "Hello, World!"))
+
+  (provide 'hello-world)
+  ;;; hello-world.el ends here
+#+end_src
+
+{{{heading(Test the Code)}}}
+
+#+name:elisp-hello-world-test-code
+#+begin_src sh :dir elisp/hello-world :results output :exports both
+emacs -batch -l ert -l hello-world-test.el -f ert-run-tests-batch-and-exit
+#+end_src
+
+#+RESULTS: elisp-hello-world-test-code
+: 
+: "Hello, World!"
+
+*** Emacs Lisp Hello World Test
+#+name:elisp-hello-world-test
+#+begin_src emacs-lisp :tangle elisp/hello-world/hello-world-test.el :mkdirp yes
+;;; hello-world-test.el --- Tests for Hello World (exercism)
+
+;;; Commentary:
+;; Common test data version: 1.1.0 be3ae66
+
+;;; Code:
+
+(load-file "hello-world.el")
+
+(ert-deftest hello-world-test ()
+  (should (equal (hello) "Hello, World!")))
+
+(provide 'hello-world-test)
+
+;;; hello-world-test.el ends here
 #+end_src
 
 * Exercism Makefile
