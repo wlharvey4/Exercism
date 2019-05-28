@@ -1,8 +1,8 @@
 # -*- mode:org; fill-column:79; -*-
 #+Title:Exercism Exercises
 #+Author:Pinecone062
-#+Date:Last updated 2019-05-28 10:58
-#+Macro: version Version 0.3.2
+#+Date:Last updated 2019-05-28 11:16
+#+Macro: version Version 0.3.3
 {{{title}}} {{{version}}} {{{date}}}
 * Exercism Home
 :PROPERTIES:
@@ -3740,18 +3740,22 @@ exercism download --exercise=two-fer --track=elisp
 exercism submit elisp/two-fer/two-fer.el
 #+end_src
 
+#+RESULTS: elisp-two-fer-submit
+: https://exercism.io/my/solutions/65d4cc560fef45a695f56a2a1609b9e1
+
 *** Emacs Lisp Two Fer Code
 **** Emacs Lisp Two Fer Solution
 #+name:elisp-two-fer-solution
 #+begin_src emacs-lisp :tangle elisp/two-fer/two-fer.el :mkdirp yes
 ;;; two-fer.el --- Two-fer Exercise (exercism)
 
-;;; Commentary:
+;;; Commentary: Two-fer or 2-fer is short for two for one. One for you
+;;; and one for me.<
 
 ;;; Code:
 (defun two-fer (&optional name)
-  (or name (setq name "you"))
-  (format "One for %s, one for me." name))
+  "Prints a two-fer message, possibly using 'you' if argument is missing."
+  (format "One for %s, one for me." (or name "you")))
 
 (provide 'two-fer)
 ;;; two-fer.el ends here
@@ -3759,18 +3763,8 @@ exercism submit elisp/two-fer/two-fer.el
 
 #+name:elisp-two-fer-run-tests
 #+begin_src sh :dir elisp/two-fer :results output :exports both
-emacs -batch -l ert -l two-fer-test3.el -f ert-run-tests-batch-and-exit 2>&1
+emacs -batch -l ert -l two-fer-test.el -f ert-run-tests-batch-and-exit 2>&1
 #+end_src
-
-#+RESULTS: elisp-two-fer-run-tests
-: Loading /Users/pine/Dev/Programming/Languages/Exercism/elisp/two-fer/two-fer.el (source)...
-: Running 3 tests (2019-05-28 10:57:28-0700)
-:    passed  1/3  a-name-given
-:    passed  2/3  another-name-given
-:    passed  3/3  no-name-given
-: 
-: Ran 3 tests, 3 results as expected (2019-05-28 10:57:28-0700)
-: 
 
 #+name:elisp-two-fer-exercism-metadata
 #+begin_src js :tangle elisp/two-fer/.exercism/metadata.json :mkdirp yes :exports none
