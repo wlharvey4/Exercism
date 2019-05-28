@@ -1,8 +1,8 @@
 # -*- mode:org; fill-column:79; -*-
 #+Title:Exercism Exercises
 #+Author:Pinecone062
-#+Date:Last updated 2019-05-27 08:05
-#+Macro: version Version 0.3.0
+#+Date:Last updated 2019-05-28 08:50
+#+Macro: version Version 0.3.1
 {{{title}}} {{{version}}} {{{date}}}
 * Exercism Home
 :PROPERTIES:
@@ -3687,6 +3687,112 @@ emacs -batch -l ert -l hello-world-test.el -f ert-run-tests-batch-and-exit
 (provide 'hello-world-test)
 
 ;;; hello-world-test.el ends here
+#+end_src
+
+** Emacs Lisp Two Fer
+Two-fer or 2-fer is short for two for one. One for you and one for me.
+
+: "One for X, one for me."
+
+When X is a name or "you".
+
+If the given name is "Alice", the result should be "One for Alice, one for me."
+If no name is given, the result should be "One for you, one for me."
+
+*** Emacs Lisp Two Fer Readme
+#+name:elisp-two-fer-readme
+#+begin_src markdown :tangle elisp/two-fer/README.md :mkdirp yes
+# Two Fer
+
+`Two-fer` or `2-fer` is short for two for one. One for you and one for me.
+
+```text
+"One for X, one for me."
+```
+
+When X is a name or "you".
+
+If the given name is "Alice", the result should be "One for Alice, one for me."
+If no name is given, the result should be "One for you, one for me."
+
+## Source
+
+[https://en.wikipedia.org/wiki/Two-fer](https://en.wikipedia.org/wiki/Two-fer)
+
+## Submitting Incomplete Solutions
+It's possible to submit an incomplete solution so you can see how others have completed the exercise.
+#+end_src
+
+*** Emacs Lisp Two Fer Scripts
+
+**** Emacs Lisp Two Fer Download
+#+name:elisp-two-fer-download
+#+begin_src sh :results output
+exercism download --exercise=two-fer --track=elisp
+#+end_src
+
+#+RESULTS: elisp-two-fer-download
+: /Users/pine/Dev/Programming/Languages/Exercism/elisp/two-fer
+
+**** Emacs Lisp Two Fer Submit
+#+name:elisp-two-fer-submit
+#+begin_src sh :result output
+exercism submit elisp/two-fer/two-fer.el
+#+end_src
+
+*** Emacs Lisp Two Fer Code
+**** Emacs Lisp Two Fer Solution
+#+name:elisp-two-fer-solution
+#+begin_src emacs-lisp :tangle elisp/two-fer/two-fer.el :mkdirp yes
+;;; two-fer.el --- Two-fer Exercise (exercism)
+
+;;; Commentary:
+
+;;; Code:
+
+
+(provide 'two-fer)
+;;; two-fer.el ends here
+#+end_src
+
+#+name:elisp-two-fer-exercism-metadata
+#+begin_src js :tangle elisp/two-fer/.exercism/metadata.json :mkdirp yes :exports none
+{
+    "track":"elisp",
+    "exercise":"two-fer",
+    "id":"65d4cc560fef45a695f56a2a1609b9e1",
+    "url":"https://exercism.io/my/solutions/65d4cc560fef45a695f56a2a1609b9e1",
+    "handle":"wlharvey4",
+    "is_requester":true,
+    "auto_approve":false
+}
+#+end_src
+
+**** Emacs Lisp Two Fer Tests
+#+name:elisp-two-fer-tests
+#+begin_src emacs-lisp :tangle elisp/two-fer/two-fer-test.el :mkdirp yes
+;;; two-fer-test.el --- Tests for Two-fer (exercism)
+
+;;; Commentary:
+;; Common test data version: 1.2.0 4fc1acb
+
+;;; Code:
+
+(load-file "two-fer.el")
+
+(ert-deftest no-name-given ()
+  (should (equal (two-fer) "One for you, one for me.")))
+
+(ert-deftest a-name-given ()
+  (should (equal (two-fer "Alice") "One for Alice, one for me.")))
+
+(ert-deftest another-name-given ()
+  (should (equal (two-fer "Bob") "One for Bob, one for me.")))
+
+(provide 'two-fer-test)
+
+;;; two-fer-test.el ends here
+
 #+end_src
 
 * Exercism Makefile
