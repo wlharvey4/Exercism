@@ -1,8 +1,8 @@
 # -*- mode:org; fill-column:79; -*-
 #+Title:Exercism Exercises
 #+Author:Pinecone062
-#+Date:Last updated 2019-05-28 11:16
-#+Macro: version Version 0.3.3
+#+Date:Last updated 2019-05-29 09:58
+#+Macro: version Version 0.3.4
 {{{title}}} {{{version}}} {{{date}}}
 * Exercism Home
 :PROPERTIES:
@@ -3804,6 +3804,228 @@ emacs -batch -l ert -l two-fer-test.el -f ert-run-tests-batch-and-exit 2>&1
 
 ;;; two-fer-test.el ends here
 
+#+end_src
+
+** Emacs Lisp Bob
+Bob is a lackadaisical teenager.  In conversation, his responses are very
+limited.
+
+Bob answers 'Sure.' if you ask him any question, such as "How are you?".
+
+He answers 'Whoa, chill out!' if you YELL AT HIM (in all capitals).
+
+He answers 'Calm down, I know what I'm doing!' if you yell a question at him.
+
+He says 'Fine. Be that way!' if you address him without actually saying
+anything.
+
+He answers 'Whatever.' to anything else.
+
+Implement a function response-for that takes a string as argument and returns
+the appropriate response.
+
+*** Emacs Lisp Bob Readme
+#+name:elisp-bob-readme
+#+begin_src markdown :tangle elisp/bob/README.md :mkdirp yes
+# Bob
+
+Bob is a lackadaisical teenager. In conversation, his responses are
+very limited.
+
+Bob answers 'Sure.' if you ask him any question, such as "How are
+you?".
+
+He answers 'Whoa, chill out!' if you YELL AT HIM (in all capitals).
+
+He answers 'Calm down, I know what I'm doing!' if you yell a question
+at him.
+
+He says 'Fine. Be that way!' if you address him without actually saying
+anything.
+
+He answers 'Whatever.' to anything else.
+
+Implement a function `response-for` that takes a string as argument
+and returns the appropriate response.
+
+## Source
+
+Inspired by the 'Deaf Grandma' exercise in Chris Pine's Learn to
+Program tutorial. [http://pine.fm/LearnToProgram/?Chapter=06](http://pine.fm/LearnToProgram/?Chapter=06)
+
+## Submitting Incomplete Solutions
+
+It's possible to submit an incomplete solution so you can see how
+others have completed the exercise.
+#+end_src
+
+*** Emacs Lisp Bob Scripts
+**** Emacs Lisp Bob Download Script
+#+name:elisp-bob-download-script
+#+begin_src sh
+exercism download --exercise=bob --track=elisp
+#+end_src
+
+#+RESULTS: elisp-bob-download-script
+: /Users/pine/Dev/Programming/Languages/Exercism/elisp/bob
+
+**** Emacs Lisp Bob Submit Script
+#+name:elisp-bob-submit-script
+#+begin_src sh
+exercism submit elisp/bob/response-for.el
+#+end_src
+
+*** Emacs Lisp Bop Source and Tests
+**** Emacs Lisp Bob Source
+#+name:elisp-bob-source
+#+begin_src emacs-lisp :tangle elisp/bob/bob.el :mkdirp yes
+;;; bob.el --- Bob exercise (exercism)
+
+;;; Commentary:
+
+;;; Code:
+(defun response-for (response) "Whatever.")
+
+(provide 'bob)
+;;; bob.el ends here
+#+end_src
+
+#+name:elisp-bob-exercism-metadata.js
+#+begin_src js :tangle elisp/bob/.exercism/metadata.json :mkdirp yes :exports none
+{
+    "track":"elisp",
+    "exercise":"bob",
+    "id":"938923eec9a843fb88ce497bc1998bca",
+    "url":"https://exercism.io/my/solutions/938923eec9a843fb88ce497bc1998bca",
+    "handle":"wlharvey4",
+    "is_requester":true,
+    "auto_approve":false
+}
+#+end_src
+
+**** Emacs Lisp Bob Tests
+#+name:elisp-bob-tests
+#+begin_src emacs-lisp :tangle elisp/bob/bob-test.el
+;;; bob-test.el --- ERT tests for Bob (exercism)
+
+;;; Commentary:
+;; Common test data version: 1.2.0 6dc2014
+
+;;; Code:
+
+(load-file "bob.el")
+
+
+(ert-deftest responds-to-stating-something ()
+  (should (string= "Whatever." (response-for "Tom-ay-to, tom-aaaah-to."))))
+
+(ert-deftest responds-to-shouting ()
+  (should
+   (string= "Whoa, chill out!" (response-for "WATCH OUT!"))))
+
+(ert-deftest responds-to-shouting-gibberish ()
+  (should
+   (string= "Whoa, chill out!" (response-for "FCECDFCAAB"))))
+
+(ert-deftest responds-to-asking-a-question ()
+  (should
+   (string= "Sure." (response-for "Does this cryogenic chamber make me look fat?"))))
+
+(ert-deftest responds-to-asking-a-numeric-question ()
+  (should
+   (string= "Sure." (response-for "You are, what, like 15?"))))
+
+(ert-deftest responds-to-asking-gibberish ()
+  (should
+   (string= "Sure." (response-for "fffbbcbeab?"))))
+
+(ert-deftest responds-to-talking-forcefully ()
+  (should
+   (string= "Whatever." (response-for "Let's go make out behind the gym!"))))
+
+(ert-deftest responds-to-using-acronyms-in-regular-speech ()
+  (should
+   (string= "Whatever." (response-for "It's OK if you don't want to go to the DMV."))))
+
+(ert-deftest responds-to-forceful-question ()
+  (should
+   (string= "Calm down, I know what I'm doing!" (response-for "WHAT THE HELL WERE YOU THINKING?"))))
+
+(ert-deftest responds-to-shouting-numbers ()
+  (should
+   (string= "Whoa, chill out!" (response-for "1, 2, 3, GO!"))))
+
+(ert-deftest responds-to-only-numbers ()
+  (should
+   (string= "Whatever." (response-for "1, 2, 3"))))
+
+(ert-deftest responds-to-questions-with-only-numbers ()
+  (should
+   (string= "Sure." (response-for "4?"))))
+
+(ert-deftest responds-to-shouting-with-special-chars ()
+  (should
+   (string= "Whoa, chill out!" (response-for "ZOMG THE %^*@#$(*^ ZOMBIES ARE COMING!!11!!1!"))))
+
+(ert-deftest responds-to-shouting-with-no-exclamation-mark ()
+  (should
+   (string= "Whoa, chill out!" (response-for "I HATE YOU"))))
+
+(ert-deftest responds-to-statement-containing-question-mark ()
+  (should
+   (string= "Whatever." (response-for "Ending with ? means a question."))))
+
+(ert-deftest responds-to-non-letters-with-question ()
+  (should
+   (string= "Sure." (response-for ":) ?"))))
+
+(ert-deftest responds-to-prattling-on ()
+  (should
+   (string= "Sure." (response-for "Wait! Hang on. Are you going to be OK?"))))
+
+(ert-deftest responds-to-silence ()
+  (should
+   (string= "Fine. Be that way!" (response-for ""))))
+
+(ert-deftest responds-to-prolonged-silence ()
+  (should
+   (string= "Fine. Be that way!" (response-for "    "))))
+
+(ert-deftest responds-to-alternate-silence ()
+  (should
+   (string= "Fine. Be that way!" (response-for "\t\t\t\t\t\t\t\t\t\t"))))
+
+(ert-deftest responds-to-multiple-line-question ()
+  (should
+   (string= "Whatever." (response-for "\nDoes this cryogenic chamber make me look fat?\nno"))))
+
+(ert-deftest responds-to-starting-with-whitespace ()
+  (should
+   (string= "Whatever." (response-for "         hmmmmmmm..."))))
+
+(ert-deftest responds-to-ending-with-whitespace ()
+  (should
+   (string= "Sure." (response-for "Okay if like my  spacebar  quite a bit?   "))))
+
+(ert-deftest responds-to-other-whitespace ()
+  (should
+   (string= "Fine. Be that way!" (response-for "\n\r \t"))))
+
+(ert-deftest responds-to-non-question-ending-with-whitespace ()
+  (should
+   (string= "Whatever." (response-for "This is a statement ending with whitespace      "))))
+
+(provide 'bob-test)
+;;;bob-test.el ends here
+
+#+end_src
+
+{{{heading(Test Results)}}}
+
+#+name:elisp-bob-run-tests
+#+begin_src sh :dir elisp/bob :results output :exports both
+emacs -batch -l ert -l bob-test.el -f ert-run-tests-batch-and-exit 2> output.log
+cat output.log
 #+end_src
 
 * Exercism Makefile
