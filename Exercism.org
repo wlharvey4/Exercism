@@ -1,8 +1,8 @@
 # -*- mode:org; fill-column:79; -*-
 #+Title:Exercism Exercises
 #+Author:Pinecone062
-#+Date:Last updated 2019-05-29 09:58
-#+Macro: version Version 0.3.4
+#+Date:Last updated 2019-05-30 10:16
+#+Macro: version Version 0.3.5
 {{{title}}} {{{version}}} {{{date}}}
 * Exercism Home
 :PROPERTIES:
@@ -3884,7 +3884,9 @@ exercism submit elisp/bob/response-for.el
 ;;; Commentary:
 
 ;;; Code:
-(defun response-for (response) "Whatever.")
+(defun response-for (response)
+  (cond ((string-match "\?$" response) "Sure.")
+        (t "Whatever.")))
 
 (provide 'bob)
 ;;; bob.el ends here
