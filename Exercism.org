@@ -1,8 +1,8 @@
 # -*- mode:org; fill-column:79; -*-
 #+Title:Exercism Exercises
 #+Author:Pinecone062
-#+Date:Last updated 2019-05-30 10:16
-#+Macro: version Version 0.3.5
+#+Date:Last updated 2019-05-30 13:03
+#+Macro: version Version 0.3.6
 {{{title}}} {{{version}}} {{{date}}}
 * Exercism Home
 :PROPERTIES:
@@ -3872,8 +3872,11 @@ exercism download --exercise=bob --track=elisp
 **** Emacs Lisp Bob Submit Script
 #+name:elisp-bob-submit-script
 #+begin_src sh
-exercism submit elisp/bob/response-for.el
+exercism submit elisp/bob/bob.el
 #+end_src
+
+#+RESULTS: elisp-bob-submit-script
+: https://exercism.io/my/solutions/938923eec9a843fb88ce497bc1998bca
 
 *** Emacs Lisp Bop Source and Tests
 **** Emacs Lisp Bob Source
@@ -3885,11 +3888,23 @@ exercism submit elisp/bob/response-for.el
 
 ;;; Code:
 (defun response-for (response)
-  (cond ((string-match "\?$" response) "Sure.")
+  (setq case-fold-search nil)
+  (cond ((string-match "^[[:upper:]\s]+\\?$" response) "Calm down, I know what I'm doing!")
+        ((string-match "\\`[^\n]+\\?\s*\\'" response) "Sure.")
+        ((string-match "\\`[[:space:]]*\\'" response) "Fine. Be that way!")
+        ((string-match ".[[:upper:]].*!$\\|\\`[^[:lower:][:digit:]]+\\'" response) "Whoa, chill out!")
         (t "Whatever.")))
 
 (provide 'bob)
 ;;; bob.el ends here
+#+end_src
+
+{{{heading(Test Results)}}}
+
+#+name:elisp-bob-run-tests
+#+begin_src sh :dir elisp/bob :results output :exports both
+emacs -batch -l ert -l bob-test.el -f ert-run-tests-batch-and-exit 2> output.log
+cat output.log
 #+end_src
 
 #+name:elisp-bob-exercism-metadata.js
@@ -4020,14 +4035,6 @@ exercism submit elisp/bob/response-for.el
 (provide 'bob-test)
 ;;;bob-test.el ends here
 
-#+end_src
-
-{{{heading(Test Results)}}}
-
-#+name:elisp-bob-run-tests
-#+begin_src sh :dir elisp/bob :results output :exports both
-emacs -batch -l ert -l bob-test.el -f ert-run-tests-batch-and-exit 2> output.log
-cat output.log
 #+end_src
 
 * Exercism Makefile
