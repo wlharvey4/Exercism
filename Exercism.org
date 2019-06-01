@@ -1,8 +1,8 @@
 # -*- mode:org; fill-column:79; -*-
 #+Title:Exercism Exercises
 #+Author:Pinecone062
-#+Date:Last updated 2019-05-30 13:03
-#+Macro: version Version 0.3.6
+#+Date:Last updated 2019-06-01 06:34
+#+Macro: version Version 0.3.7
 {{{title}}} {{{version}}} {{{date}}}
 * Exercism Home
 :PROPERTIES:
@@ -3882,21 +3882,21 @@ exercism submit elisp/bob/bob.el
 **** Emacs Lisp Bob Source
 #+name:elisp-bob-source
 #+begin_src emacs-lisp :tangle elisp/bob/bob.el :mkdirp yes
-;;; bob.el --- Bob exercise (exercism)
+  ;;; bob.el --- Bob exercise (exercism)
 
-;;; Commentary:
+  ;;; Commentary:
 
-;;; Code:
-(defun response-for (response)
-  (setq case-fold-search nil)
-  (cond ((string-match "^[[:upper:]\s]+\\?$" response) "Calm down, I know what I'm doing!")
-        ((string-match "\\`[^\n]+\\?\s*\\'" response) "Sure.")
-        ((string-match "\\`[[:space:]]*\\'" response) "Fine. Be that way!")
-        ((string-match ".[[:upper:]].*!$\\|\\`[^[:lower:][:digit:]]+\\'" response) "Whoa, chill out!")
-        (t "Whatever.")))
+  ;;; Code:
+  (defun response-for (response)
+    (let ((case-fold-search nil))
+      (cond ((string-match-p "^[[:upper:]\s]+\\?$" response) "Calm down, I know what I'm doing!")
+            ((string-match-p "\\`[^\n]+\\?\s*\\'" response) "Sure.")
+            ((string-match-p "\\`[[:space:]]*\\'" response) "Fine. Be that way!")
+            ((string-match-p ".[[:upper:]].*!$\\|\\`[^[:lower:][:digit:]]+\\'" response) "Whoa, chill out!")
+            (t "Whatever."))))
 
-(provide 'bob)
-;;; bob.el ends here
+  (provide 'bob)
+  ;;; bob.el ends here
 #+end_src
 
 {{{heading(Test Results)}}}
