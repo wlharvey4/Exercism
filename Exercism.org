@@ -1,8 +1,8 @@
 # -*- mode:org; fill-column:79; -*-
 #+Title:Exercism Exercises
 #+Author:Pinecone062
-#+Date:Last updated 2019-06-01 06:34
-#+Macro: version Version 0.3.7
+#+Date:Last updated 2019-06-01 06:46
+#+Macro: version Version 0.3.8
 {{{title}}} {{{version}}} {{{date}}}
 * Exercism Home
 :PROPERTIES:
@@ -3880,14 +3880,30 @@ exercism submit elisp/bob/bob.el
 
 *** Emacs Lisp Bop Source and Tests
 **** Emacs Lisp Bob Source
+Two things to note:
+
+   #+cindex:@code{case-fold-search}
+1. Eliminate global state change by localizing variable ~case-fold-search~
+   being set to ~nil~.
+
+   #+cindex:@code{string-match}
+   #+cindex:@code{string-match-p}
+   #+cindex:@code{match-data}
+   #+cindex:@code{save-match-data}
+2. Eliminate global state change of ~match-data~ by using ~string-match-p~ in
+   this case since ~match-data~ is not being used.  If ~match-data~ were being
+   used, then consider using the function ~save-match-data~.
+
 #+name:elisp-bob-source
 #+begin_src emacs-lisp :tangle elisp/bob/bob.el :mkdirp yes
   ;;; bob.el --- Bob exercise (exercism)
 
-  ;;; Commentary:
+  ;;; Commentary:Function to elicit correct response for Bob given some
+  ;;; statement or question.
 
   ;;; Code:
   (defun response-for (response)
+    "Evaluate input statement to determinte Bob's correct response."
     (let ((case-fold-search nil))
       (cond ((string-match-p "^[[:upper:]\s]+\\?$" response) "Calm down, I know what I'm doing!")
             ((string-match-p "\\`[^\n]+\\?\s*\\'" response) "Sure.")
