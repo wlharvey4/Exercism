@@ -1,8 +1,8 @@
 # -*- mode:org; fill-column:79; -*-
 #+Title:Exercism Exercises
 #+Author:Pinecone062
-#+Date:Last updated 2019-06-02 09:45
-#+Macro: version Version 0.4.0
+#+Date:Last updated 2019-06-02 14:06
+#+Macro: version Version 0.4.1
 {{{title}}} {{{version}}} {{{date}}}
 * Exercism Home
 :PROPERTIES:
@@ -4236,6 +4236,7 @@ exercism submit bash/error-handling/error_handling.sh
 
 #+RESULTS: bash-error-handling-submit
 :     https://exercism.io/my/solutions/a39a7939b2ae4e4fbe9d0a68740a46f4
+: 
 
 #+name:bash-error-handling-exercism-metadata
 #+begin_src js :tangle bash/error-handling/.exercism/metadata.json :mkdirp yes :exports none
@@ -4258,7 +4259,7 @@ exercism submit bash/error-handling/error_handling.sh
 
   main() {
       usage="Usage: ./error_handling <greetee>"
-      [ ${#@} -ne 1 ] && { echo $usage; exit 1; }
+      [ $# -ne 1 ] && { echo $usage; exit 1; }
 
       input=$1
       echo "Hello, $input"
