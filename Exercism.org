@@ -1,8 +1,8 @@
 # -*- mode:org; fill-column:79; -*-
 #+Title:Exercism Exercises
 #+Author:Pinecone062
-#+Date:Last updated 2019-06-02 14:06
-#+Macro: version Version 0.4.1
+#+Date:Last updated 2019-06-03 06:07
+#+Macro: version Version 0.4.2
 {{{title}}} {{{version}}} {{{date}}}
 * Exercism Home
 :PROPERTIES:
@@ -4252,16 +4252,16 @@ exercism submit bash/error-handling/error_handling.sh
 #+end_src
 
 *** Bash Error Handling Code
-#+name:bash-error-handling-code
+n#+name:bash-error-handling-code
 #+header: :shebang "#!/usr/bin/env bash"
 #+begin_src sh :tangle bash/error-handling/error_handling.sh :mkdirp yes
   set -o errexit
 
   main() {
       usage="Usage: ./error_handling <greetee>"
-      [ $# -ne 1 ] && { echo $usage; exit 1; }
+      [[ $# -ne 1 ]] && { echo $usage; exit 1; }
 
-      input=$1
+      input="$1"
       echo "Hello, $input"
   }
 
@@ -4274,6 +4274,15 @@ exercism submit bash/error-handling/error_handling.sh
 #+begin_src sh :dir bash/error-handling :results output :exports both
 bats error_handling_test.sh
 #+end_src
+
+#+RESULTS: bash-error-handling-code-test
+: 1..5
+: ok 1 correct arguments
+: ok 2 one long argument
+: ok 3 incorrect arguments
+: ok 4 print usage banner with no value given
+: ok 5 empty argument
+
 *** Bash Error Handling Tests
 #+name:bash-error-handling-tests
 #+begin_src sh :tangle bash/error-handling/error_handling_test.sh :mkdirp yes
@@ -4319,7 +4328,6 @@ bats error_handling_test.sh
   [ "$output" = "Hello, " ]
 }
 #+end_src
-
 * Emacs Lisp Track
 - [[http://www.gnu.org/software/emacs/manual/html_node/emacs/index.html][Emacs manual]] on the Web
 - [[https://www.emacswiki.org][Emacs Wiki]]
