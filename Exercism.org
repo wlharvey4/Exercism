@@ -1,8 +1,8 @@
 # -*- mode:org; fill-column:79; -*-
 #+Title:Exercism Exercises
 #+Author:Pinecone062
-#+Date:Last updated 2019-06-03 10:49
-#+Macro: version Version 0.4.4
+#+Date:Last updated 2019-06-04 08:32
+#+Macro: version Version 0.4.5
 {{{title}}} {{{version}}} {{{date}}}
 * Exercism Home
 :PROPERTIES:
@@ -5175,7 +5175,7 @@ python3 -m pytest two_fer_test.py
 : 
 : =========================== 3 passed in 0.06 seconds ===========================
 
-** High Scores
+** Python High Scores
 :PROPERTIES:
 :level:    easy
 :END:
@@ -5369,6 +5369,262 @@ python3 -m pytest high_scores_test.py
 : high_scores_test.py ............                                         [100%]
 : 
 : ========================== 12 passed in 0.08 seconds ===========================
+
+** Python Matrix
+Given a string representing a matrix of numbers, return the rows and columns of
+that matrix.  So given a string with embedded newlines like:
+#+begin_src python
+9 8 7
+5 3 2
+6 6 7
+#+end_src
+representing this matrix:
+#+begin_src python
+    1  2  3
+  |---------
+1 | 9  8  7
+2 | 5  3  2
+3 | 6  6  7
+#+end_src
+
+your code should be able to spit out:
+- A list of the rows, reading each row left-to-right while moving top-to-bottom
+  across the rows,
+- A list of the columns, reading each column top-to-bottom while moving from
+  left-to-right.
+
+
+The rows for our example matrix:
+- 9, 8, 7
+- 5, 3, 2
+- 6, 6, 7
+
+
+And its columns:
+- 9, 5, 6
+- 8, 3, 6
+- 7, 2, 7
+
+
+In this exercise you're going to create a class.
+- [[https://docs.python.org/3/tutorial/classes.html#a-first-look-at-classes][A First Look at Classes]] from the Python 3 documentation.
+- [[https://realpython.com/python3-object-oriented-programming/#how-to-define-a-class-in-python][How to Define a Class in Python]] from the Real Python website.
+- [[https://docs.python.org/3/tutorial/datastructures.html][Data Structures in Python]] from the Python 3 documentation.
+
+*** Python Matrix Readme
+
+#+name:python-matrix-readme
+#+begin_src markdown :tangle python/matrix/README.md
+# Matrix
+
+Given a string representing a matrix of numbers, return the rows and columns of
+that matrix.
+
+So given a string with embedded newlines like:
+
+```text
+9 8 7
+5 3 2
+6 6 7
+```
+
+representing this matrix:
+
+```text
+    1  2  3
+  |---------
+1 | 9  8  7
+2 | 5  3  2
+3 | 6  6  7
+```
+
+your code should be able to spit out:
+
+- A list of the rows, reading each row left-to-right while moving
+  top-to-bottom across the rows,
+- A list of the columns, reading each column top-to-bottom while moving
+  from left-to-right.
+
+The rows for our example matrix:
+
+- 9, 8, 7
+- 5, 3, 2
+- 6, 6, 7
+
+And its columns:
+
+- 9, 5, 6
+- 8, 3, 6
+- 7, 2, 7
+
+In this exercise you're going to create a **class**.  _Don't worry, it's not as complicated as you think!_ 
+
+-   [**A First Look at Classes**](https://docs.python.org/3/tutorial/classes.html#a-first-look-at-classes) from the Python 3 documentation. 
+-   [**How to Define a Class in Python**](https://realpython.com/python3-object-oriented-programming/#how-to-define-a-class-in-python) from the Real Python website.  
+-   [**Data Structures in Python**](https://docs.python.org/3/tutorial/datastructures.html) from the Python 3 documentation.
+
+
+
+## Exception messages
+
+Sometimes it is necessary to raise an exception. When you do this, you should include a meaningful error message to
+indicate what the source of the error is. This makes your code more readable and helps significantly with debugging. Not
+every exercise will require you to raise an exception, but for those that do, the tests will only pass if you include
+a message.
+
+To raise a message with an exception, just write it as an argument to the exception type. For example, instead of
+`raise Exception`, you should write:
+
+```python
+raise Exception("Meaningful message indicating the source of the error")
+```
+
+## Running the tests
+
+To run the tests, run the appropriate command below ([why they are different](https://github.com/pytest-dev/pytest/issues/1629#issue-161422224)):
+
+- Python 2.7: `py.test matrix_test.py`
+- Python 3.4+: `pytest matrix_test.py`
+
+Alternatively, you can tell Python to run the pytest module (allowing the same command to be used regardless of Python version):
+`python -m pytest matrix_test.py`
+
+### Common `pytest` options
+
+- `-v` : enable verbose output
+- `-x` : stop running tests on first failure
+- `--ff` : run failures from previous test before running other test cases
+
+For other options, see `python -m pytest -h`
+
+## Submitting Exercises
+
+Note that, when trying to submit an exercise, make sure the solution is in the `$EXERCISM_WORKSPACE/python/matrix` directory.
+
+You can find your Exercism workspace by running `exercism debug` and looking for the line that starts with `Workspace`.
+
+For more detailed information about running tests, code style and linting,
+please see [Running the Tests](http://exercism.io/tracks/python/tests).
+
+## Source
+
+Warmup to the `saddle-points` warmup. [http://jumpstartlab.com](http://jumpstartlab.com)
+
+## Submitting Incomplete Solutions
+
+It's possible to submit an incomplete solution so you can see how others have completed the exercise.
+
+#+end_src
+
+*** Python Matrix Scripts
+
+**** Python Matrix Download Script
+
+#+name:python-matrix-download-script
+#+begin_src sh
+exercism download --exercise=matrix --track=python
+#+end_src
+
+#+RESULTS: python-matrix-download-script
+: /usr/local/dev/programming/Languages/Exercism/python/matrix
+
+**** Python Matrix Submit Script
+
+#+name:python-matrix-submit-script
+#+begin_src sh
+exercism submit python/matrix/matrix.py
+#+end_src
+
+*** Python Matrix Metadata
+
+#+name:python-matrix-exercism-metadata
+#+begin_src js :tangle python/matrix/.exercism/metadata.json :mkdirp yes :exports none
+  {
+      "track":"python",
+      "exercise":"matrix",
+      "id":"69068a572d974bb0899fdffe5249077f",
+      "url":"https://exercism.io/my/solutions/69068a572d974bb0899fdffe5249077f",
+      "handle":"wlharvey4",
+      "is_requester":true,
+      "auto_approve":false
+  }
+#+end_src
+
+*** Python Matrix Solution Code and Tests
+
+**** Python Matrix Solution Code
+
+#+name:python-matrix-solution
+#+begin_src python :tangle python/matrix/matrix.py :mkdirp yes
+class Matrix(object):
+    def __init__(self, matrix_string):
+        pass
+
+    def row(self, index):
+        pass
+
+    def column(self, index):
+        pass
+
+#+end_src
+
+{{{heading(Python Matrix Test Results)}}}
+
+#+name:python-matrix-test-results
+#+begin_src sh :dir python/matrix :results output :exports results
+python3 -m pytest matrix_test.py 2>test.results
+cat test.results
+#+end_src
+
+**** Python Matrix Tests
+
+#+name:python-matrix-tests
+#+begin_src python :tangle python/matrix/matrix_test.py :mkdirp yes
+import unittest
+
+from matrix import Matrix
+
+
+# Tests adapted from `problem-specifications//canonical-data.json` @ v1.1.0
+
+class MatrixTest(unittest.TestCase):
+    def test_extract_row_from_one_number_matrix(self):
+        matrix = Matrix("1")
+        self.assertEqual(matrix.row(1), [1])
+
+    def test_can_extract_row(self):
+        matrix = Matrix("1 2\n3 4")
+        self.assertEqual(matrix.row(2), [3, 4])
+
+    def test_extract_row_where_numbers_have_different_widths(self):
+        matrix = Matrix("1 2\n10 20")
+        self.assertEqual(matrix.row(2), [10, 20])
+
+    def test_can_extract_row_from_non_square_matrix(self):
+        matrix = Matrix("1 2 3\n4 5 6\n7 8 9\n8 7 6")
+        self.assertEqual(matrix.row(3), [7, 8, 9])
+
+    def test_extract_column_from_one_number_matrix(self):
+        matrix = Matrix("1")
+        self.assertEqual(matrix.column(1), [1])
+
+    def test_can_extract_column(self):
+        matrix = Matrix("1 2 3\n4 5 6\n7 8 9")
+        self.assertEqual(matrix.column(3), [3, 6, 9])
+
+    def test_can_extract_column_from_non_square_matrix(self):
+        matrix = Matrix("1 2 3\n4 5 6\n7 8 9\n8 7 6")
+        self.assertEqual(matrix.column(3), [3, 6, 9, 6])
+
+    def test_extract_column_where_numbers_have_different_widths(self):
+        matrix = Matrix("89 1903 3\n18 3 1\n9 4 800")
+        self.assertEqual(matrix.column(2), [1903, 3, 4])
+
+
+if __name__ == '__main__':
+    unittest.main()
+
+#+end_src
 
 * Perl5 Exercism Track
 ** Perl5 Hello World
