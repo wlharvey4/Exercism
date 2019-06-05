@@ -1,8 +1,8 @@
 # -*- mode:org; fill-column:79; -*-
 #+Title:Exercism Exercises
 #+Author:Pinecone062
-#+Date:Last updated 2019-06-05 10:17
-#+Macro: version Version 0.4.6
+#+Date:Last updated 2019-06-05 11:05
+#+Macro: version Version 0.4.7
 {{{title}}} {{{version}}} {{{date}}}
 * Exercism Home
 :PROPERTIES:
@@ -5557,6 +5557,9 @@ exercism submit python/matrix/matrix.py
 
 **** Python Matrix Solution Code
 
+This solution uses a list comprehension to create rows of integer numbers from
+string numbers.
+
 #+name:python-matrix-solution
 #+begin_src python :tangle python/matrix/matrix.py :mkdirp yes
   class Matrix(object):
@@ -5566,10 +5569,8 @@ exercism submit python/matrix/matrix.py
           rows = matrix_string.split('\n')
 
           for row in rows:
-              col = []
-              col_as_str = row.split(' ')
-              for num in col_as_str:
-                  col.append(int(num))
+              col = [int(num) for num in row.split(' ')]
+
               self.matrix.append(col)
 
       def row(self, index):
