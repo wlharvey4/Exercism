@@ -1,8 +1,8 @@
 # -*- mode:org; fill-column:79; -*-
 #+Title:Exercism Exercises
 #+Author:Pinecone062
-#+Date:Last updated 2019-06-04 08:32
-#+Macro: version Version 0.4.5
+#+Date:Last updated 2019-06-05 10:17
+#+Macro: version Version 0.4.6
 {{{title}}} {{{version}}} {{{date}}}
 * Exercism Home
 :PROPERTIES:
@@ -5535,6 +5535,9 @@ exercism download --exercise=matrix --track=python
 exercism submit python/matrix/matrix.py
 #+end_src
 
+#+RESULTS: python-matrix-submit-script
+: https://exercism.io/my/solutions/69068a572d974bb0899fdffe5249077f
+
 *** Python Matrix Metadata
 
 #+name:python-matrix-exercism-metadata
@@ -5556,15 +5559,28 @@ exercism submit python/matrix/matrix.py
 
 #+name:python-matrix-solution
 #+begin_src python :tangle python/matrix/matrix.py :mkdirp yes
-class Matrix(object):
-    def __init__(self, matrix_string):
-        pass
+  class Matrix(object):
+      def __init__(self, matrix_string):
+          self.matrix = []
 
-    def row(self, index):
-        pass
+          rows = matrix_string.split('\n')
 
-    def column(self, index):
-        pass
+          for row in rows:
+              col = []
+              col_as_str = row.split(' ')
+              for num in col_as_str:
+                  col.append(int(num))
+              self.matrix.append(col)
+
+      def row(self, index):
+          return self.matrix[index - 1]
+
+      def column(self, index):
+          col = []
+          for row in self.matrix:
+              col.append(row[index - 1])
+
+          return col
 
 #+end_src
 
