@@ -1,8 +1,8 @@
 # -*- mode:org; fill-column:79; -*-
 #+Title:Exercism Exercises
 #+Author:Pinecone062
-#+Date:Last updated 2019-06-05 11:05
-#+Macro: version Version 0.4.7
+#+Date:Last updated 2019-06-05 11:07
+#+Macro: version Version 0.4.8
 {{{title}}} {{{version}}} {{{date}}}
 * Exercism Home
 :PROPERTIES:
@@ -5564,14 +5564,7 @@ string numbers.
 #+begin_src python :tangle python/matrix/matrix.py :mkdirp yes
   class Matrix(object):
       def __init__(self, matrix_string):
-          self.matrix = []
-
-          rows = matrix_string.split('\n')
-
-          for row in rows:
-              col = [int(num) for num in row.split(' ')]
-
-              self.matrix.append(col)
+          self.matrix = [[int(num) for num in row.split(' ')] for row in matrix_string.split('\n')]
 
       def row(self, index):
           return self.matrix[index - 1]
