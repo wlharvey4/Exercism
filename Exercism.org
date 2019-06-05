@@ -1,8 +1,8 @@
 # -*- mode:org; fill-column:79; -*-
 #+Title:Exercism Exercises
 #+Author:Pinecone062
-#+Date:Last updated 2019-06-05 11:07
-#+Macro: version Version 0.4.8
+#+Date:Last updated 2019-06-05 11:12
+#+Macro: version Version 0.4.9
 {{{title}}} {{{version}}} {{{date}}}
 * Exercism Home
 :PROPERTIES:
@@ -5570,11 +5570,7 @@ string numbers.
           return self.matrix[index - 1]
 
       def column(self, index):
-          col = []
-          for row in self.matrix:
-              col.append(row[index - 1])
-
-          return col
+          return [row[index-1] for row in self.matrix]
 
 #+end_src
 
