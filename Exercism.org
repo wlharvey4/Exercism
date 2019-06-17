@@ -1,8 +1,8 @@
 # -*- mode:org; fill-column:79; -*-
 #+Title:Exercism Exercises
 #+Author:Pinecone062
-#+Date:Last updated 2019-06-05 11:12
-#+Macro: version Version 0.4.9
+#+Date:Last updated 2019-06-17 12:57
+#+Macro: version Version 0.4.10
 {{{title}}} {{{version}}} {{{date}}}
 * Exercism Home
 :PROPERTIES:
@@ -4928,6 +4928,370 @@ describe('TwoFer', () => {
 })
 
 #+end_src
+** TypeScript Leap
+:PROPERTIES:
+:source:   JavaRanch Cattle Drive, exercise 3 http://www.javaranch.com/leap.jsp
+:END:
+Given a year, report if it is a leap year.
+
+The tricky thing here is that a leap year in the Gregorian calendar occurs:
+
+- on every year that is evenly divisible by 4
+- except every year that is evenly divisible by 100
+- unless the year is also evenly divisible by 400
+
+
+For example, 1997 is not a leap year, but 1996 is. 1900 is not a leap year, but
+2000 is.
+
+*** TypeScript Leap Readme
+#+name:typescript-leap-readme
+#+begin_src sh :tangle typescript/leap/README.md :mkdirp yes
+# Leap
+
+Given a year, report if it is a leap year.
+
+The tricky thing here is that a leap year in the Gregorian calendar occurs:
+
+```text
+on every year that is evenly divisible by 4
+  except every year that is evenly divisible by 100
+    unless the year is also evenly divisible by 400
+```
+
+For example, 1997 is not a leap year, but 1996 is.  1900 is not a leap
+year, but 2000 is.
+
+## Notes
+
+Though our exercise adopts some very simple rules, there is more to
+learn!
+
+For a delightful, four minute explanation of the whole leap year
+phenomenon, go watch [this youtube video][video].
+
+[video]: http://www.youtube.com/watch?v=xX96xng7sAE
+
+## Setup
+
+Go through the setup instructions for TypeScript to install the necessary
+dependencies:
+
+[https://exercism.io/tracks/typescript/installation](https://exercism.io/tracks/typescript/installation)
+
+## Requirements
+
+Install assignment dependencies:
+
+```bash
+$ yarn install
+```
+
+## Making the test suite pass
+
+Execute the tests with:
+
+```bash
+$ yarn test
+```
+
+In the test suites all tests but the first have been skipped.
+
+Once you get a test passing, you can enable the next one by changing `xit` to
+`it`.
+
+## Source
+
+JavaRanch Cattle Drive, exercise 3 [http://www.javaranch.com/leap.jsp](http://www.javaranch.com/leap.jsp)
+
+## Submitting Incomplete Solutions
+
+It's possible to submit an incomplete solution so you can see how others have
+completed the exercise.
+
+#+end_src
+*** TypeScript Leap Scripts
+**** TypeScriipt Leap Download Script
+#+name:typescript-leap-download-script
+#+begin_src sh :results output
+exercism download --exercise=leap --track=typescript
+#+end_src
+
+#+RESULTS: typescript-leap-download-script
+: /Users/pine/Dev/Programming/Languages/Exercism/typescript/leap
+
+**** TypeScript Leap Submit Script
+#+name:typescript-leap-submit-script
+#+begin_src sh :results output
+exercism submit typescript/leap/leap.ts
+#+end_src
+*** TypeScript Leap Metadata
+#+name:typescript-leap-metadata-package.json
+#+begin_src js :tangle typescript/leap/package.json :mkdirp yes
+{
+  "name": "xtypescript",
+  "version": "1.0.0",
+  "description": "Exercism exercises in Typescript.",
+  "author": "",
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/exercism/xtypescript"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "tsc --noEmit -p . && jest --no-cache",
+    "lint": "tsc --noEmit -p . && tslint \"*.ts?(x)\"",
+    "lintci": "tslint \"*.ts?(x)\" --force"
+  },
+  "dependencies": {
+    "@types/jest": "^21.1.5",
+    "@types/node": "^8.0.47",
+    "jest": "^21.2.1",
+    "ts-jest": "^21.1.3",
+    "tslint": "^5.8.0",
+    "typescript": "^2.5.3"
+  },
+  "jest": {
+    "transform": {
+      ".(ts|tsx)": "<rootDir>/node_modules/ts-jest/preprocessor.js"
+    },
+    "testRegex": "(/__tests__/.*|\\.(test|spec))\\.(ts|tsx|js)$",
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js"
+    ]
+  }
+}
+
+#+end_src
+
+#+name:typescript-leap-metadata-tsconfig.js
+#+begin_src js :tangle typescript/leap/tsconfig.json :mkdirp yes
+{
+    "compilerOptions": { 
+        "target": "es2017",
+        "module": "commonjs",
+        "alwaysStrict": true,
+        "noUnusedLocals": true,
+        "noUnusedParameters": true,
+        "noImplicitAny": true,
+        "strictNullChecks": true,
+        "preserveConstEnums": true,
+        "noFallthroughCasesInSwitch":true,
+        "noImplicitThis":true,
+        "noImplicitReturns":true,
+        "sourceMap": true,
+        "noEmitOnError": true,
+        "outDir": "./build"
+    },
+    "compileOnSave": true, 
+    "exclude": [
+        "node_modules"
+    ]
+}
+#+end_src
+
+#+name:typescript-leap-metadata-tslint.json
+#+begin_src js :tangle typescript/leap/tslint.json :mkdirp yes
+{
+    "jsRules": {
+        "class-name": true,
+        "comment-format": [
+            true,
+            "check-space"
+        ],
+        "indent": [
+            true,
+            "spaces"
+        ],
+        "no-duplicate-variable": true,
+        "no-eval": true,
+        "no-trailing-whitespace": true,
+        "no-unsafe-finally": true,
+        "one-line": [
+            true,
+            "check-open-brace",
+            "check-whitespace"
+        ],
+        "quotemark": [
+            false,
+            "double"
+        ],
+        "semicolon": [
+            true,
+            "never"
+        ],
+        "triple-equals": [
+            true,
+            "allow-null-check"
+        ],
+        "variable-name": [
+            true,
+            "ban-keywords"
+        ],
+        "whitespace": [
+            true,
+            "check-branch",
+            "check-decl",
+            "check-operator",
+            "check-separator",
+            "check-type"
+        ]
+    },
+    "rules": {
+        "class-name": true,
+        "comment-format": [
+            true,
+            "check-space"
+        ],
+        "indent": [
+            true,
+            "spaces"
+        ],
+        "no-eval": true,
+        "no-internal-module": true,
+        "no-trailing-whitespace": true,
+        "no-unsafe-finally": true,
+        "no-var-keyword": true,
+        "one-line": [
+            true,
+            "check-open-brace",
+            "check-whitespace"
+        ],
+        "semicolon": [
+            true,
+            "never"
+        ],
+        "triple-equals": [
+            true,
+            "allow-null-check"
+        ],
+        "typedef-whitespace": [
+            true,
+            {
+                "call-signature": "nospace",
+                "index-signature": "nospace",
+                "parameter": "nospace",
+                "property-declaration": "nospace",
+                "variable-declaration": "nospace"
+            }
+        ],
+        "variable-name": [
+            true,
+            "ban-keywords"
+        ],
+        "whitespace": [
+            true,
+            "check-branch",
+            "check-decl",
+            "check-operator",
+            "check-separator",
+            "check-type"
+        ],
+        "no-namespace": true, 
+        "prefer-for-of": true,
+        "only-arrow-functions": [true, "allow-declarations"],
+        "no-var-requires": true,
+        "no-any": true,
+        "curly": true,
+        "forin": true,
+        "no-arg": true,
+        "label-position": true,
+        "no-conditional-assignment": true,
+        "no-console": [true, "log", "error"],
+        "no-construct": true,
+        "no-duplicate-variable": true,
+        "no-empty": true,
+        "no-invalid-this": [true, "check-function-in-method"],
+        "no-misused-new": true,
+        "no-null-keyword": true,
+        "no-string-literal": true,
+        "radix": true,
+        "typeof-compare": true,
+        "use-isnan": true,
+        "prefer-const": true,
+        "array-type": [true, "array-simple"],
+        "arrow-parens": true,
+        "new-parens": true,
+        "no-consecutive-blank-lines": [true,1],
+        "no-parameter-properties": true,
+        "no-unnecessary-initializer": true,
+        "object-literal-shorthand": true,
+        "object-literal-key-quotes": [true, "as-needed"]
+    }
+}
+#+end_src
+
+#+name:typescript-leap-metadata-exercism
+#+begin_src js :tangle typescript/leap/.exercism/metadata.json :mkdirp yes :exports none
+{
+    "track":"typescript",
+    "exercise":"leap",
+    "id":"1fe455d365f946e69ed99df4984febf8",
+    "url":"https://exercism.io/my/solutions/1fe455d365f946e69ed99df4984febf8",
+    "handle":"wlharvey4",
+    "is_requester":true,
+    "auto_approve":false
+}
+#+end_src
+
+*** TypeScript Leap Solution and Tests
+**** TypeScript Leap Solution Code
+#+name:typescript-leap-solution
+#+begin_src js :tangle typescript/leap/leap.ts :mkdirp yes
+function isLeapYear( /* Parameters go here */ ) {
+    // Your code here
+}
+
+export default isLeapYear
+#+end_src
+
+**** TypsScript Leap Tests
+#+name:typescript-leap-tests
+#+begin_src js :tangle typescript/leap/leap.test.ts
+import isLeapYear from './leap'
+
+describe('A leap year', () => {
+
+  it('is not very common', () => {
+    expect(isLeapYear(2015)).toBeFalsy()
+  })
+
+  xit('is introduced every 4 years to adjust about a day', () => {
+    expect(isLeapYear(2016)).toBeTruthy()
+  })
+
+  xit('is skipped every 100 years to remove an extra day', () => {
+    expect(isLeapYear(1900)).toBeFalsy()
+  })
+
+  xit('is reintroduced every 400 years to adjust another day', () => {
+    expect(isLeapYear(2000)).toBeTruthy()
+  })
+
+  describe('Additional example of a leap year that', () => {
+
+    xit('is not a leap year', () => {
+      expect(isLeapYear(1978)).toBeFalsy()
+    })
+
+    xit('is a common leap year', () => {
+      expect(isLeapYear(1992)).toBeTruthy()
+    })
+
+    xit('is skipped every 100 years', () => {
+      expect(isLeapYear(2100)).toBeFalsy()
+    })
+
+    xit('is reintroduced every 400 years', () => {
+      expect(isLeapYear(2400)).toBeTruthy()
+    })
+  })
+})
+
+#+end_src
 * Python Exercism Track
 - http://exercism.io/languages/python
 - https://github.com/exercism/python
@@ -5414,7 +5778,7 @@ In this exercise you're going to create a class.
 *** Python Matrix Readme
 
 #+name:python-matrix-readme
-#+begin_src markdown :tangle python/matrix/README.md
+#+begin_src markdown :tangle python/matrix/README.md :mkdirp yes
 # Matrix
 
 Given a string representing a matrix of numbers, return the rows and columns of
