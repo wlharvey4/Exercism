@@ -1,8 +1,8 @@
 # -*- mode:org; fill-column:79; -*-
 #+Title:Exercism Exercises
 #+Author:Pinecone062
-#+Date:Last updated 2019-06-17 12:57
-#+Macro: version Version 0.4.10
+#+Date:Last updated 2019-06-17 14:07
+#+Macro: version Version 0.4.11
 {{{title}}} {{{version}}} {{{date}}}
 * Exercism Home
 :PROPERTIES:
@@ -1204,7 +1204,6 @@ Try it out at the [[http://www.typescriptlang.org/Playground][playground]], and 
 Twitter account.
 
 ** TypeScript Hello World
-
 *** TypeScript Introduction
 The classical introductory exercise. Just say "Hello, World!".
 
@@ -1929,7 +1928,6 @@ yarn install
 #+end_src
 
 *** TypeScript HelloWorld Solution and Tests
-
 **** TypeScript Hello World Solution
 
 {{{heading(TypeScript Hello-World Solution Code)}}}
@@ -5025,6 +5023,10 @@ exercism download --exercise=leap --track=typescript
 #+begin_src sh :results output
 exercism submit typescript/leap/leap.ts
 #+end_src
+
+#+RESULTS: typescript-leap-submit-script
+:     https://exercism.io/my/solutions/1fe455d365f946e69ed99df4984febf8
+
 *** TypeScript Leap Metadata
 #+name:typescript-leap-metadata-package.json
 #+begin_src js :tangle typescript/leap/package.json :mkdirp yes
@@ -5065,6 +5067,11 @@ exercism submit typescript/leap/leap.ts
   }
 }
 
+#+end_src
+
+#+name:typescript-leap-install
+#+begin_src sh :dir typescript/leap :results output :exports results
+yarn install
 #+end_src
 
 #+name:typescript-leap-metadata-tsconfig.js
@@ -5241,11 +5248,22 @@ exercism submit typescript/leap/leap.ts
 **** TypeScript Leap Solution Code
 #+name:typescript-leap-solution
 #+begin_src js :tangle typescript/leap/leap.ts :mkdirp yes
-function isLeapYear( /* Parameters go here */ ) {
-    // Your code here
+function isLeapYear(year : number) : boolean {
+
+    let div_4   : boolean = !(year % 4),
+        div_100 : boolean = !(year % 100),
+        div_400 : boolean = !(year % 400);
+
+    return div_4 && !(div_100 && !div_400);
 }
 
 export default isLeapYear
+#+end_src
+
+#+name:typescript-leap-run-tests
+#+begin_src sh :dir typescript/leap :results output :exports results
+yarn test 2> results.txt
+cat results.txt
 #+end_src
 
 **** TypsScript Leap Tests
@@ -5259,33 +5277,33 @@ describe('A leap year', () => {
     expect(isLeapYear(2015)).toBeFalsy()
   })
 
-  xit('is introduced every 4 years to adjust about a day', () => {
+  it('is introduced every 4 years to adjust about a day', () => {
     expect(isLeapYear(2016)).toBeTruthy()
   })
 
-  xit('is skipped every 100 years to remove an extra day', () => {
+  it('is skipped every 100 years to remove an extra day', () => {
     expect(isLeapYear(1900)).toBeFalsy()
   })
 
-  xit('is reintroduced every 400 years to adjust another day', () => {
+  it('is reintroduced every 400 years to adjust another day', () => {
     expect(isLeapYear(2000)).toBeTruthy()
   })
 
   describe('Additional example of a leap year that', () => {
 
-    xit('is not a leap year', () => {
+    it('is not a leap year', () => {
       expect(isLeapYear(1978)).toBeFalsy()
     })
 
-    xit('is a common leap year', () => {
+    it('is a common leap year', () => {
       expect(isLeapYear(1992)).toBeTruthy()
     })
 
-    xit('is skipped every 100 years', () => {
+    it('is skipped every 100 years', () => {
       expect(isLeapYear(2100)).toBeFalsy()
     })
 
-    xit('is reintroduced every 400 years', () => {
+    it('is reintroduced every 400 years', () => {
       expect(isLeapYear(2400)).toBeTruthy()
     })
   })
