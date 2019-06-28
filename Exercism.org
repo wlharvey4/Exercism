@@ -1,7 +1,7 @@
 # -*- mode:org; fill-column:79; -*-
 #+Title:Exercism Exercises
 #+Author:Pinecone062
-#+Date:Last updated 2019-06-28 13:21
+#+Date:Last updated 2019-06-28 13:26
 #+Macro: version Version 0.4.12
 {{{title}}} {{{version}}} {{{date}}}
 * Exercism Home
@@ -5266,6 +5266,36 @@ export default isLeapYear
 yarn test 2> results.txt
 cat results.txt
 #+end_src
+***** Mentor Commentary
+:PROPERTIES:
+:mentor:   snowfrogdev
+:date:     2019-06-25
+:END:
+Congratulations on solving this problem and passing all the tests.  I like how
+you made individual variables to wrap the divisible by X checks.
+
+One of the main teaching goals for this exercise is to help the student get a
+better grasp of logical operators and short-circuiting.  With that in mind can
+you try to refactor your code a little bit to keep the following in mind:
+
+{{{heading(order of operation matters:)}}}
+
+- 75% of all years cannot be leap years because they are not multiples of 4;
+  test ~year % 4 === 0~ first
+- 98.97% of all years that are multiples of 4 are not multiples of 100; test
+  ~year % 100 !== 0~ second
+- 1.03% of all years that are multiples of 4 are also multiples of 100 and 400;
+  test ~year % 400 === 0~ third
+
+
+Although your solution is correct in output, the check ~year % 400~ is executed
+for all years that don't match ~year % 4 == 0~, and for these (75% of all
+years), always returns false, because if something is not divisible by 4 it can
+not be divisible by 400.  This is making a redundant check.
+
+Essentially, I'd like you to rewrite your solution in a way that avoids making
+unnecessary checks.  That's where short-circuiting comes in.  Let me know if
+you need more guidance.
 
 **** TypsScript Leap Tests
 #+name:typescript-leap-tests
