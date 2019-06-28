@@ -1,8 +1,8 @@
 # -*- mode:org; fill-column:79; -*-
 #+Title:Exercism Exercises
 #+Author:Pinecone062
-#+Date:Last updated 2019-06-17 14:07
-#+Macro: version Version 0.4.11
+#+Date:Last updated 2019-06-28 13:21
+#+Macro: version Version 0.4.12
 {{{title}}} {{{version}}} {{{date}}}
 * Exercism Home
 :PROPERTIES:
@@ -5026,6 +5026,7 @@ exercism submit typescript/leap/leap.ts
 
 #+RESULTS: typescript-leap-submit-script
 :     https://exercism.io/my/solutions/1fe455d365f946e69ed99df4984febf8
+: 
 
 *** TypeScript Leap Metadata
 #+name:typescript-leap-metadata-package.json
@@ -5250,11 +5251,11 @@ yarn install
 #+begin_src js :tangle typescript/leap/leap.ts :mkdirp yes
 function isLeapYear(year : number) : boolean {
 
-    let div_4   : boolean = !(year % 4),
-        div_100 : boolean = !(year % 100),
-        div_400 : boolean = !(year % 400);
+    let div_4   = (year:number) => !(year % 4);
+    let div_100 = (year:number) => !(year % 100);
+    let div_400 = (year:number) => !(year % 400);
 
-    return div_4 && !(div_100 && !div_400);
+    return div_4(year) && !(div_100(year) && !div_400(year));
 }
 
 export default isLeapYear
