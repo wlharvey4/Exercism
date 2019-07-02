@@ -1,8 +1,8 @@
 # -*- mode:org; fill-column:79; -*-
 #+Title:Exercism Exercises
 #+Author:Pinecone062
-#+Date:Last updated 2019-06-28 13:26
-#+Macro: version Version 0.4.12
+#+Date:Last updated 2019-07-01 20:13
+#+Macro: version Version 0.4.13
 {{{title}}} {{{version}}} {{{date}}}
 * Exercism Home
 :PROPERTIES:
@@ -8498,6 +8498,221 @@ cat output.log
 
 #+end_src
 
+** Emacs Lisp Hamming
+*** Emacs Lisp Hamming Introduction
+#+cindex:hamming difference
+Calculate the Hamming difference between two DNA strands.
+
+A mutation is simply a mistake that occurs during the creation or copying of a
+nucleic acid, in particular DNA.  Because nucleic acids are vital to cellular
+functions, mutations tend to cause a ripple effect throughout the cell.
+Although mutations are technically mistakes, a very rare mutation may equip the
+cell with a beneficial attribute.  In fact, the macro effects of evolution are
+attributable by the accumulated result of beneficial microscopic mutations over
+many generations.
+
+The simplest and most common type of nucleic acid mutation is a point mutation,
+which replaces one base with another at a single nucleotide.
+
+By counting the number of differences between two homologous DNA strands taken
+from different genomes with a common ancestor, we get a measure of the minimum
+number of point mutations that could have occurred on the evolutionary path
+between the two strands.
+
+This is called the 'Hamming distance'.
+
+It is found by comparing two DNA strands and counting how many of the
+nucleotides are different from their equivalent in the other string.
+
+#+begin_example
+GAGCCTACTAACGGGAT
+CATCGTAATGACGGCCT
+^ ^ ^  ^ ^    ^^
+#+end_example
+
+The Hamming distance between these two DNA strands is 7.
+
+*** Emacs Lisp Hamming Implementation Notes
+The Hamming distance is only defined for sequences of equal length.  This means
+that based on the definition, each language could deal with getting sequences
+of equal length differently.
+
+{{{heading(Source)}}}
+
+The Calculating Point Mutations problem at [[http://rosalind.info/problems/hamm/][Rosalind]].
+
+*** Emacs Lisp Hamming Scripts
+**** Emacs Lisp Hamming Download Script
+#+name:elisp-hamming-download-script
+#+begin_src sh
+exercism download --exercise=hamming --track=elisp
+#+end_src
+
+#+RESULTS: elisp-hamming-download-script
+: /usr/local/dev/programming/Languages/Exercism/elisp/hamming
+
+**** Emacs Lisp Hamming Submit Script
+#+name:elisp-hamming-submit-script
+#+begin_src sh
+exercism submit elisp/hamming/hamming.el
+#+end_src
+
+#+RESULTS: elisp-hamming-submit-script
+: https://exercism.io/my/solutions/fed4aef682fe4010a9d5455d9c76bc22
+
+*** Emacs Lisp Hamming Readme
+#+name:elisp-hamming-readme
+#+begin_src markdown :tangle elisp/hamming/README.md :mkdirp yes
+# Hamming
+
+Calculate the Hamming difference between two DNA strands.
+
+A mutation is simply a mistake that occurs during the creation or
+copying of a nucleic acid, in particular DNA. Because nucleic acids are
+vital to cellular functions, mutations tend to cause a ripple effect
+throughout the cell. Although mutations are technically mistakes, a very
+rare mutation may equip the cell with a beneficial attribute. In fact,
+the macro effects of evolution are attributable by the accumulated
+result of beneficial microscopic mutations over many generations.
+
+The simplest and most common type of nucleic acid mutation is a point
+mutation, which replaces one base with another at a single nucleotide.
+
+By counting the number of differences between two homologous DNA strands
+taken from different genomes with a common ancestor, we get a measure of
+the minimum number of point mutations that could have occurred on the
+evolutionary path between the two strands.
+
+This is called the 'Hamming distance'.
+
+It is found by comparing two DNA strands and counting how many of the
+nucleotides are different from their equivalent in the other string.
+
+    GAGCCTACTAACGGGAT
+    CATCGTAATGACGGCCT
+    ^ ^ ^  ^ ^    ^^
+
+The Hamming distance between these two DNA strands is 7.
+
+# Implementation notes
+
+The Hamming distance is only defined for sequences of equal length. This means
+that based on the definition, each language could deal with getting sequences
+of equal length differently.
+
+## Source
+
+The Calculating Point Mutations problem at Rosalind [http://rosalind.info/problems/hamm/](http://rosalind.info/problems/hamm/)
+
+## Submitting Incomplete Solutions
+
+It's possible to submit an incomplete solution so you can see how others have completed the exercise.
+#+end_src
+
+*** Emacs Lisp Hamming Source and Tests Code
+**** Emacs Lisp Hamming Solution Code
+#+name:elisp-hamming-hamming.el
+#+begin_src emacs-lisp :tangle elisp/hamming/hamming.el
+  ;;; hamming.el --- Hamming (exercism)
+
+  ;;; Commentary:
+
+  ;;; Code:
+
+  (defun calc-hamming (str1 str2)
+    "Recursively calculate the hamming distance between STR1 and STR2."
+    (if (not (zerop (length str1)))
+        (+ (if (char-equal (aref str1 0) (aref str2 0))
+               0
+             1)
+           (calc-hamming (substring str1 1) (substring str2 1)))
+      0))
+
+
+
+  (defun hamming-distance (str1 str2)
+    "Calculate the hamming distance between two strings, STR1 and STR2."
+    (if (equal (length str1) (length str2))
+               (calc-hamming str1 str2)
+               (error "Strings of unequal length")))
+
+  (provide 'hamming)
+  ;;; hamming ends here
+#+end_src
+
+#+name:elisp-hamming-metadata
+#+begin_src js :tangle elisp/hamming/.exercism/matadata.json :exports none
+  {
+      "track":"elisp",
+      "exercise":"hamming",
+      "id":"fed4aef682fe4010a9d5455d9c76bc22",
+      "url":"https://exercism.io/my/solutions/fed4aef682fe4010a9d5455d9c76bc22",
+      "handle":"wlharvey4",
+      "is_requester":true,
+      "auto_approve":false
+  }
+#+end_src
+
+**** Emacs Lisp Test Code
+#+name:elisp-hamming-test-code
+#+begin_src emacs-lisp :tangle elisp/hamming/hamming-test.el
+;;; hamming-test.el --- Tests for hamming (exercism)
+
+;;; Commentary:
+;; Common test data version: 2.0.1 f79dfd7
+
+;;; Code:
+
+(load-file "hamming.el")
+
+(declare-function hamming-distance "hamming.el")
+
+(ert-deftest empty-strands ()
+  (should (= 0 (hamming-distance "" ""))))
+
+(ert-deftest identical-strands ()
+  (should (= 0 (hamming-distance "A" "A"))))
+
+(ert-deftest long-identical-strands ()
+  (should (= 0 (hamming-distance "GGACTGA" "GGACTGA"))))
+
+(ert-deftest complete-distance-in-single-nucleotide-strands ()
+  (should (= 1 (hamming-distance "A" "G"))))
+
+(ert-deftest complete-distance-in-small-strands ()
+  (should (= 2 (hamming-distance "AG" "CT"))))
+
+(ert-deftest small-distance-in-small-strands ()
+  (should (= 1 (hamming-distance "AT" "CT"))))
+
+(ert-deftest small-distance ()
+  (should (= 1 (hamming-distance "GGACG" "GGTCG"))))
+
+(ert-deftest small-distance-in-long-strands ()
+  (should (= 2 (hamming-distance "ACCAGGG" "ACTATGG"))))
+
+(ert-deftest non-unique-character-in-first-strand ()
+  (should (= 1 (hamming-distance "AAA" "AAG"))))
+
+(ert-deftest same-nucleotides-in-different-positions ()
+  (should (= 2 (hamming-distance "TAG" "GAT"))))
+
+(ert-deftest large-distance ()
+  (should (= 4 (hamming-distance "GATACA" "GCATAA"))))
+
+(ert-deftest large-distance-in-off-by-one-strand ()
+  (should (= 9 (hamming-distance "GGACGGATTCTG" "AGGACGGATTCT"))))
+
+(ert-deftest disallow-first-strand-longer ()
+  (should-error (hamming-distance "AATG" "AAA")))
+
+(ert-deftest disallow-second-strand-longer ()
+  (should-error (hamming-distance "ATA" "AGTG")))
+
+(provide 'hamming-test)
+;;; hamming-test.el ends here
+
+#+end_src
 * Exercism Makefile
 
 #+name:Exercism-Makefile
