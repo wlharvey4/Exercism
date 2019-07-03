@@ -1,8 +1,8 @@
 # -*- mode:org; fill-column:79; -*-
 #+Title:Exercism Exercises
 #+Author:Pinecone062
-#+Date:Last updated 2019-07-02 22:35
-#+Macro: version Version 0.4.15
+#+Date:Last updated 2019-07-03 11:12
+#+Macro: version Version 0.4.16
 {{{title}}} {{{version}}} {{{date}}}
 * Exercism Home
 :PROPERTIES:
@@ -8849,37 +8849,37 @@ It's possible to submit an incomplete solution so you can see how others have co
 
 *** Emacs Lisp Hamming Source and Tests Code
 **** Emacs Lisp Hamming Solution Code
+Note that in order for "ert" to work with the ~seq-count~ and ~seq-mapn~
+functions, the ~seq~ library must be loaded first.
+
 #+name:elisp-hamming-hamming.el
-#+begin_src emacs-lisp :tangle elisp/hamming/hamming.el
+#+begin_src emacs-lisp :tangle elisp/hamming/hamming.el :mkdirp yes
   ;;; hamming.el --- Hamming (exercism)
 
   ;;; Commentary:
 
   ;;; Code:
 
-  (defun calc-hamming (str1 str2)
-    "Recursively calculate the hamming distance between STR1 and STR2."
-    (if (not (zerop (length str1)))
-        (+ (if (char-equal (aref str1 0) (aref str2 0))
-               0
-             1)
-           (calc-hamming (substring str1 1) (substring str2 1)))
-      0))
+(require 'seq)
 
+(defun calc-hamming (str1 str2)
+  "Functionally calculate the hamming distance between STR1 and STR2."
+  (- (length str1)
+     (seq-count #'identity (seq-mapn #'char-equal str1 str2))))
 
+(defun hamming-distance (str1 str2)
+  "Calculate the hamming distance between two strings, STR1 and STR2."
+  (if (equal (length str1) (length str2))
+      (calc-hamming str1 str2)
+    (error "Strings of unequal length")))
 
-  (defun hamming-distance (str1 str2)
-    "Calculate the hamming distance between two strings, STR1 and STR2."
-    (if (equal (length str1) (length str2))
-               (calc-hamming str1 str2)
-               (error "Strings of unequal length")))
-
-  (provide 'hamming)
+(provide 'hamming)
   ;;; hamming ends here
 #+end_src
 
 #+name:elisp-hamming-metadata
-#+begin_src js :tangle elisp/hamming/.exercism/matadata.json :exports none
+#+header: :mkdirp yes :exports none
+#+begin_src js :tangle elisp/hamming/.exercism/metadata.json
   {
       "track":"elisp",
       "exercise":"hamming",
@@ -8890,6 +8890,40 @@ It's possible to submit an incomplete solution so you can see how others have co
       "auto_approve":false
   }
 #+end_src
+
+***** Mentor Comment
+Can you try to implement calc-hamming with seq-mapn and seq-count?
+
+Example uses of them:
+
+#+begin_src emacs-lisp
+(seq-mapn #'= "123" "321")
+;; => (nil t nil)
+
+(seq-count #'identity '(nil t nil t nil))
+;; => 2
+#+end_src
+
+***** Review of ~seq-mapn~
+#+cindex:@code{seq-mapn}
+~seq-mapn~ FUNCTION &rest SEQUENCES
+
+This function returns the result of applying FUNCTION to each element of
+SEQUENCES.  The arity of FUNCTION must match the number of sequences.  Mapping
+stops at the end of the shortest sequence, and the returned value is a list.
+
+***** Review of ~seq-count~
+#+cindex:@code{seq-count}
+~seq-count~ PREDICATE SEQUENCE
+
+This function returns the number of elements in SEQUENCE for which PREDICATE
+returns non-‘nil’.
+
+***** Review of ~identity~
+#+cindex:@code{identity}
+~identity~ ARG
+
+This function returns ARG and has no side effects.
 
 **** Emacs Lisp Test Code
 #+name:elisp-hamming-test-code
@@ -8951,6 +8985,17 @@ It's possible to submit an incomplete solution so you can see how others have co
 ;;; hamming-test.el ends here
 
 #+end_src
+
+**** Emacs Lisp Hamming Run Tests
+#+name:elisp-hamming-run-tests
+#+header: :shebang "#!/usr/bin/env bash" :dir elisp/hamming
+#+header: :results output :exports results
+#+begin_src sh :tangle elisp/hamming/hamming-test.sh
+emacs -batch -l ert -l hamming-test.el -f ert-run-tests-batch-and-exit
+#+end_src
+
+#+RESULTS: elisp-hamming-run-tests
+
 * Exercism Makefile
 
 #+name:Exercism-Makefile
