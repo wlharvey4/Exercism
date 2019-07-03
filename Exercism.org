@@ -1,8 +1,8 @@
 # -*- mode:org; fill-column:79; -*-
 #+Title:Exercism Exercises
 #+Author:Pinecone062
-#+Date:Last updated 2019-07-01 20:13
-#+Macro: version Version 0.4.13
+#+Date:Last updated 2019-07-02 19:12
+#+Macro: version Version 0.4.14
 {{{title}}} {{{version}}} {{{date}}}
 * Exercism Home
 :PROPERTIES:
@@ -6038,6 +6038,233 @@ class MatrixTest(unittest.TestCase):
     def test_extract_column_where_numbers_have_different_widths(self):
         matrix = Matrix("89 1903 3\n18 3 1\n9 4 800")
         self.assertEqual(matrix.column(2), [1903, 3, 4])
+
+
+if __name__ == '__main__':
+    unittest.main()
+
+#+end_src
+** Python Pangram
+:PROPERTIES:
+:exercise: side
+:END:
+
+*** Python Pangram Introduction
+Determine if a sentence is a pangram.  A pangram (Greek: παν γράμμα, pan
+gramma, "every letter") is a sentence using every letter of the alphabet at
+least once.  The best known English pangram is:
+
+: The quick brown fox jumps over the lazy dog.
+
+The alphabet used consists of ASCII letters a to z, inclusive, and is case
+insensitive.  Input will not contain non-ASCII symbols.
+
+{{{heading(Exception Messages)}}}
+
+Sometimes it is necessary to raise an exception.  When you do this, you should
+include a meaningful error message to indicate what the source of the error is.
+This makes your code more readable and helps significantly with debugging.  Not
+every exercise will require you to raise an exception, but for those that do,
+the tests will only pass if you include a message.
+
+To raise a message with an exception, just write it as an argument to the
+exception type. For example, instead of ~raise Exception~, you should write:
+
+: raise Exception("Meaningful message indicating the source of the error")
+
+{{{heading(Running the tests)}}}
+
+- Python 3.4+: ~pytest pangram_test.py~
+
+
+Alternatively, you can tell Python to run the =pytest= module (allowing the same
+command to be used regardless of Python version):
+
+: python -m pytest pangram_test.py
+
+{{{heading(Submitting Exercises)}}}
+
+Note that, when trying to submit an exercise, make sure the solution is in the
+~$EXERCISM_WORKSPACE/python/pangram~ directory.
+
+You can find your Exercism workspace by running ~exercism debug~ and looking
+for the line that starts with ~Workspace~.
+
+{{{heading(Source)}}}
+
+[[https://en.wikipedia.org/wiki/Pangram][Pangram on Wikipedia]]
+
+*** Python Pangram Readme
+#+name:python-pangram-readme
+#+begin_src markdown :tangle python/pangram/README.md :mkdirp yes
+# Pangram
+
+Determine if a sentence is a pangram. A pangram (Greek: παν γράμμα, pan gramma,
+"every letter") is a sentence using every letter of the alphabet at least once.
+The best known English pangram is:
+> The quick brown fox jumps over the lazy dog.
+
+The alphabet used consists of ASCII letters `a` to `z`, inclusive, and is case
+insensitive. Input will not contain non-ASCII symbols.
+
+## Exception messages
+
+Sometimes it is necessary to raise an exception. When you do this, you should include a meaningful error message to
+indicate what the source of the error is. This makes your code more readable and helps significantly with debugging. Not
+every exercise will require you to raise an exception, but for those that do, the tests will only pass if you include
+a message.
+
+To raise a message with an exception, just write it as an argument to the exception type. For example, instead of
+`raise Exception`, you should write:
+
+```python
+raise Exception("Meaningful message indicating the source of the error")
+```
+
+## Running the tests
+
+To run the tests, run the appropriate command below ([why they are different](https://github.com/pytest-dev/pytest/issues/1629#issue-161422224)):
+
+- Python 2.7: `py.test pangram_test.py`
+- Python 3.4+: `pytest pangram_test.py`
+
+Alternatively, you can tell Python to run the pytest module (allowing the same command to be used regardless of Python version):
+`python -m pytest pangram_test.py`
+
+### Common `pytest` options
+
+- `-v` : enable verbose output
+- `-x` : stop running tests on first failure
+- `--ff` : run failures from previous test before running other test cases
+
+For other options, see `python -m pytest -h`
+
+## Submitting Exercises
+
+Note that, when trying to submit an exercise, make sure the solution is in the `$EXERCISM_WORKSPACE/python/pangram` directory.
+
+You can find your Exercism workspace by running `exercism debug` and looking for the line that starts with `Workspace`.
+
+For more detailed information about running tests, code style and linting,
+please see [Running the Tests](http://exercism.io/tracks/python/tests).
+
+## Source
+
+Wikipedia [https://en.wikipedia.org/wiki/Pangram](https://en.wikipedia.org/wiki/Pangram)
+
+## Submitting Incomplete Solutions
+
+It's possible to submit an incomplete solution so you can see how others have completed the exercise.
+
+#+end_src
+
+*** Python Pangram Scripts
+
+**** Python Pangram Download Script
+#+name:python-pangram-download-script
+#+begin_src sh
+exercism download --exercise=pangram --track=python
+#+end_src
+
+#+RESULTS: python-pangram-download-script
+: /Users/pine/Dev/Programming/Languages/Exercism/python/pangram
+
+**** Python Pangram Submit Script
+#+name:python-pangram-submit-script
+#+begin_src sh
+exercism submit python/pangram/pangram.py :mkdirp yes
+#+end_src
+
+*** Python Pangram Solution Code
+#+name:python-pangram-solution
+#+begin_src py -n :tangle python/pangram/pangram.py
+def is_pangram(sentence):
+    pass
+
+#+end_src
+
+{{{heading(Tests of Python Pangram Solution Code)}}}
+
+#+name:python-pangram-run-tests
+#+header: :dir python/pangram
+#+header: :results output :exports results
+#+begin_src sh
+pytest pangram_test.py 2>&1 > results_pangram
+cat results_pangram
+#+end_src
+
+#+RESULTS: python-pangram-run-tests
+
+#+name:python-pangram-metadata
+#+begin_src js :tangle python/pangram/.exercism/metadata.json :mkdirp yes :exports none
+{
+    "track":"python",
+    "exercise":"pangram",
+    "id":"6ee88bf5b1f54cbe9fe490f58a2526d8",
+    "url":"https://exercism.io/my/solutions/6ee88bf5b1f54cbe9fe490f58a2526d8",
+    "handle":"wlharvey4",
+    "is_requester":true,
+    "auto_approve":false
+}
+#+end_src
+
+*** Python Pangram Test Code
+#+name:python-pangram-test-code
+#+begin_src py -n :tangle python/pangram/pangram_test.py
+import unittest
+
+from pangram import is_pangram
+
+
+# Tests adapted from `problem-specifications//canonical-data.json` @ v1.4.1
+
+class PangramTest(unittest.TestCase):
+
+    def test_sentence_empty(self):
+        self.assertIs(is_pangram(''), False)
+
+    def test_recognizes_a_perfect_lower_case_pangram(self):
+        self.assertIs(is_pangram('abcdefghijklmnopqrstuvwxyz'), True)
+
+    def test_pangram_with_only_lower_case(self):
+        self.assertIs(
+            is_pangram('the quick brown fox jumps over the lazy dog'),
+            True)
+
+    def test_missing_character_x(self):
+        self.assertIs(
+            is_pangram('a quick movement of the enemy will '
+                       'jeopardize five gunboats'),
+            False)
+
+    def test_another_missing_character(self):
+        self.assertIs(is_pangram('five boxing wizards jump quickly at it'),
+                      False)
+
+    def test_pangram_with_underscores(self):
+        self.assertIs(
+            is_pangram('the_quick_brown_fox_jumps_over_the_lazy_dog'),
+            True)
+
+    def test_pangram_with_numbers(self):
+        self.assertIs(
+            is_pangram('the 1 quick brown fox jumps over the 2 lazy dogs'),
+            True)
+
+    def test_missing_letters_replaced_by_numbers(self):
+        self.assertIs(
+            is_pangram('7h3 qu1ck brown fox jumps ov3r 7h3 lazy dog'),
+            False)
+
+    def test_pangram_with_mixedcase_and_punctuation(self):
+        self.assertIs(
+            is_pangram('"Five quacking Zephyrs jolt my wax bed."'),
+            True)
+
+    def test_upper_and_lower_case_versions_of_the_same_character(self):
+        self.assertIs(
+            is_pangram('the quick brown fox jumped over the lazy FX'),
+            False)
 
 
 if __name__ == '__main__':
