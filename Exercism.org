@@ -1,8 +1,8 @@
 # -*- mode:org; fill-column:79; -*-
 #+Title:Exercism Exercises
 #+Author:Pinecone062
-#+Date:Last updated 2019-07-02 19:12
-#+Macro: version Version 0.4.14
+#+Date:Last updated 2019-07-02 22:35
+#+Macro: version Version 0.4.15
 {{{title}}} {{{version}}} {{{date}}}
 * Exercism Home
 :PROPERTIES:
@@ -6172,15 +6172,18 @@ exercism download --exercise=pangram --track=python
 **** Python Pangram Submit Script
 #+name:python-pangram-submit-script
 #+begin_src sh
-exercism submit python/pangram/pangram.py :mkdirp yes
+exercism submit python/pangram/pangram.py
 #+end_src
 
-*** Python Pangram Solution Code
-#+name:python-pangram-solution
-#+begin_src py -n :tangle python/pangram/pangram.py
-def is_pangram(sentence):
-    pass
+#+RESULTS: python-pangram-submit-script
+: https://exercism.io/my/solutions/6ee88bf5b1f54cbe9fe490f58a2526d8
 
+*** Python Pangram Solution Code
+#+caption:Solution Code pangram.py
+#+name:python-pangram-solution
+#+begin_src python -n :tangle python/pangram/pangram.py
+def is_pangram(sentence):
+    return len(set(list(filter(lambda e : e.isalpha(), list(''.join(sentence.lower().split())))))) == 26
 #+end_src
 
 {{{heading(Tests of Python Pangram Solution Code)}}}
@@ -6194,6 +6197,14 @@ cat results_pangram
 #+end_src
 
 #+RESULTS: python-pangram-run-tests
+: ============================= test session starts ==============================
+: platform darwin -- Python 3.7.3, pytest-4.0.2, py-1.7.0, pluggy-0.8.0
+: rootdir: /Users/pine/Dev/Programming/Languages/Exercism/python/pangram, inifile:
+: collected 10 items
+: 
+: pangram_test.py ..........                                               [100%]
+: 
+: ========================== 10 passed in 0.01 seconds ===========================
 
 #+name:python-pangram-metadata
 #+begin_src js :tangle python/pangram/.exercism/metadata.json :mkdirp yes :exports none
