@@ -1,8 +1,8 @@
 # -*- mode:org; fill-column:79; -*-
 #+Title:Exercism Exercises
 #+Author:Pinecone062
-#+Date:Last updated 2019-07-08 08:45
-#+Macro: version Version 0.4.17
+#+Date:Last updated 2019-07-08 10:48
+#+Macro: version Version 0.4.18
 {{{title}}} {{{version}}} {{{date}}}
 * Exercism Home
 :PROPERTIES:
@@ -5985,7 +5985,6 @@ class Matrix(object):
 
     def column(self, index):
         return [row[index-1] for row in self.matrix]
-
 #+end_src
 
 {{{heading(Python Matrix Test Results)}}}
@@ -5997,7 +5996,6 @@ cat test.results
 #+end_src
 
 **** Mentor Comments
-
 ***** yawpitch July 8, 2018
 This works quite well, so I'll approve, but consider the following:
 
@@ -6018,6 +6016,20 @@ One interesting subtlety of this problem: if you assign to the return value of
 ~Matrix.row (ie m.row(1)[0] = 5~) you mutate the underlying ~self.matrix~;
 however doing the same with the ~Matrix.column~ return value won't mutate the
 underlying data.  Perhaps return a copy of the row?
+
+***** yawpitch July 8, 2018
+Much better. This does still display that somewhat odd behaviour I mentioned
+though:
+
+#+name:odd-behavior-example
+#+begin_src python
+from matrix import Matrix
+m = Matrix("1 2 3\n4 5 6\n7 8 9")
+m.column(1)[0] = "X"
+m.print_matrix()   # "1 2 3 \n 4 5 6 \n 7 8 9"
+m.row(1)[0] = "X"
+m.print_matrix()    # "X 2 3 \n 4 5 6 \n 7 8 9"
+#+end_src
 
 **** Python Matrix Tests
 
