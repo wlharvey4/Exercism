@@ -1,8 +1,8 @@
 # -*- mode:org; fill-column:79; -*-
 #+Title:Exercism Exercises
 #+Author:Pinecone062
-#+Date:Last updated 2019-07-03 11:12
-#+Macro: version Version 0.4.16
+#+Date:Last updated 2019-07-08 08:45
+#+Macro: version Version 0.4.17
 {{{title}}} {{{version}}} {{{date}}}
 * Exercism Home
 :PROPERTIES:
@@ -5930,7 +5930,6 @@ It's possible to submit an incomplete solution so you can see how others have co
 #+end_src
 
 *** Python Matrix Scripts
-
 **** Python Matrix Download Script
 
 #+name:python-matrix-download-script
@@ -5967,7 +5966,6 @@ exercism submit python/matrix/matrix.py
 #+end_src
 
 *** Python Matrix Solution Code and Tests
-
 **** Python Matrix Solution Code
 
 This solution uses a list comprehension to create rows of integer numbers from
@@ -5975,15 +5973,18 @@ string numbers.
 
 #+name:python-matrix-solution
 #+begin_src python :tangle python/matrix/matrix.py :mkdirp yes
-  class Matrix(object):
-      def __init__(self, matrix_string):
-          self.matrix = [[int(num) for num in row.split(' ')] for row in matrix_string.split('\n')]
+class Matrix(object):
+    def __init__(self, matrix_string):
+        self.matrix = [
+            [int(num) for num in row.split(' ')]
+            for row in matrix_string.splitlines()
+        ]
 
-      def row(self, index):
-          return self.matrix[index - 1]
+    def row(self, index):
+        return self.matrix[index - 1]
 
-      def column(self, index):
-          return [row[index-1] for row in self.matrix]
+    def column(self, index):
+        return [row[index-1] for row in self.matrix]
 
 #+end_src
 
@@ -5994,6 +5995,29 @@ string numbers.
 python3 -m pytest matrix_test.py 2>test.results
 cat test.results
 #+end_src
+
+**** Mentor Comments
+
+***** yawpitch July 8, 2018
+This works quite well, so I'll approve, but consider the following:
+
+1. When it involves newlines from unknown sources it's generally a good idea to
+   use ~str.splitlines~ rather than split on the Unix-specific newline
+   character.
+
+2. You could do for ~row in matrix_string.splitlines()~ and skip assigning
+   rows.
+
+   #+cindex:list comprehension
+3. Consider how you could accomplish lines 7-12 with a /list comprehension/
+   instead of an explicit for loop.  Lines 18-22 could also be done with a list
+   comprehension.
+
+
+One interesting subtlety of this problem: if you assign to the return value of
+~Matrix.row (ie m.row(1)[0] = 5~) you mutate the underlying ~self.matrix~;
+however doing the same with the ~Matrix.column~ return value won't mutate the
+underlying data.  Perhaps return a copy of the row?
 
 **** Python Matrix Tests
 
