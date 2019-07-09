@@ -1,8 +1,8 @@
 # -*- mode:org; fill-column:79; -*-
 #+Title:Exercism Exercises
 #+Author:Pinecone062
-#+Date:Last updated 2019-07-09 08:49
-#+Macro: version Version 0.4.20
+#+Date:Last updated 2019-07-09 09:49
+#+Macro: version Version 0.4.21
 {{{title}}} {{{version}}} {{{date}}}
 * Exercism Home
 :PROPERTIES:
@@ -12,7 +12,6 @@
 - https://github.com/exercism
 
 ** Exercism Readme
-
 #+name:Exercism-Readme
 #+BEGIN_SRC txt :tangle README.md
   # Welcome to Exercism
@@ -105,6 +104,7 @@ This code extracts all of the Exercism files to disk upon Export.
 #+BEGIN_SRC emacs-lisp :results output :exports both
 (org-babel-tangle-file "Exercism.org")
 #+END_SRC
+
 * JavaScript Exercism Track
 - https://exercism.io/my/tracks/javascript
 ** Installing JavaScript
@@ -113,6 +113,7 @@ Install [[https://nodejs.org/en/][Node.js]] from its [[https://nodejs.org/en/dow
 or
 
 from a [[https://nodejs.org/en/download/package-manager/][package manager]].
+
 ** Required Tools for the JavaScript Track
 Each assignment needs some tools to run the tests.  *NOTE* that they can be
 installed by running the following command from within each assignment
@@ -261,6 +262,7 @@ directory:
   Because of this line, all of the rules marked “OK” on the rules page will be
   turned on.  ESLint will not lint your code unless you extend from a shared
   configuration or explicitly turn rules on in your configuration.
+
 ** Running the Tests
 Execute the tests with:
 
@@ -365,16 +367,6 @@ exercism download --exercise=hello-world --track=javascript
    yarn install
    #+end_src
 
-   #+RESULTS: javascript-hello-world-install
-   : yarn install v1.16.0
-   : info No lockfile found.
-   : [1/4] Resolving packages...
-   : [2/4] Fetching packages...
-   : [3/4] Linking dependencies...
-   : [4/4] Building fresh packages...
-   : success Saved lockfile.
-   : Done in 9.77s.
-
 3. After completing the code challenge, Execute the tests.
 
    This step will also run automatically upon an export of this Org file.
@@ -383,22 +375,6 @@ exercism download --exercise=hello-world --track=javascript
    #+begin_src sh :dir javascript/hello-world :results output :exports both
    yarn lint-test 2>&1
    #+end_src
-
-   #+RESULTS: javascript-hello-world-run-lint-test
-   #+begin_example
-   yarn run v1.16.0
-   $ eslint . && jest --no-cache ./* 
-   PASS ./hello-world.spec.js
-     Hello World
-       ✓ says hello (3ms)
-
-   Test Suites: 1 passed, 1 total
-   Tests:       1 passed, 1 total
-   Snapshots:   0 total
-   Time:        0.842s
-   Ran all test suites matching /.\/README.md|.\/babel.config.js|.\/hello-world.js|.\/hello-world.spec.js|.\/node_modules|.\/package.json|.\/yarn.lock/i.
-   Done in 1.91s.
-   #+end_example
 
    In the test suites all tests but the first have been skipped.  Once you get
    a test passing, you can enable the next one by changing ~xtest~ to ~test~.
@@ -413,12 +389,8 @@ exercism download --exercise=hello-world --track=javascript
   exercism submit $PWD/hello-world.js
   #+end_src
 
-  #+RESULTS: javascript-hello-world-submit
-  :     https://exercism.io/my/solutions/3e83e95453cb4b2e8d0a68027687fe72
-
 *** JavaScript Hello World Files
 **** JS Hello World README
-
 #+name:javascript-hello-world-readme
 #+begin_src markdown :tangle javascript/hello-world/README.md :mkdirp yes
 # Hello World
@@ -476,7 +448,6 @@ completed the exercise.
 #+end_src
 
 **** JS Hello World package.json
-
 #+name:javascript-hello-world-package.json
 #+begin_src js :tangle javascript/hello-world/package.json :mkdirp yes
 {
@@ -516,9 +487,8 @@ completed the exercise.
 #+end_src
 
 **** JS Hello World Babel config
-
 #+name:javascript-hello-world-babel.config.js
-#+begin_src js :tangle javascript/hello-world/babel.config.js :mkdirp yes
+#+begin_src js :tangle javascript/hello-world/babel.config.js
 module.exports = {
   presets: [
     [
@@ -536,9 +506,8 @@ module.exports = {
 #+end_src
 
 **** JS Hello World ESLint config
-
 #+name:javascript-hello-world-eslint-config
-#+begin_src js :tangle javascript/hello-world/.eslintrc :mkdirp yes
+#+begin_src js :tangle javascript/hello-world/.eslintrc
 {
   "root": true,
   "parser": "babel-eslint",
@@ -568,9 +537,8 @@ module.exports = {
 #+end_src
 
 **** JS Hello World Jest Spec
-
 #+name:javascript-hello-world-spec
-#+begin_src js :tangle javascript/hello-world/hello-world.spec.js :mkdirp yes
+#+begin_src js :tangle javascript/hello-world/hello-world.spec.js
 import { hello } from './hello-world';
 
 describe('Hello World', () => {
@@ -581,9 +549,8 @@ describe('Hello World', () => {
 #+end_src
 
 **** JS Hello World Solution
-
 #+name:javascript-hello-world-solution
-#+begin_src js :tangle javascript/hello-world/hello-world.js :mkdirp yes
+#+begin_src js :tangle javascript/hello-world/hello-world.js
 //
 // This is only a SKELETON file for the 'Hello World' exercise. It's been provided as a
 // convenience to get you started writing code faster.
@@ -1317,6 +1284,8 @@ or alternatively, type the command:
 yarn
 #+end_src
 
+#+RESULTS: javascript-resistor-color-duo-install-package-json
+
 **** JavaScript Resistor Color Duo Run Tests Script
 These tests will run automatically upon an export of this Org file.
 
@@ -1332,7 +1301,8 @@ To run these these from within a shell, navigate into the
 #+header: :dir javascript/resistor-color-duo
 #+header: :results output :exports results
 #+begin_src sh :tangle javascript/resistor-color-duo/run-tests.sh
-npm run lint-test
+npm run lint-test 2>&1 >test-results
+cat test-results
 #+end_src
 
 *** JavaScript Resistor Color Duo Solution Code
@@ -1343,8 +1313,21 @@ npm run lint-test
 // convenience to get you started writing code faster.
 //
 
-export const value = () => {
-  throw new Error("Remove this statement and implement this function");
+export const value = ([color1, color2]) => {
+    const band_colors = {
+        black: 0,
+        brown: 1,
+        red:   2,
+        orange:3,
+        yellow:4,
+        green: 5,
+        blue:  6,
+        violet:7,
+        grey:  8,
+        white: 9
+    };
+
+    return Number.parseInt(`${band_colors[color1.toLowerCase()]}${band_colors[color2.toLowerCase()]}`);
 };
 
 #+end_src
@@ -1359,15 +1342,15 @@ describe('Resistor Colors', () => {
     expect(value(['brown', 'black'])).toEqual(10);
   });
 
-  xtest('Blue and grey', () => {
+  test('Blue and grey', () => {
     expect(value(['blue', 'grey'])).toEqual(68);
   });
 
-  xtest('Yellow and violet', () => {
+  test('Yellow and violet', () => {
     expect(value(['yellow', 'violet'])).toEqual(47);
   });
 
-  xtest('Orange and orange', () => {
+  test('Orange and orange', () => {
     expect(value(['orange', 'orange'])).toEqual(33);
   });
 });
@@ -1481,7 +1464,6 @@ module.exports = {
 };
 
 #+end_src
-
 * TypeScript Exercism Track
 - https://exercism.io/my/tracks/typescript
 
@@ -9367,7 +9349,6 @@ emacs -batch -l ert -l hamming-test.el -f ert-run-tests-batch-and-exit
 #+RESULTS: elisp-hamming-run-tests
 
 * Exercism Makefile
-
 #+name:Exercism-Makefile
 #+begin_src makefile :tangle Makefile
 BASE_DIR := $(shell cat ~/.config/exercism/user.json | sed -n '/workspace/ s///p' | tr -d '": ')
