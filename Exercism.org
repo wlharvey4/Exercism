@@ -1,8 +1,8 @@
 # -*- mode:org; fill-column:79; -*-
 #+Title:Exercism Exercises
 #+Author:Pinecone062
-#+Date:Last updated 2019-07-08 10:48
-#+Macro: version Version 0.4.18
+#+Date:Last updated 2019-07-09 07:22
+#+Macro: version Version 0.4.19
 {{{title}}} {{{version}}} {{{date}}}
 * Exercism Home
 :PROPERTIES:
@@ -5593,7 +5593,7 @@ python3 -m pytest two_fer_test.py
 :level:    easy
 :END:
 
-*** Task for High Scores
+*** Python High Scores Task
 Manage a game player's High Score list.
 
 Your task is to build a high-score component of the classic Frogger game, one
@@ -5602,7 +5602,7 @@ arcade era.  Your task is to write methods that return the highest score from
 the list, the last added score, the three highest scores, and a report on the
 difference between the last and the highest scores.
 
-*** Readme for High Scores
+*** Python High Scores Readme
 
 #+name:High_Scores_Python_Readme
 #+begin_src txt :tangle python/high-scores/README.md :mkdirp yes
@@ -5638,6 +5638,25 @@ difference between the last and the highest scores.
   It's possible to submit an incomplete solution so you can see how others have completed the exercise.
 
 #+end_src
+
+*** Python High Scores Scripts
+**** Python High Scores Download Script
+#+name:python-high-scores-download
+#+begin_src sh
+exercism download --exercise=high-scores --track=python
+#+end_src
+
+#+RESULTS: python-high-scores-download
+: /Users/pine/Dev/Programming/Languages/Exercism/python/high-scores
+
+**** Python High Scores Submit Script
+#+name:python-high-scores-submit
+#+begin_src sh
+exercism submit python/high-scores/high_scores.py
+#+end_src
+
+#+RESULTS: python-high-scores-submit
+: https://exercism.io/my/solutions/485c09d00b054d51b421c3d06a7cec30
 
 *** Python High Scores Code
 #+name:High_Scores_Python
@@ -5684,7 +5703,7 @@ class HighScores(object):
     "handle":"wlharvey4",
     "is_requester":true,
     "auto_approve":false
-p}
+  }
 #+END_SRC
 
 *** Python High Scores Test
