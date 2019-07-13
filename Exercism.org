@@ -1,8 +1,8 @@
 # -*- mode:org; fill-column:79; -*-
 #+Title:Exercism Exercises
 #+Author:Pinecone062
-#+Date:Last updated 2019-07-11 08:59
-#+Macro: version Version 0.4.22
+#+Date:Last updated 2019-07-13 06:20
+#+Macro: version Version 0.4.23
 {{{title}}} {{{version}}} {{{date}}}
 * Exercism Home
 :PROPERTIES:
@@ -1767,6 +1767,297 @@ export const gigasecond = (moment) => {
     return new Date(moment.getTime() + 10**12);
 };
 
+#+end_src
+
+** JavaScript RNA Transcription
+*** JavaScript RNA Transcription Introduction
+Given a DNA strand, return its RNA complement (per RNA transcription).
+
+Both DNA and RNA strands are a sequence of nucleotides.
+
+The four nucleotides found in DNA are:
+- adenine (A)
+- cytosine (C)
+- guanine (G)
+- thymine (T)
+
+
+The four nucleotides found in RNA are
+- adenine (A)
+- cytosine (C)
+- guanine (G)
+- uracil (U)
+
+
+Given a DNA strand, its transcribed RNA strand is formed by replacing each
+nucleotide with its complement:
+
+- G -> C
+- C -> G
+- T -> A
+- A -> U
+
+
+{{{heading(Setup)}}}
+
+Go through the setup instructions for Javascript to install the necessary
+dependencies:
+
+
+{{{heading(Requirements)}}}
+
+Install assignment dependencies:
+
+#+name:javascript-rna-transcription-install-dependencies
+#+begin_src sh
+yarn
+#+end_src
+
+{{{heading(Making the test suite pass)}}}
+
+Execute the tests with:
+
+#+name:javascript-rna-transcription-run-tests
+#+begin_src sh
+yarn test
+#+end_src
+
+In the test suites all tests but the first have been skipped.  Once you get a
+test passing, you can enable the next one by changing ~xtest~ to ~test~.
+
+{{{heading(Source)}}}
+
+[[http://hyperphysics.phy-astr.gsu.edu/hbase/Organic/transcription.html][Hyperphysics Transcription]]
+
+*** JavaScript RNA Transcription Scripts
+
+**** JavaScript RNA Transcription Download Script
+#+name:javascript-rna-transcription-download-script
+#+begin_src sh
+exercism download --exercise=rna-transcription --track=javascript
+#+end_src
+
+#+RESULTS: javascript-rna-transcription-download-script
+: /Users/pine/Dev/Programming/Languages/Exercism/javascript/rna-transcription
+
+**** JavaScript RNA Transcription Submit Script
+#+name:javascript-rna-transcription-submit-script
+#+begin_src sh
+exercism submit javascript/rna-transcription/rna-transcription.js
+#+end_src
+
+*** JavaScript RNA Transcription README
+#+name:javascript-rna-transcription-README
+#+begin_src markdown :tangle javascript/rna-transcription/README.md
+# RNA Transcription
+
+Given a DNA strand, return its RNA complement (per RNA transcription).
+
+Both DNA and RNA strands are a sequence of nucleotides.
+
+The four nucleotides found in DNA are adenine (**A**), cytosine (**C**),
+guanine (**G**) and thymine (**T**).
+
+The four nucleotides found in RNA are adenine (**A**), cytosine (**C**),
+guanine (**G**) and uracil (**U**).
+
+Given a DNA strand, its transcribed RNA strand is formed by replacing
+each nucleotide with its complement:
+
+,* `G` -> `C`
+,* `C` -> `G`
+,* `T` -> `A`
+,* `A` -> `U`
+
+## Setup
+
+Go through the setup instructions for Javascript to install the necessary
+dependencies:
+
+[https://exercism.io/tracks/javascript/installation](https://exercism.io/tracks/javascript/installation)
+
+## Requirements
+
+Install assignment dependencies:
+
+```bash
+$ npm install
+```
+
+## Making the test suite pass
+
+Execute the tests with:
+
+```bash
+$ npm test
+```
+
+In the test suites all tests but the first have been skipped.
+
+Once you get a test passing, you can enable the next one by changing `xtest` to
+`test`.
+
+## Source
+
+Hyperphysics [http://hyperphysics.phy-astr.gsu.edu/hbase/Organic/transcription.html](http://hyperphysics.phy-astr.gsu.edu/hbase/Organic/transcription.html)
+
+## Submitting Incomplete Solutions
+
+It's possible to submit an incomplete solution so you can see how others have
+completed the exercise.
+
+#+end_src
+*** JavaScript RNA Transcription Metadata
+**** JavaScript RNA Transcription Node Package
+#+name:javascript-rna-transcription-node-package
+#+begin_src js :tangle javascript/rna-transcription/package.json
+{
+  "name": "exercism-javascript",
+  "version": "0.0.0",
+  "description": "Exercism exercises in Javascript.",
+  "author": "Katrina Owen",
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/exercism/javascript"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.2.3",
+    "@babel/core": "^7.4.0",
+    "@babel/preset-env": "^7.4.2",
+    "@types/jest": "^24.0.13",
+    "@types/node": "^12.0.4",
+    "babel-eslint": "^10.0.1",
+    "babel-jest": "^24.5.0",
+    "eslint": "^5.15.3",
+    "eslint-plugin-import": "^2.16.0",
+    "jest": "^24.5.0"
+  },
+  "jest": {
+    "modulePathIgnorePatterns": [
+      "package.json"
+    ]
+  },
+  "scripts": {
+    "test": "jest --no-cache ./*",
+    "watch": "jest --no-cache --watch ./*",
+    "lint": "eslint .",
+    "lint-test": "eslint . && jest --no-cache ./* "
+  },
+  "license": "MIT",
+  "dependencies": {}
+}
+
+#+end_src
+
+**** JavaScript RNA Transcription Babel Config
+#+name:javascript-rna-transcription-babel-config
+#+begin_src js :tangle javascript/rna-transcription/babel.config.js
+module.exports = {
+  presets: [
+    [
+      '@babel/env',
+      {
+        targets: {
+          node: 'current',
+        },
+        useBuiltIns: false,
+      },
+
+    ],
+  ],
+};
+#+end_src
+
+**** JavaScript RNA Transcription ESLint Config
+#+name:javascript-rna-transcription-eslint-config
+#+begin_src js :tangle javascript/rna-transcription/.eslintrc
+{
+  "root": true,
+  "parser": "babel-eslint",
+  "parserOptions": {
+    "ecmaVersion": 7,
+    "sourceType": "module"
+  },
+  "env": {
+    "es6": true,
+    "node": true,
+    "jest": true
+  },
+  "extends": [
+    "eslint:recommended",
+    "plugin:import/errors",
+    "plugin:import/warnings"
+  ],
+  "rules": {
+    "linebreak-style": "off",
+
+    "import/extensions": "off",
+    "import/no-default-export": "off",
+    "import/no-unresolved": "off",
+    "import/prefer-default-export": "off"
+  }
+}
+#+end_src
+
+**** JavaScript RNA Transcription Exercism Config
+#+name:javascript-rna-transcription-exercism-config
+#+header: :mkdirp yes
+#+begin_src js :tangle javascript/rna-transcription/.exercism/metadata.json
+{
+    "track":"javascript",
+    "exercise":"rna-transcription",
+    "id":"e4a461c666f24604878c855a90871b40",
+    "url":"https://exercism.io/my/solutions/e4a461c666f24604878c855a90871b40",
+    "handle":"wlharvey4",
+    "is_requester":true,
+    "auto_approve":false
+}
+#+end_src
+
+*** JavaScript RNA Transcription Test Specs
+#+name:javascript-rna-transcription-test-specs
+#+begin_src js :tangle javascript/rna-transcription/rna-transcription.spec.js
+import { toRna } from './rna-transcription'
+
+describe('Transcription', () => {
+  test('empty rna sequence', () => {
+    expect(toRna('')).toEqual('');
+  });
+
+  xtest('transcribes cytosine to guanine', () => {
+    expect(toRna('C')).toEqual('G');
+  });
+
+  xtest('transcribes guanine to cytosine', () => {
+    expect(toRna('G')).toEqual('C');
+  });
+
+  xtest('transcribes thymine to adenine', () => {
+    expect(toRna('T')).toEqual('A');
+  });
+
+  xtest('transcribes adenine to uracil', () => {
+    expect(toRna('A')).toEqual('U');
+  });
+
+  xtest('transcribes all dna nucleotides to their rna complements', () => {
+    expect(toRna('ACGTGGTCTTAA')).toEqual('UGCACCAGAAUU');
+  });
+})
+#+end_src
+
+*** JavaScript RNA Transcription Code
+#+name:javascript-rna-transcription-code
+#+begin_src js :tangle/rna-transcription/rna-transcription.js
+//
+// This is only a SKELETON file for the 'RNA Transcription' exercise. It's been provided as a
+// convenience to get you started writing code faster.
+//
+
+export const toRna = () => {
+  throw new Error("Remove this statement and implement this function");
+};
 #+end_src
 
 * TypeScript Exercism Track
