@@ -1,7 +1,7 @@
 # -*- mode:org; fill-column:79; -*-
 #+Title:Exercism Exercises
 #+Author:Pinecone062
-#+Date:Last updated 2019-07-13 06:20
+#+Date:Last updated 2019-07-13 06:35
 #+Macro: version Version 0.4.23
 {{{title}}} {{{version}}} {{{date}}}
 * Exercism Home
@@ -1809,6 +1809,8 @@ dependencies:
 Install assignment dependencies:
 
 #+name:javascript-rna-transcription-install-dependencies
+#+header: :dir javascript/rna-transcription
+#+header: :results output :exports results
 #+begin_src sh
 yarn
 #+end_src
@@ -1818,8 +1820,10 @@ yarn
 Execute the tests with:
 
 #+name:javascript-rna-transcription-run-tests
+#+header: :dir javascript/rna-transcription
+#+header: :results output :exports results
 #+begin_src sh
-yarn test
+yarn test 2>&1
 #+end_src
 
 In the test suites all tests but the first have been skipped.  Once you get a
@@ -1830,7 +1834,6 @@ test passing, you can enable the next one by changing ~xtest~ to ~test~.
 [[http://hyperphysics.phy-astr.gsu.edu/hbase/Organic/transcription.html][Hyperphysics Transcription]]
 
 *** JavaScript RNA Transcription Scripts
-
 **** JavaScript RNA Transcription Download Script
 #+name:javascript-rna-transcription-download-script
 #+begin_src sh
@@ -1848,6 +1851,7 @@ exercism submit javascript/rna-transcription/rna-transcription.js
 
 *** JavaScript RNA Transcription README
 #+name:javascript-rna-transcription-README
+#+header: :mkdirp yes
 #+begin_src markdown :tangle javascript/rna-transcription/README.md
 # RNA Transcription
 
@@ -2049,7 +2053,7 @@ describe('Transcription', () => {
 
 *** JavaScript RNA Transcription Code
 #+name:javascript-rna-transcription-code
-#+begin_src js :tangle/rna-transcription/rna-transcription.js
+#+begin_src js :tangle javascript/rna-transcription/rna-transcription.js
 //
 // This is only a SKELETON file for the 'RNA Transcription' exercise. It's been provided as a
 // convenience to get you started writing code faster.
