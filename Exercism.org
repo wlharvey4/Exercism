@@ -1,8 +1,8 @@
 # -*- mode:org; fill-column:79; -*-
 #+Title:Exercism Exercises
 #+Author:Pinecone062
-#+Date:Last updated 2019-07-13 06:35
-#+Macro: version Version 0.4.23
+#+Date:Last updated 2019-07-13 07:00
+#+Macro: version Version 0.4.24
 {{{title}}} {{{version}}} {{{date}}}
 * Exercism Home
 :PROPERTIES:
@@ -1815,6 +1815,16 @@ Install assignment dependencies:
 yarn
 #+end_src
 
+#+RESULTS: javascript-rna-transcription-install-dependencies
+: yarn install v1.16.0
+: info No lockfile found.
+: [1/4] Resolving packages...
+: [2/4] Fetching packages...
+: [3/4] Linking dependencies...
+: [4/4] Building fresh packages...
+: success Saved lockfile.
+: Done in 8.48s.
+
 {{{heading(Making the test suite pass)}}}
 
 Execute the tests with:
@@ -1825,6 +1835,27 @@ Execute the tests with:
 #+begin_src sh
 yarn test 2>&1
 #+end_src
+
+#+RESULTS: javascript-rna-transcription-run-tests
+#+begin_example
+yarn run v1.16.0
+$ jest --no-cache ./*
+PASS ./rna-transcription.spec.js
+  Transcription
+    ✓ empty rna sequence (3ms)
+    ✓ transcribes cytosine to guanine
+    ✓ transcribes guanine to cytosine
+    ✓ transcribes thymine to adenine
+    ✓ transcribes adenine to uracil
+    ✓ transcribes all dna nucleotides to their rna complements (1ms)
+
+Test Suites: 1 passed, 1 total
+Tests:       6 passed, 6 total
+Snapshots:   0 total
+Time:        0.864s
+Ran all test suites matching /.\/README.md|.\/babel.config.js|.\/node_modules|.\/package.json|.\/rna-transcription.js|.\/rna-transcription.spec.js|.\/yarn.lock/i.
+Done in 1.44s.
+#+end_example
 
 In the test suites all tests but the first have been skipped.  Once you get a
 test passing, you can enable the next one by changing ~xtest~ to ~test~.
@@ -1848,6 +1879,9 @@ exercism download --exercise=rna-transcription --track=javascript
 #+begin_src sh
 exercism submit javascript/rna-transcription/rna-transcription.js
 #+end_src
+
+#+RESULTS: javascript-rna-transcription-submit-script
+: https://exercism.io/my/solutions/e4a461c666f24604878c855a90871b40
 
 *** JavaScript RNA Transcription README
 #+name:javascript-rna-transcription-README
@@ -2029,23 +2063,23 @@ describe('Transcription', () => {
     expect(toRna('')).toEqual('');
   });
 
-  xtest('transcribes cytosine to guanine', () => {
+  test('transcribes cytosine to guanine', () => {
     expect(toRna('C')).toEqual('G');
   });
 
-  xtest('transcribes guanine to cytosine', () => {
+  test('transcribes guanine to cytosine', () => {
     expect(toRna('G')).toEqual('C');
   });
 
-  xtest('transcribes thymine to adenine', () => {
+  test('transcribes thymine to adenine', () => {
     expect(toRna('T')).toEqual('A');
   });
 
-  xtest('transcribes adenine to uracil', () => {
+  test('transcribes adenine to uracil', () => {
     expect(toRna('A')).toEqual('U');
   });
 
-  xtest('transcribes all dna nucleotides to their rna complements', () => {
+  test('transcribes all dna nucleotides to their rna complements', () => {
     expect(toRna('ACGTGGTCTTAA')).toEqual('UGCACCAGAAUU');
   });
 })
@@ -2059,8 +2093,15 @@ describe('Transcription', () => {
 // convenience to get you started writing code faster.
 //
 
-export const toRna = () => {
-  throw new Error("Remove this statement and implement this function");
+export const toRna = (dna) => {
+    const complement = {
+        G:'C',
+        C:'G',
+        T:'A',
+        A:'U',
+    };
+
+    return dna.split('').map(n => complement[n]).join('');
 };
 #+end_src
 
