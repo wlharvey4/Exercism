@@ -1,8 +1,8 @@
 # -*- mode:org; fill-column:79; -*-
 #+Title:Exercism Exercises
 #+Author:Pinecone062
-#+Date:Last updated 2019-07-13 07:00
-#+Macro: version Version 0.4.24
+#+Date:Last updated 2019-07-14 09:09
+#+Macro: version Version 0.4.25
 {{{title}}} {{{version}}} {{{date}}}
 * Exercism Home
 :PROPERTIES:
@@ -7859,7 +7859,202 @@ prove ./t
 : All tests successful.
 : Files=1, Tests=26,  0 wallclock secs ( 0.01 usr  0.01 sys +  0.06 cusr  0.00 csys =  0.08 CPU)
 : Result: PASS
+** Perl5 Leap
+*** Perl5 Leap Scripts
+**** Perl5 Leap Download Script
+#+name:perl5-leap-download-script
+#+begin_src sh
+exercism download --exercise=leap --track=perl5
+#+end_src
 
+#+RESULTS: perl5-leap-download-script
+: /Users/pine/Dev/Programming/Languages/Exercism/perl5/leap
+
+**** Perl5 Leap Submit Script
+#+name:perl5-leap-submit-script
+#+begin_src sh
+exercism submit perl5/leap/leap.pm
+#+end_src
+
+#+RESULTS: perl5-leap-submit-script
+: https://exercism.io/my/solutions/bc5ea753ab4440f8a8a9b57231b38402
+
+**** Perl5 Leap Run Tests Script
+#+name:perl5-leap-run-tests-script
+#+header: :dir perl5/leap
+#+header: :results output :exports results
+#+begin_src sh
+prove . -v
+#+end_src
+
+#+RESULTS: perl5-leap-run-tests-script
+#+begin_example
+./leap.t .. 
+# Seeded srand with seed '20190714' from local date.
+1..7
+ok 1 - Imported symbol: is_leap_year
+ok 2 - year not divisible by 4 in common year
+ok 3 - year divisible by 2, not divisible by 4 in common year
+ok 4 - year divisible by 4, not divisible by 100 in leap year
+ok 5 - year divisible by 100, not divisible by 400 in common year
+ok 6 - year divisible by 400 in leap year
+ok 7 - year divisible by 200, not divisible by 400 in common year
+ok
+All tests successful.
+Files=1, Tests=7,  0 wallclock secs ( 0.01 usr  0.00 sys +  0.06 cusr  0.00 csys =  0.07 CPU)
+Result: PASS
+#+end_example
+
+*** Perl5 Leap README
+#+name:perl5-leap-readme
+#+begin_src markdown :tangle perl5/leap/README.md :mkdirp yes
+# Leap
+
+Given a year, report if it is a leap year.
+
+The tricky thing here is that a leap year in the Gregorian calendar occurs:
+
+```text
+on every year that is evenly divisible by 4
+  except every year that is evenly divisible by 100
+    unless the year is also evenly divisible by 400
+```
+
+For example, 1997 is not a leap year, but 1996 is.  1900 is not a leap
+year, but 2000 is.
+
+## Notes
+
+Though our exercise adopts some very simple rules, there is more to
+learn!
+
+For a delightful, four minute explanation of the whole leap year
+phenomenon, go watch [this youtube video][video].
+
+[video]: http://www.youtube.com/watch?v=xX96xng7sAE
+## Source
+
+JavaRanch Cattle Drive, exercise 3 [http://www.javaranch.com/leap.jsp](http://www.javaranch.com/leap.jsp)
+
+## Submitting Incomplete Solutions
+It's possible to submit an incomplete solution so you can see how others have completed the exercise.
+
+#+end_src
+
+*** Perl5 Leap Tests
+#+name:perl5-leap-tests
+#+begin_src perl :tangle perl5/leap/leap.t
+#!/usr/bin/env perl
+use Test2::V0;
+use JSON::PP;
+
+use FindBin qw($Bin);
+use lib $Bin, "$Bin/local/lib/perl5"; # Find modules in the same dir as this file.
+
+use Leap qw(is_leap_year);
+
+my $C_DATA = do { local $/; decode_json(<DATA>); };
+plan 7;    # This is how many tests we expect to run.
+
+imported_ok qw(is_leap_year) or bail_out;
+
+for ( @{ $C_DATA->{cases} } ) {
+  is(
+    is_leap_year( $_->{input}{year} ),
+    $_->{expected} ? T : DF,    # Check if True, or Defined but False
+    $_->{description}
+  );
+}
+
+__DATA__
+{
+  "exercise": "leap",
+  "version": "1.5.1",
+  "cases": [
+    {
+      "description": "year not divisible by 4 in common year",
+      "property": "leapYear",
+      "input": {
+        "year": 2015
+      },
+      "expected": false
+    },
+    {
+      "description": "year divisible by 2, not divisible by 4 in common year",
+      "property": "leapYear",
+      "input": {
+        "year": 1970
+      },
+      "expected": false
+    },
+    {
+      "description": "year divisible by 4, not divisible by 100 in leap year",
+      "property": "leapYear",
+      "input": {
+        "year": 1996
+      },
+      "expected": true
+    },
+    {
+      "description": "year divisible by 100, not divisible by 400 in common year",
+      "property": "leapYear",
+      "input": {
+        "year": 2100
+      },
+      "expected": false
+    },
+    {
+      "description": "year divisible by 400 in leap year",
+      "property": "leapYear",
+      "input": {
+        "year": 2000
+      },
+      "expected": true
+    },
+    {
+      "description": "year divisible by 200, not divisible by 400 in common year",
+      "property": "leapYear",
+      "input": {
+        "year": 1800
+      },
+      "expected": false
+    }
+  ]
+}
+
+#+end_src
+
+*** Perl5 Leap Code
+#+name:perl5-leap-code
+#+begin_src perl :tangle perl5/leap/leap.pm
+# Declare package 'Leap'
+package Leap;
+use strict;
+use warnings;
+use Exporter 'import';
+our @EXPORT_OK = qw(is_leap_year);
+
+sub is_leap_year {
+  my ($year) = @_;
+  sub div { !($_[0] % $_[1]) }
+  div($year, 4) && !(div($year, 100) && !div($year, 400));
+}
+1;
+#+end_src
+
+#+name:perl5-leap-exercism-metadata
+#+header: :exports no
+#+begin_src js :tangle perl5/leap/.exercism/metadata.json :mkdirp yes
+{
+    "track":"perl5",
+    "exercise":"leap",
+    "id":"bc5ea753ab4440f8a8a9b57231b38402",
+    "url":"https://exercism.io/my/solutions/bc5ea753ab4440f8a8a9b57231b38402",
+    "handle":"wlharvey4",
+    "is_requester":true,
+    "auto_approve":false
+}
+#+end_src
 * OCaml Exercism Track
 - https://exercism.io/my/tracks/ocaml
 
