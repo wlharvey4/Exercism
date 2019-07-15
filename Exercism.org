@@ -1,8 +1,8 @@
 # -*- mode:org; fill-column:79; -*-
 #+Title:Exercism Exercises
 #+Author:Pinecone062
-#+Date:Last updated 2019-07-14 09:09
-#+Macro: version Version 0.4.25
+#+Date:Last updated 2019-07-15 08:14
+#+Macro: version Version 0.4.26
 {{{title}}} {{{version}}} {{{date}}}
 * Exercism Home
 :PROPERTIES:
@@ -7881,7 +7881,7 @@ exercism submit perl5/leap/leap.pm
 
 **** Perl5 Leap Run Tests Script
 #+name:perl5-leap-run-tests-script
-#+header: :dir perl5/leap
+#+header: :dir perl5/leap :mkdirp yes
 #+header: :results output :exports results
 #+begin_src sh
 prove . -v
@@ -8055,6 +8055,331 @@ sub is_leap_year {
     "auto_approve":false
 }
 #+end_src
+** Perl5 Grains
+*** Perl5 Grains Introduction
+Calculate the number of grains of wheat on a chessboard given that the number
+on each square doubles.
+
+There once was a wise servant who saved the life of a prince.  The king
+promised to pay whatever the servant could dream up.  Knowing that the king
+loved chess, the servant told the king he would like to have grains of
+wheat.  One grain on the first square of a chess board, with the number of
+grains doubling on each successive square.
+
+There are 64 squares on a chessboard (where square 1 has one grain, square 2
+has two grains, and so on).
+
+Write code that shows:
+
+- how many grains were on a given square, and
+
+- the total number of grains on the chessboard
+
+
+{{{heading(For bonus points)}}}
+
+Did you get the tests passing and the code clean? If you want to, these are
+some additional things you could try:
+
+- Optimize for speed.
+
+- Optimize for readability.
+
+
+Then please share your thoughts in a comment on the submission.  Did this
+experiment make the code better?  Worse?  Did you learn anything from it?
+
+{{{heading(Source)}}}
+
+JavaRanch Cattle Drive, exercise 6 http://www.javaranch.com/grains.jsp
+
+*** Perl5 Grains Readme
+#+name:perl5-grains-readme
+#+header: :mkdirp yes
+#+begin_src markdown :tangle perl5/grains/README.md
+# Grains
+
+Calculate the number of grains of wheat on a chessboard given that the number
+on each square doubles.
+
+There once was a wise servant who saved the life of a prince. The king
+promised to pay whatever the servant could dream up. Knowing that the
+king loved chess, the servant told the king he would like to have grains
+of wheat. One grain on the first square of a chess board, with the number
+of grains doubling on each successive square.
+
+There are 64 squares on a chessboard (where square 1 has one grain, square 2 has two grains, and so on).
+
+Write code that shows:
+- how many grains were on a given square, and
+- the total number of grains on the chessboard
+
+## For bonus points
+
+Did you get the tests passing and the code clean? If you want to, these
+are some additional things you could try:
+
+- Optimize for speed.
+- Optimize for readability.
+
+Then please share your thoughts in a comment on the submission. Did this
+experiment make the code better? Worse? Did you learn anything from it?
+## Source
+
+JavaRanch Cattle Drive, exercise 6 [http://www.javaranch.com/grains.jsp](http://www.javaranch.com/grains.jsp)
+
+## Submitting Incomplete Solutions
+It's possible to submit an incomplete solution so you can see how others have completed the exercise.
+
+#+end_src
+
+*** Perl5 Grains Scripts
+**** Perl5 Grains Download Script
+#+name:perl5-grains-download-script
+#+header: :results output :exports none
+#+begin_src sh
+exercism download --exercise=grains --track=perl5
+#+end_src
+
+#+RESULTS: perl5-grains-download-script
+: /Users/pine/Dev/Programming/Languages/Exercism/perl5/grains
+
+**** Perl5 Grains Run Tests Script
+#+name:perl5-grains-run-tests-script
+#+header: :results output :exports both
+#+header: :dir perl5/grains
+#+begin_src sh
+prove . -v
+#+end_src
+
+#+RESULTS: perl5-grains-run-tests-script
+#+begin_example
+./grains.t .. 
+# Seeded srand with seed '20190715' from local date.
+1..12
+ok 1 - Imported symbols: grains_on_square, total_grains
+ok 2 - square no. 1
+ok 3 - square no. 2
+ok 4 - square no. 3
+ok 5 - square no. 4
+ok 6 - square no. 16
+ok 7 - square no. 32
+ok 8 - square no. 64
+ok 9 - square 0 raises an exception
+ok 10 - negative square raises an exception
+ok 11 - square greater than 64 raises an exception
+ok 12 - returns the total number of grains on the board
+ok
+All tests successful.
+Files=1, Tests=12,  0 wallclock secs ( 0.01 usr  0.00 sys +  0.09 cusr  0.01 csys =  0.11 CPU)
+Result: PASS
+#+end_example
+
+**** Perl5 Grains Submit Script
+#+name:perl5-grains-submit-script
+#+header: :results output :exports none
+#+begin_src sh
+exercism submit perl5/grains/Grains.pm
+#+end_src
+
+#+RESULTS: perl5-grains-submit-script
+:     https://exercism.io/my/solutions/8100efca3ab744fdab92510c09acb14c
+: 
+
+#+name:perl5-grains-exercism-metadata
+#+header: :mkdirp yes :exports none
+#+begin_src js :tangle perl5/grains/.exercism/metadata.json
+{
+    "track":"perl5",
+    "exercise":"grains",
+    "id":"8100efca3ab744fdab92510c09acb14c",
+    "url":"https://exercism.io/my/solutions/8100efca3ab744fdab92510c09acb14c",
+    "handle":"wlharvey4",
+    "is_requester":true,
+    "auto_approve":false
+}
+#+end_src
+
+*** Perl5 Grains Tests
+#+name:perl5-grains-tests
+#+begin_src perl :tangle perl5/grains/grains.t
+#!/usr/bin/env perl
+use Test2::V0;
+use JSON::PP;
+
+use FindBin qw($Bin);
+use lib $Bin, "$Bin/local/lib/perl5";
+
+use Grains qw(grains_on_square total_grains);
+use Math::BigFloat;
+
+my $C_DATA = do { local $/; decode_json(<DATA>); };
+plan 12;
+
+imported_ok qw(grains_on_square total_grains) or bail_out;
+
+for my $case ( map @{ $_->{cases} // [$_] }, @{ $C_DATA->{cases} } ) {
+  if ( ref $case->{expected} ) {
+    like dies( sub { grains_on_square( $case->{input}{square} ) } ),
+      qr/$case->{expected}{error}/,
+      $case->{description};
+  }
+  elsif ( $case->{property} eq 'square' ) {
+    is(
+      Math::BigFloat->new(
+        grains_on_square( $case->{input}{square} )
+      )->numify,
+      number( $case->{expected} ),
+      'square no. ' . $case->{description}
+    );
+  }
+  elsif ( $case->{property} eq 'total' ) {
+    is(
+      Math::BigFloat->new( total_grains() )->numify,
+      number( $case->{expected} ),
+      $case->{description}
+    );
+  }
+}
+
+__DATA__
+{
+  "exercise": "grains",
+  "version": "1.2.0",
+  "comments": [
+    "The final tests of square test error conditions",
+    "In these cases you should expect an error as is idiomatic for your language"
+  ],
+  "cases": [
+    {
+      "description": "returns the number of grains on the square",
+      "cases": [
+        {
+          "description": "1",
+          "property": "square",
+          "input": {
+            "square": 1
+          },
+          "expected": 1
+        },
+        {
+          "description": "2",
+          "property": "square",
+          "input": {
+            "square": 2
+          },
+          "expected": 2
+        },
+        {
+          "description": "3",
+          "property": "square",
+          "input": {
+            "square": 3
+          },
+          "expected": 4
+        },
+        {
+          "description": "4",
+          "property": "square",
+          "input": {
+            "square": 4
+          },
+          "expected": 8
+        },
+        {
+          "description": "16",
+          "property": "square",
+          "input": {
+            "square": 16
+          },
+          "expected": 32768
+        },
+        {
+          "description": "32",
+          "property": "square",
+          "input": {
+            "square": 32
+          },
+          "expected": 2147483648
+        },
+        {
+          "description": "64",
+          "property": "square",
+          "input": {
+            "square": 64
+          },
+          "expected": 9223372036854775808
+        },
+        {
+          "description": "square 0 raises an exception",
+          "property": "square",
+          "input": {
+            "square": 0
+          },
+          "expected": {"error": "square must be between 1 and 64"}
+        },
+        {
+          "description": "negative square raises an exception",
+          "property": "square",
+          "input": {
+            "square": -1
+          },
+          "expected": {"error": "square must be between 1 and 64"}
+        },
+        {
+          "description": "square greater than 64 raises an exception",
+          "property": "square",
+          "input": {
+            "square": 65
+          },
+          "expected": {"error": "square must be between 1 and 64"}
+        }
+      ]
+    },
+    {
+      "description": "returns the total number of grains on the board",
+      "property": "total",
+      "input": {},
+      "expected": 18446744073709551615
+    }
+  ]
+}
+
+#+end_src
+
+*** Perl5 Grains Code
+#+name:perl5-grains-code
+#+begin_src perl :tangle perl5/grains/Grains.pm
+package Grains;
+use strict;
+use warnings;
+use Exporter 'import';
+our @EXPORT_OK = qw(grains_on_square total_grains);
+
+use Math::BigFloat;
+
+sub grains_on_square {
+  my ($square) = @_;
+  die "square must be between 1 and 64"
+      unless ($square > 0 && $square <=64);
+
+  eval {
+      my $num = Math::BigFloat->new($square) - Math::BigFloat->bone();
+      Math::BigInt->new(2) ** $num;
+  };
+}
+
+sub total_grains {
+    my $total = Math::BigInt->bzero();
+    for (my $sq = 1; $sq <= 64; $sq++) {
+        $total += grains_on_square(Math::BigInt->new($sq));
+    }
+    return $total;
+}
+
+1;
+#+end_src
+
 * OCaml Exercism Track
 - https://exercism.io/my/tracks/ocaml
 
