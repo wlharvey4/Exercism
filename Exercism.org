@@ -1,8 +1,8 @@
 # -*- mode:org; fill-column:79; -*-
 #+Title:Exercism Exercises
 #+Author:Pinecone062
-#+Date:Last updated 2019-07-15 08:14
-#+Macro: version Version 0.4.26
+#+Date:Last updated 2019-07-15 23:53
+#+Macro: version Version 0.4.27
 {{{title}}} {{{version}}} {{{date}}}
 * Exercism Home
 :PROPERTIES:
@@ -9184,6 +9184,262 @@ It's possible to submit an incomplete solution so you can see how others have co
     "is_requester":true,
     "auto_approve":false
 }
+#+end_src
+
+** OCaml Raindrops
+Convert a number to a string, the contents of which depend on the number's
+factors.
+
+*** OCaml Raindrops Introduction
+Convert a number to a string, the contents of which depend on the number's
+factors.
+
+- If the number has 3 as a factor, output 'Pling'.
+- If the number has 5 as a factor, output 'Plang'.
+- If the number has 7 as a factor, output 'Plong'.
+- If the number does not have 3, 5, or 7 as a factor, just pass the number's
+  digits straight through.
+
+
+{{{heading(Examples)}}}
+
+- 28's factors are 1, 2, 4, 7, 14, 28.
+  - In raindrop-speak, this would be a simple "Plong".
+- 30's factors are 1, 2, 3, 5, 6, 10, 15, 30.
+  - In raindrop-speak, this would be a "PlingPlang".
+- 34 has four factors: 1, 2, 17, and 34.
+  - In raindrop-speak, this would be "34".
+
+
+{{{heading(Getting Started)}}}
+
+For installation and learning resources, refer to the [[*OCaml Getting Started][exercism help page]].
+
+{{{heading(Installation)}}}
+
+To work on the exercises, you will need ~Opam~ and ~Base~.  Consult [[https://opam.ocaml.org/][opam]]
+website for instructions on how to install ~opam~ for your OS.  Once ~opam~ is
+installed open a terminal window and run the following command to install
+~base~:
+
+: opam install base
+
+To run the tests you will need ~OUnit~.  Install it using ~opam~:
+
+: opam install ounit
+
+{{{heading(Running Tests)}}}
+
+A Makefile is provided with a default target to compile your solution and run
+the tests.  At the command line, type:
+
+: make
+
+{{{heading(Interactive Shell)}}}
+
+~utop~ is a command line program which allows you to run Ocaml code
+interactively.  The easiest way to install it is via ~opam~:
+
+: opam install utop
+
+Consult [[https://github.com/diml/utop/blob/master/README.md][utop]] for more detail.
+
+*** OCaml Raindrops Readme
+#+name:ocaml-raindrops-readme
+#+header: :mkdirp yes
+#+begin_src markdown :tangle ocaml/raindrops/README.md
+# Raindrops
+
+Convert a number to a string, the contents of which depend on the number's factors.
+
+- If the number has 3 as a factor, output 'Pling'.
+- If the number has 5 as a factor, output 'Plang'.
+- If the number has 7 as a factor, output 'Plong'.
+- If the number does not have 3, 5, or 7 as a factor,
+  just pass the number's digits straight through.
+
+## Examples
+
+- 28's factors are 1, 2, 4, **7**, 14, 28.
+  - In raindrop-speak, this would be a simple "Plong".
+- 30's factors are 1, 2, **3**, **5**, 6, 10, 15, 30.
+  - In raindrop-speak, this would be a "PlingPlang".
+- 34 has four factors: 1, 2, 17, and 34.
+  - In raindrop-speak, this would be "34".
+
+
+## Getting Started
+1. [Install the Exercism CLI](https://exercism.io/cli-walkthrough).
+
+2. [Install OCaml](https://exercism.io/tracks/ocaml/installation).
+
+3. For library documentation, follow [Useful OCaml resources](https://exercism.io/tracks/ocaml/resources).
+
+## Running Tests
+A `Makefile` is provided with a default target to compile your solution and run the tests. At the command line, type:
+
+```bash
+make
+```
+
+## Submitting Incomplete Solutions
+It's possible to submit an incomplete solution so you can see how others have completed the exercise.
+
+## Feedback, Issues, Pull Requests
+The [exercism/ocaml](https://github.com/exercism/ocaml) repository on GitHub is
+the home for all of the Ocaml exercises.
+
+If you have feedback about an exercise, or want to help implementing a new
+one, head over there and create an issue or submit a PR. We welcome new
+contributors!
+
+## Source
+
+A variation on a famous interview question intended to weed out potential candidates. [http://jumpstartlab.com](http://jumpstartlab.com)
+
+
+#+end_src
+
+*** OCaml Raindrops Scripts
+**** OCaml Raindrops Download Script
+#+name:ocaml-raindrops-download-script
+#+begin_src sh :results output :exports none
+exercism download --exercise=raindrops --track=ocaml
+#+end_src
+
+#+RESULTS: ocaml-raindrops-download-script
+: /Users/pine/Dev/Programming/Languages/Exercism/ocaml/raindrops
+
+**** OCaml Raindrops Run Tests Scripts
+#+name:ocaml-raindrops-run-tests-script
+#+header: :dir ocaml/raindrops
+#+begin_src sh :results output :exports results
+make
+#+end_src
+
+**** OCaml Raindrops Submit Script
+#+name:ocaml-raindrops-submit-script
+#+begin_src sh :results output :exports none
+exercism submit ocaml/raindrops/raindrops.ml
+#+end_src
+
+#+name:ocaml-raindrops-exercism-metadata
+#+header: :exports none :mkdirp yes
+#+begin_src js :tangle ocaml/raindrops/.exercism/metadata.json
+{
+    "track":"ocaml",
+    "exercise":"raindrops",
+    "id":"021bc609157b481983cfd7ce4fb39fa7",
+    "url":"https://exercism.io/my/solutions/021bc609157b481983cfd7ce4fb39fa7",
+    "handle":"wlharvey4",
+    "is_requester":true,
+    "auto_approve":false
+}
+#+end_src
+
+*** OCaml Raindrops Toolchain
+**** OCaml Raindrops Dune
+#+name:ocaml-raindrops-dune
+#+begin_src ocaml :tangle ocaml/raindrops/dune
+(executable
+ (name test)
+ (libraries base oUnit))
+
+(alias
+  (name    runtest)
+  (deps    (:x test.exe))
+  (action  (run %{x})))
+#+end_src
+**** OCaml Raindrops Dune Project
+#+name:ocaml-raindrops-dune-project
+#+begin_src ocaml :tangle ocaml/raindrops/dune-project
+(lang dune 1.1)
+#+end_src
+**** OCaml Raindrops Makefile
+#+name:ocaml-raindrops-makefile
+#+begin_src make :tangle ocaml/raindrops/Makefile
+default: clean test
+
+test:
+	dune runtest
+
+clean:
+	dune clean
+
+.PHONY: clean
+
+#+end_src
+
+*** OCaml Raindrops Tests
+#+name:ocaml-raindrops-tests
+#+begin_src ocaml :tangle ocaml/raindrops/test.ml
+open OUnit2
+open Raindrops
+
+let ae exp got _test_ctxt = assert_equal ~printer:(fun x -> x) exp got
+
+let tests = [
+   "the sound for 1 is 1" >::
+      ae "1" (raindrop 1);
+   "the sound for 3 is Pling" >::
+      ae "Pling" (raindrop 3);
+   "the sound for 5 is Plang" >::
+      ae "Plang" (raindrop 5);
+   "the sound for 7 is Plong" >::
+      ae "Plong" (raindrop 7);
+   "the sound for 6 is Pling as it has a factor 3" >::
+      ae "Pling" (raindrop 6);
+   "2 to the power 3 does not make a raindrop sound as 3 is the exponent not the base" >::
+      ae "8" (raindrop 8);
+   "the sound for 9 is Pling as it has a factor 3" >::
+      ae "Pling" (raindrop 9);
+   "the sound for 10 is Plang as it has a factor 5" >::
+      ae "Plang" (raindrop 10);
+   "the sound for 14 is Plong as it has a factor of 7" >::
+      ae "Plong" (raindrop 14);
+   "the sound for 15 is PlingPlang as it has factors 3 and 5" >::
+      ae "PlingPlang" (raindrop 15);
+   "the sound for 21 is PlingPlong as it has factors 3 and 7" >::
+      ae "PlingPlong" (raindrop 21);
+   "the sound for 25 is Plang as it has a factor 5" >::
+      ae "Plang" (raindrop 25);
+   "the sound for 27 is Pling as it has a factor 3" >::
+      ae "Pling" (raindrop 27);
+   "the sound for 35 is PlangPlong as it has factors 5 and 7" >::
+      ae "PlangPlong" (raindrop 35);
+   "the sound for 49 is Plong as it has a factor 7" >::
+      ae "Plong" (raindrop 49);
+   "the sound for 52 is 52" >::
+      ae "52" (raindrop 52);
+   "the sound for 105 is PlingPlangPlong as it has factors 3, 5 and 7" >::
+      ae "PlingPlangPlong" (raindrop 105);
+   "the sound for 3125 is Plang as it has a factor 5" >::
+      ae "Plang" (raindrop 3125);
+]
+
+let () =
+  run_test_tt_main ("raindrops tests" >::: tests)
+
+#+end_src
+
+*** OCaml Raindrops Solution Code
+**** OCaml Raindrops Interface
+#+name:ocaml-raindrops-code
+#+begin_src ocaml -n :tangle ocaml/raindrops/raindrops.mli :mkdirp yes
+(*
+    If the number contains 3 as a factor, output 'Pling'.
+    If the number contains 5 as a factor, output 'Plang'.
+    If the number contains 7 as a factor, output 'Plong'.
+    If the number does not contain 3, 5, or 7 as a factor, just pass the number's digits straight through.
+*)
+val raindrop : int -> string
+#+end_src
+
+**** OCaml Raindrops Code
+#+name:ocaml-raindrops-code
+#+begin_src ocaml -n :tangle ocaml/raindrops/raindrops.ml
+let raindrop num =
+  Base.Int.to_string num;;
 #+end_src
 
 * Bash Exercism Track
