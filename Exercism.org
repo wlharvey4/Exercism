@@ -1,8 +1,8 @@
-# -*- mode:org; fill-column:79; -*-
+n# -*- mode:org; fill-column:79; -*-
 #+Title:Exercism Exercises
 #+Author:Pinecone062
-#+Date:Last updated 2019-07-15 23:53
-#+Macro: version Version 0.4.27
+#+Date:Last updated 2019-07-16 12:09
+#+Macro: version Version 0.4.28
 {{{title}}} {{{version}}} {{{date}}}
 * Exercism Home
 :PROPERTIES:
@@ -9323,6 +9323,10 @@ make
 exercism submit ocaml/raindrops/raindrops.ml
 #+end_src
 
+#+RESULTS: ocaml-raindrops-submit-script
+:     https://exercism.io/my/solutions/021bc609157b481983cfd7ce4fb39fa7
+: 
+
 #+name:ocaml-raindrops-exercism-metadata
 #+header: :exports none :mkdirp yes
 #+begin_src js :tangle ocaml/raindrops/.exercism/metadata.json
@@ -9438,8 +9442,33 @@ val raindrop : int -> string
 **** OCaml Raindrops Code
 #+name:ocaml-raindrops-code
 #+begin_src ocaml -n :tangle ocaml/raindrops/raindrops.ml
+open Base
+
 let raindrop num =
-  Base.Int.to_string num;;
+  let new_pl m =
+    match m with
+    | 3 -> "Pling"
+    | 5 -> "Plang"
+    | 7 -> "Plong"
+    | _ -> ""
+  in
+  let div_by n m = n % m = 0 in
+  let add_pl s pl =
+    match s with
+    | None -> Some pl
+    | Some pl' -> Some (pl' ^ pl)
+  in
+  let ans s n m =
+    if div_by n m
+    then add_pl s (new_pl m)
+    else s
+  in
+  let reveal s =
+    match s with
+    | None -> Int.to_string num
+    | Some s -> s
+  in
+  reveal (ans (ans (ans None num 3) num 5) num 7);;
 #+end_src
 
 * Bash Exercism Track
