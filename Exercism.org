@@ -1,8 +1,8 @@
-n# -*- mode:org; fill-column:79; -*-
+# -*- mode:org; fill-column:79; -*-
 #+Title:Exercism Exercises
 #+Author:Pinecone062
-#+Date:Last updated 2019-07-16 12:09
-#+Macro: version Version 0.4.28
+#+Date:Last updated 2019-07-18 00:33
+#+Macro: version Version 0.4.29
 {{{title}}} {{{version}}} {{{date}}}
 * Exercism Home
 :PROPERTIES:
@@ -2617,7 +2617,6 @@ completed the exercise.
 #+end_src
 
 *** TypeScript Hello World Scripts
-
 **** TypeScript Hello World Download Script
 
 #+name:typescript-hello-world-download
@@ -5813,7 +5812,6 @@ yargs@~3.10.0:
 #+end_src
 
 *** TypeScript Two Fer Code Solution and Test
-
 **** TypeScript Two Fer Code Solution
 
 #+name:typescript-two-fer-code-solution
@@ -6278,6 +6276,401 @@ describe('A leap year', () => {
   })
 })
 
+#+end_src
+** TypeScript Gigasecond
+:PROPERTIES:
+:exercise: side
+:END:
+*** TypeScript Gigasecond Introduction
+Given a moment, determine the moment that would be after a gigasecond has
+passed.
+
+A gigasecond is 10^9 (1,000,000,000) seconds.
+
+{{{heading(Setup)}}}
+
+Go through the [[https://exercism.io/tracks/typescript/installation][setup instructions]] for TypeScript to install the necessary
+dependencies.
+
+{{{heading(Requirements)}}}
+
+Install assignment dependencies:
+
+: $ yarn install
+
+{{{heading(Making the test suite pass)}}}
+
+Execute the tests with:
+
+: $ yarn test
+
+In the test suites all tests but the first have been skipped.  Once you get a
+test passing, you can enable the next one by changing ~xit~ to ~it~.
+
+{{{heading(Source)}}}
+
+[[http://pine.fm/LearnToProgram/?Chapter=09][Chapter 9]] in Chris Pine's online Learn to Program tutorial.
+
+*** TypeScript Gigasecond Scripts
+**** TypeScript Gigasecond Download Script
+#+name:typescript-gigasecond-download-script
+#+begin_src sh
+exercism download --exercise=gigasecond --terack=typescript
+#+end_src
+
+#+RESULTS: typescript-gigasecond-download-script
+: /Users/pine/Dev/Programming/Languages/Exercism/typescript/gigasecond
+
+**** TypeScript Gigasecond Test Script
+#+typescript-gigasecond-test-script
+#+header: :dir typescript/gigasecond
+#+header: :results output :exports results
+#+begin_src sh
+yarn lint && yarn test 2>&1
+#+end_src
+
+**** TypeScript Gigasecond Submit Script
+#+name:typescript-gigasecond-submit-script
+#+begin_src sh
+exercism submit typescript/gigasecond/gigasecond.ts
+#+end_src
+
+#+RESULTS: typescript-gigasecond-submit-script
+: https://exercism.io/my/solutions/5fa8d8dd0a1149f19d7db94c86a9848d
+
+#+name:typescript-gigasecond-exercism-metadata
+#+header: :mkdirp yes
+#+begin_src js :tangle typescript/gigasecond/.exercism/metadata.json
+{
+    "track":"typescript",
+    "exercise":"gigasecond",
+    "id":"5fa8d8dd0a1149f19d7db94c86a9848d",
+    "url":"https://exercism.io/my/solutions/5fa8d8dd0a1149f19d7db94c86a9848d",
+    "handle":"wlharvey4",
+    "is_requester":true,
+    "auto_approve":false
+}
+#+end_src
+
+*** TypeScript Gigasecond Readme
+#+name:typescript-gigasecond-readme
+#+header: :mkdirp yes
+#+begin_src markdown :tangle typescript/gigasecond/README.md
+# Gigasecond
+
+Given a moment, determine the moment that would be after a gigasecond
+has passed.
+
+A gigasecond is 10^9 (1,000,000,000) seconds.
+
+## Setup
+
+Go through the setup instructions for TypeScript to install the necessary
+dependencies:
+
+[https://exercism.io/tracks/typescript/installation](https://exercism.io/tracks/typescript/installation)
+
+## Requirements
+
+Install assignment dependencies:
+
+```bash
+$ yarn install
+```
+
+## Making the test suite pass
+
+Execute the tests with:
+
+```bash
+$ yarn test
+```
+
+In the test suites all tests but the first have been skipped.
+
+Once you get a test passing, you can enable the next one by changing `xit` to
+`it`.
+
+## Source
+
+Chapter 9 in Chris Pine's online Learn to Program tutorial. [http://pine.fm/LearnToProgram/?Chapter=09](http://pine.fm/LearnToProgram/?Chapter=09)
+
+## Submitting Incomplete Solutions
+
+It's possible to submit an incomplete solution so you can see how others have
+completed the exercise.
+
+#+end_src
+
+*** TypeScript Gigasecond Metadata
+**** TypeScript Gigasecond Package File
+#+name:typescript-gigasecond-package-file
+#+begin_src js :tangle typescript/gigasecond/package.json
+{
+  "name": "xtypescript",
+  "version": "1.0.0",
+  "description": "Exercism exercises in Typescript.",
+  "author": "",
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/exercism/xtypescript"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "tsc --noEmit -p . && jest --no-cache",
+    "lint": "tsc --noEmit -p . && tslint \"*.ts?(x)\"",
+    "lintci": "tslint \"*.ts?(x)\" --force"
+  },
+  "dependencies": {
+    "@types/jest": "^21.1.5",
+    "@types/node": "^8.0.47",
+    "jest": "^21.2.1",
+    "ts-jest": "^21.1.3",
+    "tslint": "^5.8.0",
+    "typescript": "^2.5.3"
+  },
+  "jest": {
+    "transform": {
+      ".(ts|tsx)": "<rootDir>/node_modules/ts-jest/preprocessor.js"
+    },
+    "testRegex": "(/__tests__/.*|\\.(test|spec))\\.(ts|tsx|js)$",
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js"
+    ]
+  }
+}
+
+#+end_src
+**** TypeScript Gigasecond Package Installation
+#+name:typescript-gigasecond-package-installation
+#+header: :dir typescript/gigasecond
+#+header: :results output :exports results
+#+begin_src sh
+yarn
+#+end_src
+
+#+RESULTS: typescript-gigasecond-package-installation
+: yarn install v1.17.3
+: info No lockfile found.
+: [1/4] Resolving packages...
+: [2/4] Fetching packages...
+: [3/4] Linking dependencies...
+: [4/4] Building fresh packages...
+: success Saved lockfile.
+: Done in 6.27s.
+
+**** TypeScript Gigasecond TSConfig
+#+name:typescript-gigasecond-tsconfig
+#+begin_src js :tangle typescript/gigasecond/tsconfig.json
+{
+    "compilerOptions": { 
+        "target": "es2017",
+        "module": "commonjs",
+        "alwaysStrict": true,
+        "noUnusedLocals": true,
+        "noUnusedParameters": true,
+        "noImplicitAny": true,
+        "strictNullChecks": true,
+        "preserveConstEnums": true,
+        "noFallthroughCasesInSwitch":true,
+        "noImplicitThis":true,
+        "noImplicitReturns":true,
+        "sourceMap": true,
+        "noEmitOnError": true,
+        "outDir": "./build"
+    },
+    "compileOnSave": true, 
+    "exclude": [
+        "node_modules"
+    ]
+}
+
+#+end_src
+**** TypeScript Gigasecond TSLint
+#+name:typescript-gigasecond-tslint
+#+begin_src js :tangle typescript/gigasecond/tslint.json
+{
+    "jsRules": {
+        "class-name": true,
+        "comment-format": [
+            true,
+            "check-space"
+        ],
+        "indent": [
+            true,
+            "spaces"
+        ],
+        "no-duplicate-variable": true,
+        "no-eval": true,
+        "no-trailing-whitespace": true,
+        "no-unsafe-finally": true,
+        "one-line": [
+            true,
+            "check-open-brace",
+            "check-whitespace"
+        ],
+        "quotemark": [
+            false,
+            "double"
+        ],
+        "semicolon": [
+            true,
+            "never"
+        ],
+        "triple-equals": [
+            true,
+            "allow-null-check"
+        ],
+        "variable-name": [
+            true,
+            "ban-keywords"
+        ],
+        "whitespace": [
+            true,
+            "check-branch",
+            "check-decl",
+            "check-operator",
+            "check-separator",
+            "check-type"
+        ]
+    },
+    "rules": {
+        "class-name": true,
+        "comment-format": [
+            true,
+            "check-space"
+        ],
+        "indent": [
+            true,
+            "spaces"
+        ],
+        "no-eval": true,
+        "no-internal-module": true,
+        "no-trailing-whitespace": true,
+        "no-unsafe-finally": true,
+        "no-var-keyword": true,
+        "one-line": [
+            true,
+            "check-open-brace",
+            "check-whitespace"
+        ],
+        "semicolon": [
+            true,
+            "never"
+        ],
+        "triple-equals": [
+            true,
+            "allow-null-check"
+        ],
+        "typedef-whitespace": [
+            true,
+            {
+                "call-signature": "nospace",
+                "index-signature": "nospace",
+                "parameter": "nospace",
+                "property-declaration": "nospace",
+                "variable-declaration": "nospace"
+            }
+        ],
+        "variable-name": [
+            true,
+            "ban-keywords"
+        ],
+        "whitespace": [
+            true,
+            "check-branch",
+            "check-decl",
+            "check-operator",
+            "check-separator",
+            "check-type"
+        ],
+        "no-namespace": true, 
+        "prefer-for-of": true,
+        "only-arrow-functions": [true, "allow-declarations"],
+        "no-var-requires": true,
+        "no-any": true,
+        "curly": true,
+        "forin": true,
+        "no-arg": true,
+        "label-position": true,
+        "no-conditional-assignment": true,
+        "no-console": [true, "log", "error"],
+        "no-construct": true,
+        "no-duplicate-variable": true,
+        "no-empty": true,
+        "no-invalid-this": [true, "check-function-in-method"],
+        "no-misused-new": true,
+        "no-null-keyword": true,
+        "no-string-literal": true,
+        "radix": true,
+        "typeof-compare": true,
+        "use-isnan": true,
+        "prefer-const": true,
+        "array-type": [true, "array-simple"],
+        "arrow-parens": true,
+        "new-parens": true,
+        "no-consecutive-blank-lines": [true,1],
+        "no-parameter-properties": true,
+        "no-unnecessary-initializer": true,
+        "object-literal-shorthand": true,
+        "object-literal-key-quotes": [true, "as-needed"]
+    }
+}
+
+#+end_src
+
+*** TypeScript Gigasecond Tests and Solution
+**** TypeScript Gigasecond Tests
+#+name:typescrpt-gigasecond-tests
+#+begin_src js -n :tangle typescript/gigasecond/gigasecond.test.ts
+import Gigasecond from './gigasecond'
+
+describe('Gigasecond', () => {
+
+  it('tells a gigasecond anniversary since midnight', () => {
+    const gs = new Gigasecond(new Date(Date.UTC(2015, 8, 14)))
+    const expectedDate = new Date(Date.UTC(2047, 4, 23, 1, 46, 40))
+    expect(gs.date()).toEqual(expectedDate)
+  })
+
+  it('tells the anniversary is next day when you are born at night', () => {
+    const gs = new Gigasecond(new Date(Date.UTC(2015, 8, 14, 23, 59, 59)))
+    const expectedDate = new Date(Date.UTC(2047, 4, 24, 1, 46, 39))
+    expect(gs.date()).toEqual(expectedDate)
+  })
+
+  it('even works before 1970 (beginning of Unix epoch )', () => {
+    const gs = new Gigasecond(new Date(Date.UTC(1959, 6, 19, 5, 13, 45)))
+    const expectedDate = new Date(Date.UTC(1991, 2, 27, 7, 0, 25))
+    expect(gs.date()).toEqual(expectedDate)
+  })
+
+  it('make sure calling "date" doesn\'t mutate value', () => {
+    const gs = new Gigasecond(new Date(Date.UTC(1959, 6, 19, 5, 13, 45)))
+    const expectedDate = new Date(Date.UTC(1991, 2, 27, 7, 0, 25))
+    gs.date()
+    expect(gs.date()).toEqual(expectedDate)
+  })
+})
+
+#+end_src
+**** TypeScript Gigasecond Solution
+#+name:typescript-gigasecond-solution
+#+begin_src js -n :tangle typescript/gigasecond/gigasecond.ts
+export default class Gigasecond {
+    moment: Date
+
+    constructor(moment: Date) {
+        this.moment = moment
+    }
+
+    date() {
+        return new Date(this.moment.getTime() + 10 ** 12)
+    }
+}
 #+end_src
 * Python Exercism Track
 - http://exercism.io/languages/python
