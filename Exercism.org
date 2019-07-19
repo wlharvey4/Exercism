@@ -1,8 +1,8 @@
 # -*- mode:org; fill-column:79; -*-
 #+Title:Exercism Exercises
 #+Author:Pinecone062
-#+Date:Last updated 2019-07-18 00:33
-#+Macro: version Version 0.4.29
+#+Date:Last updated 2019-07-19 08:38
+#+Macro: version Version 0.4.30
 {{{title}}} {{{version}}} {{{date}}}
 * Exercism Home
 :PROPERTIES:
@@ -6937,36 +6937,68 @@ difference between the last and the highest scores.
 
 #+name:High_Scores_Python_Readme
 #+begin_src txt :tangle python/high-scores/README.md :mkdirp yes
-  # High Scores
+# High Scores
 
-  Manage a game player's High Score list.
+Manage a game player's High Score list.
 
-  Your task is to build a high-score component of the classic Frogger
-  game, one of the highest selling and addictive games of all time, and
-  a classic of the arcade era. Your task is to write methods that return
-  the highest score from the list, the last added score, the three
-  highest scores, and a report on the difference between the last and
-  the highest scores.
+Your task is to build a high-score component of the classic Frogger game, one of the highest selling and addictive games of all time, and a classic of the arcade era. Your task is to write methods that return the highest score from the list, the last added score and the three highest scores.
 
-  ## Submitting Exercises
+In this exercise, you're going to use and manipulate lists. Python lists are very versatile, and you'll find yourself using them again and again in problems both simple and complex.
 
-  Note that, when trying to submit an exercise, make sure the solution
-  is in the `exercism/python/<exerciseName>` directory.
-
-  For example, if you're submitting `bob.py` for the Bob exercise, the
-  submit command would be something like `exercism submit
-  <path_to_exercism_dir>/python/bob/bob.py`.
+- [**Data Structures (Python 3 Documentation Tutorial)**](https://docs.python.org/3/tutorial/datastructures.html)
+- [**Lists and Tuples in Python (Real Python)**](https://realpython.com/python-lists-tuples/)
+- [**Python Lists (Google for Education)**](https://developers.google.com/edu/python/lists)
 
 
-  For more detailed information about running tests, code style and linting,
-  please see the [help page](http://exercism.io/languages/python).
 
-  ## Source
+## Exception messages
 
-  Tribute to the eighties' arcade game Frogger
+Sometimes it is necessary to raise an exception. When you do this, you should include a meaningful error message to
+indicate what the source of the error is. This makes your code more readable and helps significantly with debugging. Not
+every exercise will require you to raise an exception, but for those that do, the tests will only pass if you include
+a message.
 
-  ## Submitting Incomplete Solutions
-  It's possible to submit an incomplete solution so you can see how others have completed the exercise.
+To raise a message with an exception, just write it as an argument to the exception type. For example, instead of
+`raise Exception`, you should write:
+
+```python
+raise Exception("Meaningful message indicating the source of the error")
+```
+
+## Running the tests
+
+To run the tests, run the appropriate command below ([why they are different](https://github.com/pytest-dev/pytest/issues/1629#issue-161422224)):
+
+- Python 2.7: `py.test high_scores_test.py`
+- Python 3.4+: `pytest high_scores_test.py`
+
+Alternatively, you can tell Python to run the pytest module (allowing the same command to be used regardless of Python version):
+`python -m pytest high_scores_test.py`
+
+### Common `pytest` options
+
+- `-v` : enable verbose output
+- `-x` : stop running tests on first failure
+- `--ff` : run failures from previous test before running other test cases
+
+For other options, see `python -m pytest -h`
+
+## Submitting Exercises
+
+Note that, when trying to submit an exercise, make sure the solution is in the `$EXERCISM_WORKSPACE/python/high-scores` directory.
+
+You can find your Exercism workspace by running `exercism debug` and looking for the line that starts with `Workspace`.
+
+For more detailed information about running tests, code style and linting,
+please see [Running the Tests](http://exercism.io/tracks/python/tests).
+
+## Source
+
+Tribute to the eighties' arcade game Frogger
+
+## Submitting Incomplete Solutions
+
+It's possible to submit an incomplete solution so you can see how others have completed the exercise.
 
 #+end_src
 
@@ -6977,8 +7009,14 @@ difference between the last and the highest scores.
 exercism download --exercise=high-scores --track=python
 #+end_src
 
-#+RESULTS: python-high-scores-download
-: /Users/pine/Dev/Programming/Languages/Exercism/python/high-scores
+**** Python High Scores Run Tests
+#+name:python-high-scores-run-tests
+#+header: :shebang "#!/usr/bin/env bash"
+#+header: :dir python/high-scores
+#+header: :results output :exports results
+#+begin_src sh :tangle python/high-scores/high_scores_run_tests.sh
+python3 -m pytest high_scores_test.py
+#+end_src
 
 **** Python High Scores Submit Script
 #+name:python-high-scores-submit
@@ -6988,41 +7026,6 @@ exercism submit python/high-scores/high_scores.py
 
 #+RESULTS: python-high-scores-submit
 : https://exercism.io/my/solutions/485c09d00b054d51b421c3d06a7cec30
-
-*** Python High Scores Code
-#+name:High_Scores_Python
-#+begin_src python -n :tangle python/high-scores/high_scores.py :mkdirp yes
-class HighScores(object):
-    def __init__(self, scores):
-        self.scores = scores
-
-    def latest(self):
-        return self.scores[-1]
-
-    def personal_best(self):
-        best = 0
-        for score in self.scores:
-            if score > best:
-                best = score
-
-        return best
-
-    def personal_top(self):
-        pt = self.scores[:]
-        pt.sort(reverse=True)
-        return pt[:3]
-
-    def report(self):
-        latest = self.scores[-1]
-        best = self.personal_best()
-        report = f"Your latest score was {latest}. "
-        if latest == best:
-            report += f"That's your personal best!"
-        else:
-            report += f"That's {best - latest} short of your personal best!"
-
-        return report
-#+end_src
 
 #+name:python-high-scores-metadata
 #+BEGIN_SRC js :tangle python/high-scores/.exercism/metadata.json :mkdirp yes :exports none
@@ -7037,102 +7040,105 @@ class HighScores(object):
   }
 #+END_SRC
 
-*** Python High Scores Test
-#+name:High_Scores_Python_Test
-#+begin_src python :tangle python/high-scores/high_scores_test.py :mkdirp yes
+*** Python High Scores Code
+#+cindex:@code{sorted()} library function
+The built-in library function ~sorted()~ returns a sorted list (that is, the
+original list is unchanged).
+
+#+name:High_Scores_Python
+#+begin_src python -n :tangle python/high-scores/high_scores.py :mkdirp yes
+def latest(scores):
+    return scores[-1]
+
+def personal_best(scores):
+    return max(scores)
+
+def personal_top_three(scores):
+    return sorted(scores, reverse=True)[:3]
+
+#+end_src
+
+**** Python High Scores Mentor Comments
+***** Comment 1 from =mfeif=
+Hi there!
+
+Great! Your tests pass. I see that you modified the tests in order to work with
+your class. I don't have a problem with that, but you may not always be able to
+change the api like that, so consider that perhaps for future exercises.
+
+That said, you've clearly solved the problems, and are working with lists and
+sorting well. (Though, you're not using your own function for 'latest' in your
+report ;-) )
+
+A couple of things that might be fun to try:
+
+1. There is a cool way to make personal_best() much simpler using a built-in
+   python function.
+2. There is also a cool way to do personal_top() without having to make a
+   manual copy, also using a built-in function.
+3. If you'd like to explore those things, give it a shot, or if you'd just like
+   to move on, let me know and I'll mark this as completed.
+
+***** Comment 1a from =mfeif=
+It's come to my attention that you may not have modified the tests, and you may
+have an old version of the exercise download; if that's so, my apologies.
+
+***** Comment 1 from me to =mfeif=
+I will update and give it another go, then.
+
+*** Python High Scores Tests
+#+name:python-high-scores-tests
+#+begin_src python -n :tangle python/high-scores/high_scores_test.py
 import unittest
 
-from high_scores import HighScores
+from high_scores import latest, personal_best, personal_top_three
 
 
-# Tests adapted from `problem-specifications//canonical-data.json` @ v2.0.0
+# Tests adapted from `problem-specifications//canonical-data.json` @ v4.0.0
 
 
 class HighScoreTest(unittest.TestCase):
-    def test_list_of_scores(self):
-        scores = [30, 50, 20, 70]
-        expected = [30, 50, 20, 70]
-        self.assertEqual(HighScores(scores).scores, expected)
 
     def test_latest_score(self):
         scores = [100, 0, 90, 30]
         expected = 30
-        self.assertEqual(HighScores(scores).latest(), expected)
+        self.assertEqual(latest(scores), expected)
 
     def test_personal_best(self):
         scores = [40, 100, 70]
         expected = 100
-        self.assertEqual(HighScores(scores).personal_best(), expected)
+        self.assertEqual(personal_best(scores), expected)
 
-    def test_personal_top(self):
-        scores = [50, 30, 10]
-        expected = [50, 30, 10]
-        self.assertEqual(HighScores(scores).personal_top(), expected)
-
-    def test_personal_top_highest_to_lowest(self):
-        scores = [20, 10, 30]
-        expected = [30, 20, 10]
-        self.assertEqual(HighScores(scores).personal_top(), expected)
-
-    def test_personal_top_when_there_is_a_tie(self):
-        scores = [40, 20, 40, 30]
-        expected = [40, 40, 30]
-        self.assertEqual(HighScores(scores).personal_top(), expected)
-
-    def test_personal_top_when_there_are_less_than_3(self):
-        scores = [30, 70]
-        expected = [70, 30]
-        self.assertEqual(HighScores(scores).personal_top(), expected)
-
-    def test_personal_top_when_there_is_only_one(self):
-        scores = [40]
-        expected = [40]
-        self.assertEqual(HighScores(scores).personal_top(), expected)
-
-    def test_personal_top_from_a_long_list(self):
+    def test_personal_top_three_from_a_long_list(self):
         scores = [10, 30, 90, 30, 100, 20, 10, 0, 30, 40, 40, 70, 70]
         expected = [100, 90, 70]
-        self.assertEqual(HighScores(scores).personal_top(), expected)
+        self.assertEqual(personal_top_three(scores), expected)
 
-    def test_message_for_new_personal_best(self):
-        scores = [20, 40, 0, 30, 70]
-        expected = "Your latest score was 70. That's your personal best!"
-        self.assertEqual(HighScores(scores).report(), expected)
+    def test_personal_top_three_highest_to_lowest(self):
+        scores = [20, 10, 30]
+        expected = [30, 20, 10]
+        self.assertEqual(personal_top_three(scores), expected)
 
-    def test_message_when_latest_score_is_not_the_highest_score(self):
-        scores = [20, 100, 0, 30, 70]
-        expected = (
-            "Your latest score was 70. That's 30 short of your personal best!"
-        )
-        self.assertEqual(HighScores(scores).report(), expected)
+    def test_personal_top_three_when_there_is_a_tie(self):
+        scores = [40, 20, 40, 30]
+        expected = [40, 40, 30]
+        self.assertEqual(personal_top_three(scores), expected)
 
-    def test_message_for_repeated_personal_best(self):
-        scores = [20, 70, 50, 70, 30]
-        expected = (
-            "Your latest score was 30. That's 40 short of your personal best!"
-        )
-        self.assertEqual(HighScores(scores).report(), expected)
+    def test_personal_top_three_when_there_are_less_than_3(self):
+        scores = [30, 70]
+        expected = [70, 30]
+        self.assertEqual(personal_top_three(scores), expected)
+
+    def test_personal_top_three_when_there_is_only_one(self):
+        scores = [40]
+        expected = [40]
+        self.assertEqual(personal_top_three(scores), expected)
 
 
 if __name__ == "__main__":
     unittest.main()
+
 #+end_src
-
-#+name:Test_High_Score_Python
-#+begin_src sh :dir python/high-scores :results output :exports both
-python3 -m pytest high_scores_test.py
-#+end_src
-
-#+RESULTS: Test_High_Score_Python
-: ============================= test session starts ==============================
-: platform darwin -- Python 3.7.3, pytest-4.4.1, py-1.8.0, pluggy-0.9.0
-: rootdir: /usr/local/dev/programming/Languages/Exercism/python/high-scores
-: collected 12 items
-: 
-: high_scores_test.py ............                                         [100%]
-: 
-: ========================== 12 passed in 0.08 seconds ===========================
-
 ** Python Matrix
 Given a string representing a matrix of numbers, return the rows and columns of
 that matrix.  So given a string with embedded newlines like:
