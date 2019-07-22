@@ -1,8 +1,8 @@
 # -*- mode:org; fill-column:79; -*-
 #+Title:Exercism Exercises
 #+Author:Pinecone062
-#+Date:Last updated 2019-07-21 12:12
-#+Macro: version Version 0.4.31
+#+Date:Last updated 2019-07-22 09:23
+#+Macro: version Version 0.4.32
 {{{title}}} {{{version}}} {{{date}}}
 * Exercism Home
 :PROPERTIES:
@@ -10435,14 +10435,26 @@ exercism download --exercise=reverse-string --track=bash
 #+header: :dir bash/reverse-string
 #+header: :results output :exports results
 #+begin_src sh
-./reverse_string_test.sh
+bats ./reverse_string_test.sh
 #+end_src
+
+#+RESULTS: bash-reverse-string-test
+: 1..6
+: ok 1 an empty string
+: ok 2 a word
+: ok 3 a capitalised word
+: ok 4 a sentence with punctuation
+: ok 5 a palindrome
+: ok 6 an even-sized word
 
 **** Bash Reverse String Submit Script
 #+name:bash-reverse-string-submit-script
 #+begin_src sh
 exercism submit bash/reverse-string/reverse_string.sh
 #+end_src
+
+#+RESULTS: bash-reverse-string-submit-script
+: https://exercism.io/my/solutions/e6b653e726a841f88aade6841e113f94
 
 #+name:bash-reverse-string-exercism-metadata
 #+header: :mkdirp yes :exports none
@@ -10532,7 +10544,7 @@ have completed the exercise.
 }
 
 @test "a word" {
-  [[ $BATS_RUN_SKIPPED == true  ]] || skip
+  # [[ $BATS_RUN_SKIPPED == true  ]] || skip
   run bash reverse_string.sh "robot"
 
   [[ $status -eq 0 ]]
@@ -10540,7 +10552,7 @@ have completed the exercise.
 }
 
 @test "a capitalised word" {
-  [[ $BATS_RUN_SKIPPED == true  ]] || skip
+  # [[ $BATS_RUN_SKIPPED == true  ]] || skip
   run bash reverse_string.sh "Ramen"
 
   [[ $status -eq 0 ]]
@@ -10548,7 +10560,7 @@ have completed the exercise.
 }
 
 @test "a sentence with punctuation" {
-  [[ $BATS_RUN_SKIPPED == true  ]] || skip
+  # [[ $BATS_RUN_SKIPPED == true  ]] || skip
   run bash reverse_string.sh "I'm hungry!"
 
   [[ $status -eq 0 ]]
@@ -10556,7 +10568,7 @@ have completed the exercise.
 }
 
 @test "a palindrome" {
-  [[ $BATS_RUN_SKIPPED == true  ]] || skip
+  # [[ $BATS_RUN_SKIPPED == true  ]] || skip
   run bash reverse_string.sh "racecar"
 
   [[ $status -eq 0 ]]
@@ -10564,7 +10576,7 @@ have completed the exercise.
 }
 
 @test "an even-sized word" {
-  [[ $BATS_RUN_SKIPPED == true  ]] || skip
+  # [[ $BATS_RUN_SKIPPED == true  ]] || skip
   run bash reverse_string.sh "drawer"
 
   [[ $status -eq 0 ]]
@@ -10576,14 +10588,22 @@ have completed the exercise.
 
 *** Bash Reverse String Code
 #+name:bash-reverse-string-code
+#+header: :shebang "#!/usr/bin/env bash"
 #+begin_src sh :tangle bash/reverse-string/reverse_string.sh
 set -o errexit
 set -o nounset
 
 reverseStr() {
     str=$1
+    newstr=""
+    len=${#1}
 
-    
+    for (( i=0 ; i<${len} ; i++ ))
+    do
+        let j="-i - 1"
+        newstr=${newstr}${str:j:1}
+    done
+    echo ${newstr}
 }
 
 reverseStr "$@"
