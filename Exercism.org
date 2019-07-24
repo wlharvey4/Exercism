@@ -1,8 +1,8 @@
 # -*- mode:org; fill-column:79; -*-
 #+Title:Exercism Exercises
 #+Author:Pinecone062
-#+Date:Last updated 2019-07-22 09:23
-#+Macro: version Version 0.4.32
+#+Date:Last updated 2019-07-23 21:38
+#+Macro: version Version 0.4.33
 {{{title}}} {{{version}}} {{{date}}}
 * Exercism Home
 :PROPERTIES:
@@ -9870,6 +9870,216 @@ let raindrop num =
   reveal (ans (ans (ans None num 3) num 5) num 7);;
 #+end_src
 
+** OCaml Anagram
+:PROPERTIES:
+:exercise: side
+:END:
+
+*** OCaml Anagrom Introduction
+Given a word and a list of possible anagrams, select the correct sublist.
+
+Given "listen" and a list of candidates like "enlists" "google" "inlets"
+"banana" the program should return a list containing "inlets".
+
+{{{heading(Running Tests)}}}
+
+A =Makefile= is provided with a default target to compile your solution and run
+the tests.  At the command line, type:
+
+: make
+
+*** OCaml Anagram Readme
+#+name:ocaml-anagram-readme
+#+header: :mkdirp yes
+#+begin_src markdown :tangle ocaml/anagram/README.md
+# Anagram
+
+Given a word and a list of possible anagrams, select the correct sublist.
+
+Given `"listen"` and a list of candidates like `"enlists" "google"
+"inlets" "banana"` the program should return a list containing
+`"inlets"`.
+
+
+## Getting Started
+1. [Install the Exercism CLI](https://exercism.io/cli-walkthrough).
+
+2. [Install OCaml](https://exercism.io/tracks/ocaml/installation).
+
+3. For library documentation, follow [Useful OCaml resources](https://exercism.io/tracks/ocaml/resources).
+
+## Running Tests
+A `Makefile` is provided with a default target to compile your solution and run the tests. At the command line, type:
+
+```bash
+make
+```
+
+## Submitting Incomplete Solutions
+It's possible to submit an incomplete solution so you can see how others have completed the exercise.
+
+## Feedback, Issues, Pull Requests
+The [exercism/ocaml](https://github.com/exercism/ocaml) repository on GitHub is
+the home for all of the Ocaml exercises.
+
+If you have feedback about an exercise, or want to help implementing a new
+one, head over there and create an issue or submit a PR. We welcome new
+contributors!
+
+## Source
+
+Inspired by the Extreme Startup game [https://github.com/rchatley/extreme_startup](https://github.com/rchatley/extreme_startup)
+
+
+#+end_src
+
+*** OCaml Anagram Scripts
+**** OCaml Anagram Download Script
+#+name:ocaml-anagram-download-script
+#+begin_src sh
+exercism download --exercise=anagram --track=ocaml
+#+end_src
+
+#+RESULTS: ocaml-anagram-download-script
+: /Users/pine/Dev/Programming/Languages/Exercism/ocaml/anagram
+
+**** OCaml Anagrom Run Test Script
+
+**** OCaml Anagram Submit Script
+#+name:ocaml-anagram-submit-script
+#+begin_src sh
+exercism submit ocaml/anagram/anagram.ml
+#+end_src
+
+#+RESULTS: ocaml-anagram-submit-script
+: https://exercism.io/my/solutions/d11f308abfe94fc7b783c16b74775a42
+
+#+name:ocaml-anagram-exercism-metadata
+#+header: :mkdirp yes :exports none
+#+begin_src js :tangle ocaml/anagram/.exercism/metadata.json
+{
+    "track":"ocaml",
+    "exercise":"anagram",
+    "id":"d11f308abfe94fc7b783c16b74775a42",
+    "url":"https://exercism.io/my/solutions/d11f308abfe94fc7b783c16b74775a42",
+    "handle":"wlharvey4",
+    "is_requester":true,
+    "auto_approve":false
+}
+#+end_src
+
+*** OCaml Anagram Build Files
+**** OCaml Anagram Build Files---Makefile
+#+name:ocaml-anagram-build-files-makefile
+#+begin_src make :tangle ocaml/anagram/Makefile
+default: clean test
+
+test:
+	dune runtest
+
+clean:
+	dune clean
+
+.PHONY: clean
+
+#+end_src
+**** OCaml Anagram Build Files---Dune Project
+#+name:ocaml-anagram-build-files-dune-project
+#+begin_src ocaml :tangle ocaml/anagram/dune-project
+(lang dune 1.1)
+(version 1.4.0)
+#+end_src
+**** OCaml Anagram Build Files---Dune
+#+name:ocaml-anagram-build-files-dune
+#+begin_src ocaml :tangle ocaml/anagram/dune
+(executable
+ (name test)
+ (libraries base oUnit))
+
+(alias
+  (name    runtest)
+  (deps    (:x test.exe))
+  (action  (run %{x})))
+#+end_src
+
+*** OCaml Anagram Test
+#+name:ocaml-anagram-test
+#+begin_src ocaml :tangle ocaml/anagram/test.ml
+open Base
+open OUnit2
+open Anagram
+
+let ae exp got _test_ctxt =
+  let printer = String.concat ~sep:";" in
+  assert_equal exp got ~printer
+
+let tests = [
+  "no matches" >::
+  ae [] (anagrams "diaper" ["hello"; "world"; "zombies"; "pants"]);
+  "detects two anagrams" >::
+  ae ["stream"; "maters"] (anagrams "master" ["stream"; "pigeon"; "maters"]);
+  "does not detect anagram subsets" >::
+  ae [] (anagrams "good" ["dog"; "goody"]);
+  "detects anagram" >::
+  ae ["inlets"] (anagrams "listen" ["enlists"; "google"; "inlets"; "banana"]);
+  "detects three anagrams" >::
+  ae ["gallery"; "regally"; "largely"] (anagrams "allergy" ["gallery"; "ballerina"; "regally"; "clergy"; "largely"; "leading"]);
+  "does not detect non-anagrams with identical checksum" >::
+  ae [] (anagrams "mass" ["last"]);
+  "detects anagrams case-insensitively" >::
+  ae ["Carthorse"] (anagrams "Orchestra" ["cashregister"; "Carthorse"; "radishes"]);
+  "detects anagrams using case-insensitive subject" >::
+  ae ["carthorse"] (anagrams "Orchestra" ["cashregister"; "carthorse"; "radishes"]);
+  "detects anagrams using case-insensitive possible matches" >::
+  ae ["Carthorse"] (anagrams "orchestra" ["cashregister"; "Carthorse"; "radishes"]);
+  "does not detect an anagram if the original word is repeated" >::
+  ae [] (anagrams "go" ["go Go GO"]);
+  "anagrams must use all letters exactly once" >::
+  ae [] (anagrams "tapper" ["patter"]);
+  "words are not anagrams of themselves (case-insensitive)" >::
+  ae [] (anagrams "BANANA" ["BANANA"; "Banana"; "banana"]);
+]
+
+let () =
+  run_test_tt_main ("anagrams tests" >::: tests)
+#+end_src
+
+*** OCaml Anagram Solution Files
+**** OCaml Anagram Interface
+#+name:ocaml-anagram-interface
+#+begin_src ocaml -n :tangle ocaml/anagram/anagram.mli
+(** Anagram exercise *)
+
+(** Returns all candidates that are anagrams of, but not equal to, [base].
+
+    Comparisons are case insensitive.
+*)
+val anagrams : string -> string list -> string list
+#+end_src
+
+**** OCaml Anagram Solution Code
+To check whether two strings are anagrams of each other, create lists of
+caseless characters (=Char= s) but make sure they are not the same word first
+(the same word is not an anagram of itself), then compare the two Char lists.
+
+#+name:ocaml-anagram-solution
+#+begin_src ocaml -n :tangle ocaml/anagram/anagram.ml
+open Base
+
+(* Turn each String s and the elements of sl into sorted Caseless Char lists;
+   make sure they don't equal each other; then compare the lists for equality. *)
+let anagrams s sl =
+  (* Turn the String s into a sorted Caseless (e.g. lowercased) Char list *)
+  let sort_str s =
+    List.sort (List.map (String.to_list s) ~f:Char.lowercase) ~compare:Char.compare
+  in
+  let s_sorted = sort_str s
+  in
+  List.filter sl ~f:(fun s' ->
+      let s_sorted' = sort_str s' in
+      (* make sure they are not the same word *)
+      (not (String.Caseless.equal s s')) && (List.equal Char.equal s_sorted s_sorted'));;
+#+end_src
 * Bash Exercism Track
 ** Running the Tests
 Run the tests with
