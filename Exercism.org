@@ -1,8 +1,8 @@
 # -*- mode:org; fill-column:79; -*-
 #+Title:Exercism Exercises
 #+Author:Pinecone062
-#+Date:Last updated 2019-07-23 21:38
-#+Macro: version Version 0.4.33
+#+Date:Last updated 2019-07-24 23:34
+#+Macro: version Version 0.4.34
 {{{title}}} {{{version}}} {{{date}}}
 * Exercism Home
 :PROPERTIES:
@@ -10080,6 +10080,237 @@ let anagrams s sl =
       (* make sure they are not the same word *)
       (not (String.Caseless.equal s s')) && (List.equal Char.equal s_sorted s_sorted'));;
 #+end_src
+
+** OCaml Space Age
+:PROPERTIES:
+:exercise: side
+:END:
+
+*** OCaml Space Age Introduction
+Given an age in seconds, calculate how old someone would be on:
+
+- Earth: orbital period 365.25 Earth days, or 31557600 seconds
+- Mercury: orbital period 0.2408467 Earth years
+- Venus: orbital period 0.61519726 Earth years
+- Mars: orbital period 1.8808158 Earth years
+- Jupiter: orbital period 11.862615 Earth years
+- Saturn: orbital period 29.447498 Earth years
+- Uranus: orbital period 84.016846 Earth years
+- Neptune: orbital period 164.79132 Earth years
+
+
+So if you were told someone were 1,000,000,000 seconds old, you should be able
+to say that they're 31.69 Earth-years old.
+
+*** OCaml Space Age Scripts
+**** OCaml Space Age Download Script
+#+name:ocaml-space-age-download-script
+#+begin_src sh
+exercism download --exercise=space-age --track=ocaml
+#+end_src
+
+#+RESULTS: ocaml-space-age-download-script
+: /Users/pine/Dev/Programming/Languages/Exercism/ocaml/space-age
+
+**** OCaml Space Age Run Tests Script
+#+name:ocaml-space-age-run-tests-script
+#+header: :dir ocaml/space-age
+#+header: :results output :exports results
+#+begin_src sh
+make
+#+end_src
+
+**** OCaml Space Age Submit Script
+#+name:ocaml-space-age-submit-script
+#+begin_src sh
+exercism submit ocaml/space-age/space_age.ml
+#+end_src
+
+#+name:ocaml-space-age-exercism-metadata
+#+header: :mkdirp yes :exports none
+#+begin_src js :tangle ocaml/space-age/.exercism/metadata.json
+{
+    "track":"ocaml",
+    "exercise":"space-age",
+    "id":"1d143cfd9df544a4a3d4c61e8692448d",
+    "url":"https://exercism.io/my/solutions/1d143cfd9df544a4a3d4c61e8692448d",
+    "handle":"wlharvey4",
+    "is_requester":true,
+    "auto_approve":false
+}
+#+end_src
+
+*** OCaml Space Age Readme
+#+name:ocaml-space-age-readme
+#+header: :mkdirp yes
+#+begin_src markdown :tangle ocaml/space-age/README.md
+# Space Age
+
+Given an age in seconds, calculate how old someone would be on:
+
+   - Earth: orbital period 365.25 Earth days, or 31557600 seconds
+   - Mercury: orbital period 0.2408467 Earth years
+   - Venus: orbital period 0.61519726 Earth years
+   - Mars: orbital period 1.8808158 Earth years
+   - Jupiter: orbital period 11.862615 Earth years
+   - Saturn: orbital period 29.447498 Earth years
+   - Uranus: orbital period 84.016846 Earth years
+   - Neptune: orbital period 164.79132 Earth years
+
+So if you were told someone were 1,000,000,000 seconds old, you should
+be able to say that they're 31.69 Earth-years old.
+
+If you're wondering why Pluto didn't make the cut, go watch [this
+youtube video](http://www.youtube.com/watch?v=Z_2gbGXzFbs).
+
+
+## Getting Started
+1. [Install the Exercism CLI](https://exercism.io/cli-walkthrough).
+
+2. [Install OCaml](https://exercism.io/tracks/ocaml/installation).
+
+3. For library documentation, follow [Useful OCaml resources](https://exercism.io/tracks/ocaml/resources).
+
+## Running Tests
+A `Makefile` is provided with a default target to compile your solution and run the tests. At the command line, type:
+
+```bash
+make
+```
+
+## Submitting Incomplete Solutions
+It's possible to submit an incomplete solution so you can see how others have completed the exercise.
+
+## Feedback, Issues, Pull Requests
+The [exercism/ocaml](https://github.com/exercism/ocaml) repository on GitHub is
+the home for all of the Ocaml exercises.
+
+If you have feedback about an exercise, or want to help implementing a new
+one, head over there and create an issue or submit a PR. We welcome new
+contributors!
+
+## Source
+
+Partially inspired by Chapter 1 in Chris Pine's online Learn to Program tutorial. [http://pine.fm/LearnToProgram/?Chapter=01](http://pine.fm/LearnToProgram/?Chapter=01)
+
+
+#+end_src
+
+*** OCaml Space Age Build Files
+**** OCaml Space Age Dune Project
+#+name:ocaml-space-age-dune-project
+#+begin_src ocaml :tangle ocaml/space-age/dune-project
+(lang dune 1.1)
+#+end_src
+
+**** OCaml Space Age Dune File
+#+name:ocaml-space-age-dune-file
+#+begin_src ocaml :tangle ocaml/space-age/dune
+(executable
+ (name test)
+ (libraries base oUnit))
+
+(alias
+  (name    runtest)
+  (deps    (:x test.exe))
+  (action  (run %{x})))
+#+end_src
+
+**** OCaml Space Age Makefile
+#+name:ocaml-space-age-makefile
+#+begin_src make :tangle ocaml/space-age/Makefile
+default: clean test
+
+test:
+	dune runtest
+
+clean:
+	dune clean
+
+.PHONY: clean
+
+#+end_src
+
+*** OCaml Space Age Test File
+#+name:ocaml-space-age-test-file
+#+begin_src ocaml -n :tangle ocaml/space-age/test.ml
+open Base
+open OUnit2
+open Space_age
+
+let ae ~delta:delta exp got _ctxt =
+  let msg = Printf.sprintf "Expected %f got %f, difference is greater than %f"
+                    exp got delta in
+  assert_bool msg (cmp_float ~epsilon:delta exp got)
+
+let tests = [
+   "age on Earth" >::
+      ae ~delta:0.05 31.69 (age_on Earth 1000000000);
+   "age on Mercury" >::
+      ae ~delta:0.05 280.88 (age_on Mercury 2134835688);
+   "age on Venus" >::
+      ae ~delta:0.05 9.78 (age_on Venus 189839836);
+   "age on Mars" >::
+      ae ~delta:0.05 35.88 (age_on Mars 2129871239);
+   "age on Jupiter" >::
+      ae ~delta:0.05 2.41 (age_on Jupiter 901876382);
+   "age on Saturn" >::
+      ae ~delta:0.05 2.15 (age_on Saturn 2000000000);
+   "age on Uranus" >::
+      ae ~delta:0.05 0.46 (age_on Uranus 1210123456);
+   "age on Neptune" >::
+      ae ~delta:0.05 0.35 (age_on Neptune 1821023456);
+]
+
+let () =
+  run_test_tt_main ("space-age tests" >::: tests)
+#+end_src
+
+*** OCaml Space Age Solution Files
+**** OCaml Space Age Interface
+#+name:ocaml-space-age-interface
+#+begin_src ocaml :tangle ocaml/space-age/space_age.mli
+(** Space-age exercise *)
+
+type planet = Mercury | Venus | Earth | Mars
+            | Jupiter | Saturn | Neptune | Uranus
+
+(** Convert seconds to years on the specified planet *)
+val age_on : planet -> int -> float
+#+end_src
+
+**** OCaml Space Age Solution
+#+name:ocaml-space-age-solution
+#+begin_src ocaml :tangle ocaml/space-age/space_age.ml
+
+type planet = Mercury | Venus | Earth | Mars
+            | Jupiter | Saturn | Neptune | Uranus
+
+(* type period = float *)
+
+(* type orbital_period_assoc = (planet * period) *)
+
+let earth_orbital_period = 365.25
+
+let orbital_periods_assoc = [
+  (Mercury, 0.2408467);
+  (Venus, 0.61519726);
+  (Earth, 1.0);
+  (Mars, 1.8808158);
+  (Jupiter, 11.862615);
+  (Saturn, 29.447498);
+  (Uranus, 84.016846);
+  (Neptune, 164.79132);
+]
+
+let age_on_earth s =
+  (Float.of_int s) /. 60. /. 60. /. 24. /. earth_orbital_period
+
+let age_on pl sec =
+  (Base.List.Assoc.find_exn orbital_periods_assoc ~equal:Base.Poly.equal pl) *.
+  (age_on_earth sec)
+#+end_src
+
 * Bash Exercism Track
 ** Running the Tests
 Run the tests with
