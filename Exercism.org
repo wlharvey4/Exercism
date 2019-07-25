@@ -1,8 +1,8 @@
 # -*- mode:org; fill-column:79; -*-
 #+Title:Exercism Exercises
 #+Author:Pinecone062
-#+Date:Last updated 2019-07-24 23:34
-#+Macro: version Version 0.4.34
+#+Date:Last updated 2019-07-25 07:26
+#+Macro: version Version 0.4.35
 {{{title}}} {{{version}}} {{{date}}}
 * Exercism Home
 :PROPERTIES:
@@ -10117,14 +10117,25 @@ exercism download --exercise=space-age --track=ocaml
 #+header: :dir ocaml/space-age
 #+header: :results output :exports results
 #+begin_src sh
-make
+make 2>&1
 #+end_src
+
+#+RESULTS: ocaml-space-age-run-tests-script
+: dune clean
+: dune runtest
+:         test alias runtest
+: ........
+: Ran: 8 tests in: 0.11 seconds.
+: OK
 
 **** OCaml Space Age Submit Script
 #+name:ocaml-space-age-submit-script
 #+begin_src sh
 exercism submit ocaml/space-age/space_age.ml
 #+end_src
+
+#+RESULTS: ocaml-space-age-submit-script
+: https://exercism.io/my/solutions/1d143cfd9df544a4a3d4c61e8692448d
 
 #+name:ocaml-space-age-exercism-metadata
 #+header: :mkdirp yes :exports none
@@ -10280,17 +10291,33 @@ val age_on : planet -> int -> float
 #+end_src
 
 **** OCaml Space Age Solution
+The new concepts used in this solution are:
+
+{{{heading(List.Assoc find_exn)}}}
+
+#+attr_texinfo: :options Base.List.Assoc find_exn assoc_list equal_fn key
+#+begin_defmethod
+Given an association list {{{var(assoc_list)}}} and a key {{{var(key)}}},
+return the value associated with that {{{var(key)}}}.
+#+end_defmethod
+
+{{{heading(Poly equal)}}}
+
+#+attr_texinfo: :options Base.Poly equal a' a'
+#+begin_defmethod
+Given some type, use ~Base.Poly.equal~ to compare two elements of that type for
+equality.
+#+end_defmethod
+
+#+pindex:space_age.ml
+#+caption:OCaml Space Age Solution
 #+name:ocaml-space-age-solution
 #+begin_src ocaml :tangle ocaml/space-age/space_age.ml
 
 type planet = Mercury | Venus | Earth | Mars
             | Jupiter | Saturn | Neptune | Uranus
 
-(* type period = float *)
-
-(* type orbital_period_assoc = (planet * period) *)
-
-let earth_orbital_period = 365.25
+let earth_orbital_period = 31557600 (* 1 year = 31557600 seconds *)
 
 let orbital_periods_assoc = [
   (Mercury, 0.2408467);
@@ -10303,12 +10330,11 @@ let orbital_periods_assoc = [
   (Neptune, 164.79132);
 ]
 
-let age_on_earth s =
-  (Float.of_int s) /. 60. /. 60. /. 24. /. earth_orbital_period
-
 let age_on pl sec =
-  (Base.List.Assoc.find_exn orbital_periods_assoc ~equal:Base.Poly.equal pl) *.
-  (age_on_earth sec)
+  let age_on_earth s =
+    (Float.of_int s) /. (Float.of_int earth_orbital_period)
+  in
+  (age_on_earth sec) /. (Base.List.Assoc.find_exn orbital_periods_assoc ~equal:Base.Poly.equal pl)
 #+end_src
 
 * Bash Exercism Track
@@ -11883,6 +11909,24 @@ world-clean : dist-clean html-clean texinfo-clean
 
 #+end_src
 
+* Index
+:PROPERTIES:
+:unnumbered: t
+:index:    cp
+:END:
+
+* Function Index
+:PROPERTIES:
+:index:    fn
+:unnumbered: t
+:END:
+
+* Program Index
+:PROPERTIES:
+:unnumbered: t
+:index:    pg
+:END:
+
 * Export Settings                                                  :noexport:
 ** Options
 #+options: H:4
@@ -11913,6 +11957,7 @@ world-clean : dist-clean html-clean texinfo-clean
 ** MACROS                                                         :noexport:
 #+macro: heading @@texinfo:@heading @@$1
 #+macro: subheading @@texinfo:@subheading @@$1
+#+macro: var @@texinfo:@var{@@$1@@texinfo:}@@
 * Local Variables                                                  :noexport:
 # Local Variables:
 # time-stamp-pattern:"8/^\\#\\+[dD]ate:Last updated %:y-%02m-%02d %02H:%02M$"
