@@ -1,8 +1,8 @@
 # -*- mode:org; fill-column:79; -*-
 #+Title:Exercism Exercises
 #+Author:Pinecone062
-#+Date:Last updated 2019-07-25 07:26
-#+Macro: version Version 0.4.35
+#+Date:Last updated 2019-07-25 09:29
+#+Macro: version Version 0.4.36
 {{{title}}} {{{version}}} {{{date}}}
 * Exercism Home
 :PROPERTIES:
@@ -11075,7 +11075,347 @@ reverseStr() {
 
 reverseStr "$@"
 #+end_src
+** Bash Raindrops
+:PROPERTIES:
+:exercise: core
+:END:
+Convert a number to a string, the contents of which depends on the number's
+factors.
+*** Bash Raindrops Introduction
+Convert a number to a string, the contents of which depend on the number's
+factors:
 
+- If the number has 3 as a factor, output 'Pling'.
+- If the number has 5 as a factor, output 'Plang'.
+- If the number has 7 as a factor, output 'Plong'.
+- If the number does not have 3, 5, or 7 as a factor, just pass the number's
+  digits straight through.
+
+
+{{{heading(Examples)}}}
+
+- 28's factors are 1, 2, 4, *7*, 14, 28.
+  - In raindrop-speak, this would be a simple "Plong".
+- 30's factors are 1, 2, *3*, *5*, 6, 10, 15, 30.
+  - In raindrop-speak, this would be a "PlingPlang".
+- 34 has four factors: 1, 2, 17, and 34.
+  - In raindrop-speak, this would be "34".
+
+
+{{{heading(Running Tests)}}}
+
+Run the tests with:
+
+: bats raindrops_test.sh
+
+After the first test(s) pass, continue by commenting out or removing the ~skip~
+annotations prepending other tests.
+
+*** Bash Raindrops Scripts
+**** Bash Raindrops Download Script
+#+name:bash-raindrops-download-script
+#+begin_src sh
+exercism download --exercise=raindrops --track=bash
+#+end_src
+
+#+RESULTS: bash-raindrops-download-script
+: /Users/pine/Dev/Programming/Languages/Exercism/bash/raindrops
+
+**** Bash Raindrops Run Tests Script
+#+name:bash-raindrops-run-tests-script
+#+header: :dir bash/raindrops
+#+header: :results output :exports results
+#+begin_src sh 2>&1
+bats raindrops_test.sh
+#+end_src
+
+#+RESULTS: bash-raindrops-run-tests-script
+#+begin_example
+1..18
+ok 1 the sound for 1 is 1
+ok 2 the sound for 3 is Pling
+ok 3 the sound for 5 is Plang
+ok 4 the sound for 7 is Plong
+ok 5 the sound for 6 is Pling as it has a factor 3
+ok 6 2 to the power 3 does not make a raindrop sound as 3 is the exponent not the base
+ok 7 the sound for 9 is Pling as it has a factor 3
+ok 8 the sound for 10 is Plang as it has a factor 5
+ok 9 the sound for 14 is Plong as it has a factor of 7
+ok 10 the sound for 15 is PlingPlang as it has factors 3 and 5
+ok 11 the sound for 21 is PlingPlong as it has factors 3 and 7
+ok 12 the sound for 25 is Plang as it has a factor 5
+ok 13 the sound for 27 is Pling as it has a factor 3
+ok 14 the sound for 35 is PlangPlong as it has factors 5 and 7
+ok 15 the sound for 49 is Plong as it has a factor 7
+ok 16 the sound for 52 is 52
+ok 17 the sound for 105 is PlingPlangPlong as it has factors 3, 5 and 7
+ok 18 the sound for 3125 is Plang as it has a factor 5
+#+end_example
+
+**** Bash Raindrops Submit Script
+#+name:bash-raindrops-submit-script
+#+begin_src sh
+exercism submit bash/raindrops/raindrops.sh
+#+end_src
+
+#+RESULTS: bash-raindrops-submit-script
+: https://exercism.io/my/solutions/027afe521f0141c9ba5138ac8b05efd2
+
+#+name:bash-raindrops-exercism-metadata
+#+header: :exports none :mkdirp yes
+#+begin_src js :tangle bash/raindrops/.exercism/metadata.json
+{
+    "track":"bash",
+    "exercise":"raindrops",
+    "id":"027afe521f0141c9ba5138ac8b05efd2",
+    "url":"https://exercism.io/my/solutions/027afe521f0141c9ba5138ac8b05efd2",
+    "handle":"wlharvey4",
+    "is_requester":true,
+    "auto_approve":false
+}
+#+end_src
+
+*** Bash Raindrops Readme
+#+name:bash-raindrops-readme
+#+header: :mkdirp yes
+#+begin_src markdown :tangle bash/raindrops/README.md
+# Raindrops
+
+Convert a number to a string, the contents of which depend on the number's factors.
+
+- If the number has 3 as a factor, output 'Pling'.
+- If the number has 5 as a factor, output 'Plang'.
+- If the number has 7 as a factor, output 'Plong'.
+- If the number does not have 3, 5, or 7 as a factor,
+  just pass the number's digits straight through.
+
+## Examples
+
+- 28's factors are 1, 2, 4, **7**, 14, 28.
+  - In raindrop-speak, this would be a simple "Plong".
+- 30's factors are 1, 2, **3**, **5**, 6, 10, 15, 30.
+  - In raindrop-speak, this would be a "PlingPlang".
+- 34 has four factors: 1, 2, 17, and 34.
+  - In raindrop-speak, this would be "34".
+
+
+Run the tests with:
+
+```bash
+bats raindrops_test.sh
+```
+
+After the first test(s) pass, continue by commenting out or removing the
+`[[ $BATS_RUN_SKIPPED == true ]] || skip` 
+annotations prepending other tests.
+
+To run all tests, including the ones with `skip` annotations, run:
+
+```bash
+BATS_RUN_SKIPPED=true bats raindrops_test.sh
+```
+
+## Source
+
+A variation on a famous interview question intended to weed out potential candidates. [http://jumpstartlab.com](http://jumpstartlab.com)
+
+
+## External utilities
+`Bash` is a language to write "scripts" -- programs that can call
+external tools, such as
+[`sed`](https://www.gnu.org/software/sed/),
+[`awk`](https://www.gnu.org/software/gawk/),
+[`date`](https://www.gnu.org/software/coreutils/manual/html_node/date-invocation.html)
+and even programs written in other programming languages, 
+like [`Python`](https://www.python.org/).
+This track does not restrict the usage of these utilities, and as long
+as your solution is portable between systems and does not require
+installation of third party applications, feel free to use them to solve
+the exercise.
+
+For an extra challenge, if you would like to have a better understanding
+of the language, try to re-implement the solution in pure `Bash`,
+without using any external tools. Note that there are some types of
+problems that bash cannot solve, such as performing floating point
+arithmetic and manipulating dates: for those, you must call out to an
+external tool.
+
+## Submitting Incomplete Solutions
+It's possible to submit an incomplete solution so you can see how others
+have completed the exercise.
+
+#+end_src
+
+*** Bash Raindrops Test File
+#+name:bash-raindrops-test-file
+#+begin_src sh -n :tangle bash/raindrops/raindrops_test.sh
+#!/usr/bin/env bash
+
+@test "the sound for 1 is 1" {
+  #[[ $BATS_RUN_SKIPPED == true  ]] || skip
+  run bash raindrops.sh 1
+  [[ $status -eq 0 ]]
+  [[ $output == "1" ]]
+}
+
+@test "the sound for 3 is Pling" {
+  # [[ $BATS_RUN_SKIPPED == true  ]] || skip
+  run bash raindrops.sh 3
+  [[ $status -eq 0 ]]
+  [[ $output == "Pling" ]]
+}
+
+@test "the sound for 5 is Plang" {
+  # [[ $BATS_RUN_SKIPPED == true  ]] || skip
+  run bash raindrops.sh 5
+  [[ $status -eq 0 ]]
+  [[ $output == "Plang" ]]
+}
+
+@test "the sound for 7 is Plong" {
+  # [[ $BATS_RUN_SKIPPED == true  ]] || skip
+  run bash raindrops.sh 7
+  [[ $status -eq 0 ]]
+  [[ $output == "Plong" ]]
+}
+
+@test "the sound for 6 is Pling as it has a factor 3" {
+  # [[ $BATS_RUN_SKIPPED == true  ]] || skip
+  run bash raindrops.sh 6
+  [[ $status -eq 0 ]]
+  [[ $output == "Pling" ]]
+}
+
+@test "2 to the power 3 does not make a raindrop sound as 3 is the exponent not the base" {
+  # [[ $BATS_RUN_SKIPPED == true  ]] || skip
+  run bash raindrops.sh 8
+  [[ $status -eq 0 ]]
+  [[ $output == "8" ]]
+}
+
+@test "the sound for 9 is Pling as it has a factor 3" {
+  # [[ $BATS_RUN_SKIPPED == true  ]] || skip
+  run bash raindrops.sh 9
+  [[ $status -eq 0 ]]
+  [[ $output == "Pling" ]]
+}
+
+@test "the sound for 10 is Plang as it has a factor 5" {
+  # [[ $BATS_RUN_SKIPPED == true  ]] || skip
+  run bash raindrops.sh 10
+  [[ $status -eq 0 ]]
+  [[ $output == "Plang" ]]
+}
+
+@test "the sound for 14 is Plong as it has a factor of 7" {
+  # [[ $BATS_RUN_SKIPPED == true  ]] || skip
+  run bash raindrops.sh 14
+  [[ $status -eq 0 ]]
+  [[ $output == "Plong" ]]
+}
+
+@test "the sound for 15 is PlingPlang as it has factors 3 and 5" {
+  # [[ $BATS_RUN_SKIPPED == true  ]] || skip
+  run bash raindrops.sh 15
+  [[ $status -eq 0 ]]
+  [[ $output == "PlingPlang" ]]
+}
+
+@test "the sound for 21 is PlingPlong as it has factors 3 and 7" {
+  # [[ $BATS_RUN_SKIPPED == true  ]] || skip
+  run bash raindrops.sh 21
+  [[ $status -eq 0 ]]
+  [[ $output == "PlingPlong" ]]
+}
+
+@test "the sound for 25 is Plang as it has a factor 5" {
+  # [[ $BATS_RUN_SKIPPED == true  ]] || skip
+  run bash raindrops.sh 25
+  [[ $status -eq 0 ]]
+  [[ $output == "Plang" ]]
+}
+
+@test "the sound for 27 is Pling as it has a factor 3" {
+  # [[ $BATS_RUN_SKIPPED == true  ]] || skip
+  run bash raindrops.sh 27
+  [[ $status -eq 0 ]]
+  [[ $output == "Pling" ]]
+}
+
+@test "the sound for 35 is PlangPlong as it has factors 5 and 7" {
+  # [[ $BATS_RUN_SKIPPED == true  ]] || skip
+  run bash raindrops.sh 35
+  [[ $status -eq 0 ]]
+  [[ $output == "PlangPlong" ]]
+}
+
+@test "the sound for 49 is Plong as it has a factor 7" {
+  # [[ $BATS_RUN_SKIPPED == true  ]] || skip
+  run bash raindrops.sh 49
+  [[ $status -eq 0 ]]
+  [[ $output == "Plong" ]]
+}
+
+@test "the sound for 52 is 52" {
+  # [[ $BATS_RUN_SKIPPED == true  ]] || skip
+  run bash raindrops.sh 52
+  [[ $status -eq 0 ]]
+  [[ $output == "52" ]]
+}
+
+@test "the sound for 105 is PlingPlangPlong as it has factors 3, 5 and 7" {
+  # [[ $BATS_RUN_SKIPPED == true  ]] || skip
+  run bash raindrops.sh 105
+  [[ $status -eq 0 ]]
+  [[ $output == "PlingPlangPlong" ]]
+}
+
+@test "the sound for 3125 is Plang as it has a factor 5" {
+  # [[ $BATS_RUN_SKIPPED == true  ]] || skip
+  run bash raindrops.sh 3125
+  [[ $status -eq 0 ]]
+  [[ $output == "Plang" ]]
+}
+
+
+#+end_src
+
+*** Bash Raindrops Solution File
+#+name:bash-raindrops-solution-file
+#+header: :shebang "#!/usr/bin/env bash"
+#+begin_src sh -n :tangle bash/raindrops/raindrops.sh
+set -o errexit
+set -o nounset
+
+raindrops() {
+    local -i num=$1 div rem
+
+    local -a raindrop
+    raindrop[3]="Pling"
+    raindrop[5]="Plang"
+    raindrop[7]="Plong"
+
+    local raindrops=""
+
+    for div in 3 5 7
+    do
+        rem="num % div"
+        if [[ $rem -eq 0 ]]
+        then
+            raindrops=${raindrops}${raindrop[$div]}
+        fi
+    done
+
+    if [[ -z ${raindrops} ]]
+    then
+        raindrops=$num
+    fi
+
+    echo ${raindrops}
+}
+
+raindrops "$@"
+#+end_src
 * Emacs Lisp Track
 - [[http://www.gnu.org/software/emacs/manual/html_node/emacs/index.html][Emacs manual]] on the Web
 - [[https://www.emacswiki.org][Emacs Wiki]]
