@@ -1,8 +1,8 @@
 # -*- mode:org; fill-column:79; -*-
 #+Title:Exercism Exercises
 #+Author:Pinecone062
-#+Date:Last updated 2019-07-25 09:29
-#+Macro: version Version 0.4.36
+#+Date:Last updated 2019-07-26 16:41
+#+Macro: version Version 0.4.37
 {{{title}}} {{{version}}} {{{date}}}
 * Exercism Home
 :PROPERTIES:
@@ -11411,11 +11411,31 @@ raindrops() {
         raindrops=$num
     fi
 
-    echo ${raindrops}
+    echo "${raindrops}"
 }
 
 raindrops "$@"
 #+end_src
+
+**** Mentor Discussion
+#+attr_texinfo: :author glennj
+#+begin_quote
+Good job!
+
+I have 2 small, non-showstopping comments.
+
+line 29: you should get into the habit of quoting your variables. Using braces
+is not quoting. And even though you know the contents of the variable, it is a
+good habit:
+
+: echo "$raindrops"
+
+I find your comparison on lines 17-18 awkward: using the ~rem~ variable's
+=integer= attribute to implicitly perform the arithmetic is a bit obscure.  Try
+using an arithmetic expression instead:
+
+: if (( ... )); then
+#+end_quote
 * Emacs Lisp Track
 - [[http://www.gnu.org/software/emacs/manual/html_node/emacs/index.html][Emacs manual]] on the Web
 - [[https://www.emacswiki.org][Emacs Wiki]]
