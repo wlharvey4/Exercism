@@ -1,8 +1,8 @@
 # -*- mode:org; fill-column:79; -*-
 #+Title:Exercism Exercises
 #+Author:Pinecone062
-#+Date:Last updated 2019-07-26 16:41
-#+Macro: version Version 0.4.37
+#+Date:Last updated 2019-07-26 23:00
+#+Macro: version Version 0.4.38
 {{{title}}} {{{version}}} {{{date}}}
 * Exercism Home
 :PROPERTIES:
@@ -12241,6 +12241,182 @@ emacs -batch -l ert -l hamming-test.el -f ert-run-tests-batch-and-exit
 #+end_src
 
 #+RESULTS: elisp-hamming-run-tests
+
+** Emacs Lisp Difference of Squares
+:PROPERTIES:
+:exercise: side
+:END:
+*** Emacs Lisp Difference of Squares Introduction
+Find the difference between the square of the sum and the sum of the squares of
+the first N natural numbers.
+
+The square of the sum of the first ten natural numbers is (1 + 2 + ... + 10)² =
+55² = 3025.
+
+The sum of the squares of the first ten natural numbers is 1² + 2² + ... + 10²
+= 385.
+
+Hence the difference between the square of the sum of the first ten natural
+numbers and the sum of the squares of the first ten natural numbers is 3025 -
+385 = 2640.
+
+*** Emacs Lisp Difference of Squares Scripts
+**** Emacs Lisp Difference of Squares Download Script
+#+name:elisp-difference-of-squares-download-scripts
+#+begin_src sh
+exercism download --exercise=difference-of-squares --track=elisp
+#+end_src
+
+**** Emacs Lisp Difference of Squares Run Tests
+#+name:elisp-difference-of-squares-run-tests
+#+header: :shebang "#!/usr/bin/env bash"
+#+header: :dir elisp/difference-of-squares
+#+header: :results output :exports results
+#+begin_src sh :tangle elisp/difference-of-squares/run-tests.sh
+emacs -batch -l ert -l difference-of-squares-test.el -f ert-run-tests-batch-and-exit 2>&1
+#+end_src
+
+#+RESULTS: elisp-difference-of-squares-run-tests
+#+begin_example
+Loading /Users/pine/Dev/Programming/Languages/Exercism/elisp/difference-of-squares/difference-of-squares.el (source)...
+Running 9 tests (2019-07-26 22:58:58-0700)
+   passed  1/9  difference-of-squares-to-10
+   passed  2/9  difference-of-squares-to-100
+   passed  3/9  difference-of-squares-to-5
+   passed  4/9  square-of-sum-to-10
+   passed  5/9  square-of-sum-to-100
+   passed  6/9  square-of-sum-to-5
+   passed  7/9  sum-of-squares-to-10
+   passed  8/9  sum-of-squares-to-100
+   passed  9/9  sum-of-squares-to-5
+
+Ran 9 tests, 9 results as expected (2019-07-26 22:58:58-0700)
+
+#+end_example
+
+#+name:elisp-difference-of-squares-exercism-metadata
+#+header: :mkdirp yes :exports none
+#+begin_src js :tangle elisp/difference-of-squares/.exercism/metadata.json
+{
+    "track":"elisp",
+    "exercise":"difference-of-squares",
+    "id":"e9094dee41a2499ca0c560985f8b8fd4",
+    "url":"https://exercism.io/my/solutions/e9094dee41a2499ca0c560985f8b8fd4",
+    "handle":"wlharvey4",
+    "is_requester":true,
+    "auto_approve":false
+}
+#+end_src
+
+**** Emacs Lisp Difference of Squares Submit Script
+#+name:elisp-difference-of-squares-submit-script
+#+begin_src sh
+exercism submit elisp/difference-of-squares/difference-of-squares.el
+#+end_src
+
+#+RESULTS: elisp-difference-of-squares-submit-script
+: https://exercism.io/my/solutions/e9094dee41a2499ca0c560985f8b8fd4
+
+*** Emacs Lisp Difference of Squares Readme
+#+name:elisp-difference-of-squares-readme
+#+header: :mkdirp yes
+#+begin_src markdown :tangle elisp/difference-of-squares/README.md
+# Difference Of Squares
+
+Find the difference between the square of the sum and the sum of the squares of the first N natural numbers.
+
+The square of the sum of the first ten natural numbers is
+(1 + 2 + ... + 10)² = 55² = 3025.
+
+The sum of the squares of the first ten natural numbers is
+1² + 2² + ... + 10² = 385.
+
+Hence the difference between the square of the sum of the first
+ten natural numbers and the sum of the squares of the first ten
+natural numbers is 3025 - 385 = 2640.
+## Source
+
+Problem 6 at Project Euler [http://projecteuler.net/problem=6](http://projecteuler.net/problem=6)
+
+## Submitting Incomplete Solutions
+It's possible to submit an incomplete solution so you can see how others have completed the exercise.
+
+#+end_src
+
+*** Emacs Lisp Difference of Squares Tests
+#+begin_src emacs-lisp :tangle elisp/difference-of-squares/difference-of-squares-test.el
+;;; difference-of-squares-test.el --- Tests for difference-of-squares (exercism)
+
+;;; Commentary:
+
+;;; Code:
+
+(load-file "difference-of-squares.el")
+
+(ert-deftest square-of-sum-to-5 ()
+  (should (= 225 (square-of-sum 5))))
+
+(ert-deftest sum-of-squares-to-5 ()
+  (should (= 55 (sum-of-squares 5))))
+
+(ert-deftest difference-of-squares-to-5 ()
+  (should (= 170 (difference 5))))
+
+
+(ert-deftest square-of-sum-to-10 ()
+  (should (= 3025 (square-of-sum 10))))
+
+(ert-deftest sum-of-squares-to-10 ()
+  (should (= 385 (sum-of-squares 10))))
+
+(ert-deftest difference-of-squares-to-10 ()
+  (should (= 2640 (difference 10))))
+
+
+(ert-deftest square-of-sum-to-100 ()
+  (should (= 25502500 (square-of-sum 100))))
+
+(ert-deftest sum-of-squares-to-100 ()
+  (should (= 338350 (sum-of-squares 100))))
+
+(ert-deftest difference-of-squares-to-100 ()
+  (should (= 25164150 (difference 100))))
+
+
+(provide 'difference-of-squares-test)
+;;; difference-of-squares-test.el ends here
+
+#+end_src
+
+*** Emacs Lisp Difference of Squares Solution
+#+name:elisp-difference-of-squares-solution
+#+begin_src elisp -n :tangle elisp/difference-of-squares/difference-of-squares.el
+;;; difference-of-squares.el --- Difference of Squares (exercism)
+(defun square-of-sum (n)
+;;; Commentary:
+  "Find the square of the sums of the first N natural numbers."
+;;; Code:
+  (expt (sum n) 2))
+
+(defun sum-of-squares (n)
+  "Find the sum of the squares of the first N natural numbers."
+  (if (zerop n)
+      0
+    (+ (* n n) (sum-of-squares (1- n)))))
+
+(defun sum (n)
+  "Find the sum of the first N natural numbers."
+  (if (zerop n)
+      0
+    (+ n (sum (1- n)))))
+
+(defun difference (n)
+  "Find the difference between the square of the sum and the sum of the squares."
+  (- (square-of-sum n) (sum-of-squares n)))
+
+(provide 'difference-of-squares)
+;;; difference-of-squares.el ends here
+#+end_src
 
 * Exercism Makefile
 #+name:Exercism-Makefile
