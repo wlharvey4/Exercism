@@ -1,8 +1,8 @@
 # -*- mode:org; fill-column:79; -*-
 #+Title:Exercism Exercises
 #+Author:Pinecone062
-#+Date:Last updated 2019-07-26 23:00
-#+Macro: version Version 0.4.38
+#+Date:Last updated 2019-08-01 21:54
+#+Macro: version Version 0.4.39
 {{{title}}} {{{version}}} {{{date}}}
 * Exercism Home
 :PROPERTIES:
@@ -11399,8 +11399,7 @@ raindrops() {
 
     for div in 3 5 7
     do
-        rem="num % div"
-        if [[ $rem -eq 0 ]]
+        if !(( num % div ))
         then
             raindrops=${raindrops}${raindrop[$div]}
         fi
