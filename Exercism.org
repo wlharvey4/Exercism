@@ -1,8 +1,8 @@
 # -*- mode:org; fill-column:79; -*-
 #+Title:Exercism Exercises
 #+Author:Pinecone062
-#+Date:Last updated 2019-08-01 21:54
-#+Macro: version Version 0.4.39
+#+Date:Last updated 2019-08-02 13:53
+#+Macro: version Version 0.4.40
 {{{title}}} {{{version}}} {{{date}}}
 * Exercism Home
 :PROPERTIES:
@@ -6672,6 +6672,423 @@ export default class Gigasecond {
     }
 }
 #+end_src
+** TypeScript RNA Transcription
+Given a DNA strand, return its RNA complement (per RNA transcription).
+
+Both DNA and RNA strands are a sequence of nucleotides.
+
+The four nucleotides found in DNA are:
+- adenine (A)
+- cytosine (C)
+- guanine (G)
+- thymine (T)
+
+
+The four nucleotides found in RNA are:
+- adenine (A)
+- cytosine (C)
+- guanine (G)
+- uracil (U)
+
+
+Given a DNA strand, its transcribed RNA strand is formed by replacing each
+nucleotide with its complement:
+
+- G -> C
+- C -> G
+- T -> A
+- A -> U
+
+*** TypeScript RNA Transcription Scripts
+**** TypeScript RNA Transcription Download Script
+#+name:typescript-rna-transcription-download-script
+#+header: :results output :exports none
+#+begin_src sh
+exercism download --exercise=rna-transcription --track=typescript
+#+end_src
+
+#+RESULTS: typescript-rna-transcription-download-script
+: /Users/pine/Dev/Programming/Languages/Exercism/typescript/rna-transcription
+
+**** TypeScript RNA Transcription Install Dependencies
+#+name:typescript-rna-transcription-install-dependencies
+#+header: :dir typescript/rna-transcription
+#+header: :results output :exports results
+#+begin_src sh
+yarn install
+#+end_src
+
+#+RESULTS: typescript-rna-transcription-install-dependencies
+: yarn install v1.17.3
+: info No lockfile found.
+: [1/4] Resolving packages...
+: [2/4] Fetching packages...
+: [3/4] Linking dependencies...
+: [4/4] Building fresh packages...
+: success Saved lockfile.
+: Done in 5.86s.
+
+**** TypeScript RNA Transcription Run Tests Script
+#+name:typescript-rna-transcription-run-tests
+#+header: :dir typescript/rna-transcription
+#+header: :results outuput :exports results
+#+begin_src sh
+yarn test
+#+end_src
+
+#+RESULTS: typescript-rna-transcription-run-tests
+
+**** TypeScript RNA Transcription Submit Script
+#+name:typescript-rna-transcription-submit-script
+#+header: :results output :exports none
+#+begin_src sh
+exercism submit typescript/rna-transcription/
+#+end_src
+
+#+name:tiypescript-rna-transcription-exercism-metadata
+#+header: :mkdirp yes
+#+header: :exports none
+#+begin_src js :tangle typescript/rna-transcription/.exercism/metadata.json
+{
+    "track":"typescript",
+    "exercise":"rna-transcription",
+    "id":"62a8630b3f034da3ad10af1c8b2b369d",
+    "url":"https://exercism.io/my/solutions/62a8630b3f034da3ad10af1c8b2b369d",
+    "handle":"wlharvey4",
+    "is_requester":true,
+    "auto_approve":false
+}
+#+end_src
+
+*** TypeScript RNA Transcription Readme
+#+name:typescript-rna-transcription-readme
+#+begin_src markdown :tangle typescript/rna-transcription/README.md
+# RNA Transcription
+
+Given a DNA strand, return its RNA complement (per RNA transcription).
+
+Both DNA and RNA strands are a sequence of nucleotides.
+
+The four nucleotides found in DNA are adenine (**A**), cytosine (**C**),
+guanine (**G**) and thymine (**T**).
+
+The four nucleotides found in RNA are adenine (**A**), cytosine (**C**),
+guanine (**G**) and uracil (**U**).
+
+Given a DNA strand, its transcribed RNA strand is formed by replacing
+each nucleotide with its complement:
+
+,* `G` -> `C`
+,* `C` -> `G`
+,* `T` -> `A`
+,* `A` -> `U`
+
+## Setup
+
+Go through the setup instructions for TypeScript to install the necessary
+dependencies:
+
+[https://exercism.io/tracks/typescript/installation](https://exercism.io/tracks/typescript/installation)
+
+## Requirements
+
+Install assignment dependencies:
+
+```bash
+$ yarn install
+```
+
+## Making the test suite pass
+
+Execute the tests with:
+
+```bash
+$ yarn test
+```
+
+In the test suites all tests but the first have been skipped.
+
+Once you get a test passing, you can enable the next one by changing `xit` to
+`it`.
+
+## Source
+
+Hyperphysics [http://hyperphysics.phy-astr.gsu.edu/hbase/Organic/transcription.html](http://hyperphysics.phy-astr.gsu.edu/hbase/Organic/transcription.html)
+
+## Submitting Incomplete Solutions
+
+It's possible to submit an incomplete solution so you can see how others have
+completed the exercise.
+
+#+end_src
+
+*** TypeScript RNA Transcription Package Files
+**** TypeScript RNA Transcription Package
+#+name:typescript-rna-transcription-package-json
+#+begin_src js :tangle typescript/rna-transcription/package.json
+{
+  "name": "xtypescript",
+  "version": "1.0.0",
+  "description": "Exercism exercises in Typescript.",
+  "author": "",
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/exercism/xtypescript"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "tsc --noEmit -p . && jest --no-cache",
+    "lint": "tsc --noEmit -p . && tslint \"*.ts?(x)\"",
+    "lintci": "tslint \"*.ts?(x)\" --force"
+  },
+  "dependencies": {
+    "@types/jest": "^21.1.5",
+    "@types/node": "^8.0.47",
+    "jest": "^21.2.1",
+    "ts-jest": "^21.1.3",
+    "tslint": "^5.8.0",
+    "typescript": "^2.5.3"
+  },
+  "jest": {
+    "transform": {
+      ".(ts|tsx)": "<rootDir>/node_modules/ts-jest/preprocessor.js"
+    },
+    "testRegex": "(/__tests__/.*|\\.(test|spec))\\.(ts|tsx|js)$",
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js"
+    ]
+  }
+}
+
+#+end_src
+**** TypeScript RNA Transcription TSConfig
+#+name:typescript-rna-transcription-tsconfig-json
+#+begin_src js :tangle typescript/rna-transcription/tsconfig.json
+{
+    "compilerOptions": { 
+        "target": "es2017",
+        "module": "commonjs",
+        "alwaysStrict": true,
+        "noUnusedLocals": true,
+        "noUnusedParameters": true,
+        "noImplicitAny": true,
+        "strictNullChecks": true,
+        "preserveConstEnums": true,
+        "noFallthroughCasesInSwitch":true,
+        "noImplicitThis":true,
+        "noImplicitReturns":true,
+        "sourceMap": true,
+        "noEmitOnError": true,
+        "outDir": "./build"
+    },
+    "compileOnSave": true, 
+    "exclude": [
+        "node_modules"
+    ]
+}
+
+#+end_src
+**** TypeScript RNA Transcription TSLint
+#+name:typescript-rna-transcription-tslint-json
+#+begin_src js :tangle typescript/rna-transcription/tslint.json
+{
+    "jsRules": {
+        "class-name": true,
+        "comment-format": [
+            true,
+            "check-space"
+        ],
+        "indent": [
+            true,
+            "spaces"
+        ],
+        "no-duplicate-variable": true,
+        "no-eval": true,
+        "no-trailing-whitespace": true,
+        "no-unsafe-finally": true,
+        "one-line": [
+            true,
+            "check-open-brace",
+            "check-whitespace"
+        ],
+        "quotemark": [
+            false,
+            "double"
+        ],
+        "semicolon": [
+            true,
+            "never"
+        ],
+        "triple-equals": [
+            true,
+            "allow-null-check"
+        ],
+        "variable-name": [
+            true,
+            "ban-keywords"
+        ],
+        "whitespace": [
+            true,
+            "check-branch",
+            "check-decl",
+            "check-operator",
+            "check-separator",
+            "check-type"
+        ]
+    },
+    "rules": {
+        "class-name": true,
+        "comment-format": [
+            true,
+            "check-space"
+        ],
+        "indent": [
+            true,
+            "spaces"
+        ],
+        "no-eval": true,
+        "no-internal-module": true,
+        "no-trailing-whitespace": true,
+        "no-unsafe-finally": true,
+        "no-var-keyword": true,
+        "one-line": [
+            true,
+            "check-open-brace",
+            "check-whitespace"
+        ],
+        "semicolon": [
+            true,
+            "never"
+        ],
+        "triple-equals": [
+            true,
+            "allow-null-check"
+        ],
+        "typedef-whitespace": [
+            true,
+            {
+                "call-signature": "nospace",
+                "index-signature": "nospace",
+                "parameter": "nospace",
+                "property-declaration": "nospace",
+                "variable-declaration": "nospace"
+            }
+        ],
+        "variable-name": [
+            true,
+            "ban-keywords"
+        ],
+        "whitespace": [
+            true,
+            "check-branch",
+            "check-decl",
+            "check-operator",
+            "check-separator",
+            "check-type"
+        ],
+        "no-namespace": true, 
+        "prefer-for-of": true,
+        "only-arrow-functions": [true, "allow-declarations"],
+        "no-var-requires": true,
+        "no-any": true,
+        "curly": true,
+        "forin": true,
+        "no-arg": true,
+        "label-position": true,
+        "no-conditional-assignment": true,
+        "no-console": [true, "log", "error"],
+        "no-construct": true,
+        "no-duplicate-variable": true,
+        "no-empty": true,
+        "no-invalid-this": [true, "check-function-in-method"],
+        "no-misused-new": true,
+        "no-null-keyword": true,
+        "no-string-literal": true,
+        "radix": true,
+        "typeof-compare": true,
+        "use-isnan": true,
+        "prefer-const": true,
+        "array-type": [true, "array-simple"],
+        "arrow-parens": true,
+        "new-parens": true,
+        "no-consecutive-blank-lines": [true,1],
+        "no-parameter-properties": true,
+        "no-unnecessary-initializer": true,
+        "object-literal-shorthand": true,
+        "object-literal-key-quotes": [true, "as-needed"]
+    }
+}
+
+#+end_src
+
+*** TypeScript RNA Transcription Solution Code
+#+name:typescript-rna-transcription-rna_transcription
+#+begin_src js -n :tangle typescript/rna-transcription/rna-transcription.ts
+class Transcriptor {
+    toRna( dna:string ) {
+        // Your code here
+        !!dna;
+        return 'G';
+    }
+}
+
+export default Transcriptor
+#+end_src
+
+*** TypeScript RNA Transcription Test Code
+#+name:typescript-rna-transcription-test-code
+#+begin_src ts -n :tangle typescript/rna-transcription/rna-transcription.test.ts
+import Transcriptor from './rna-transcription'
+
+describe('Transcriptor', () => {
+  const transcriptor = new Transcriptor()
+
+  it('transcribes cytosine to guanine', () => {
+    expect(transcriptor.toRna('C')).toEqual('G')
+  })
+
+  xit('transcribes guanine to cytosine', () => {
+    expect(transcriptor.toRna('G')).toEqual('C')
+  })
+
+  xit('transcribes adenine to uracil', () => {
+    expect(transcriptor.toRna('A')).toEqual('U')
+  })
+
+  xit('transcribes thymine to adenine', () => {
+    expect(transcriptor.toRna('T')).toEqual('A')
+  })
+
+  xit('transcribes all dna nucleotides to their rna complements', () => {
+    expect(transcriptor.toRna('ACGTGGTCTTAA'))
+        .toEqual('UGCACCAGAAUU')
+  })
+
+  xit('correctly handles invalid input', () => {
+    expect(() => transcriptor.toRna('U')).toThrowError(
+      'Invalid input DNA.'
+    )
+  })
+
+  xit('correctly handles completely invalid input', () => {
+    expect(() => transcriptor.toRna('XXX')).toThrowError(
+      'Invalid input DNA.'
+    )
+  })
+
+  xit('correctly handles partially invalid input', () => {
+    expect(() => transcriptor.toRna('ACGTXXXCTTAA')).toThrowError(
+      'Invalid input DNA.'
+    )
+  })
+
+})
+
+#+end_src
+
 * Python Exercism Track
 - http://exercism.io/languages/python
 - https://github.com/exercism/python
