@@ -1,8 +1,8 @@
 # -*- mode:org; fill-column:79; -*-
 #+Title:Exercism Exercises
 #+Author:Pinecone062
-#+Date:Last updated 2019-08-02 13:53
-#+Macro: version Version 0.4.40
+#+Date:Last updated 2019-08-03 00:06
+#+Macro: version Version 0.4.41
 {{{title}}} {{{version}}} {{{date}}}
 * Exercism Home
 :PROPERTIES:
@@ -7028,10 +7028,29 @@ completed the exercise.
 #+name:typescript-rna-transcription-rna_transcription
 #+begin_src js -n :tangle typescript/rna-transcription/rna-transcription.ts
 class Transcriptor {
-    toRna( dna:string ) {
+
+    enum DNA {A, C, G, T}
+
+    enum RNA {A, C, G, U}
+
+    interface DNAStr {
+        Array<DNA>
+    }
+
+    interface RNAStr {
+        Array<RNA>
+    }
+
+    static COMPLEMENT:{DNA: RNA} = {
+        G: 'C',
+        C: 'G',
+        T: 'A',
+        A: 'U',
+    };
+
+    toRna( dna:DNAStr ): RNAStr {
         // Your code here
-        !!dna;
-        return 'G';
+        return dna.split('').reduce((c,n) => c.concat(Transcriptor.COMPLEMENT[n]),'')
     }
 }
 
