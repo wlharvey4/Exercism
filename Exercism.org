@@ -1,8 +1,8 @@
 # -*- mode:org; fill-column:79; -*-
 #+Title:Exercism Exercises
 #+Author:Pinecone062
-#+Date:Last updated 2019-08-19 12:38
-#+Macro: version Version 0.4.42
+#+Date:Last updated 2019-08-19 12:54
+#+Macro: version Version 0.4.43
 {{{title}}} {{{version}}} {{{date}}}
 * Exercism Home
 :PROPERTIES:
@@ -4173,16 +4173,6 @@ yarn install
 : success Saved lockfile.
 : Done in 5.86s.
 
-**** TypeScript RNA Transcription Run Tests Script
-#+name:typescript-rna-transcription-run-tests
-#+header: :dir typescript/rna-transcription
-#+header: :results outuput :exports results
-#+begin_src sh
-yarn test
-#+end_src
-
-#+RESULTS: typescript-rna-transcription-run-tests
-
 **** TypeScript RNA Transcription Submit Script
 #+name:typescript-rna-transcription-submit-script
 #+header: :results output :exports none
@@ -4495,11 +4485,21 @@ completed the exercise.
 
       toRna( dna : string ): string {
            // Your code here
-           return dna;
+           dna;
+           return 'G';
       }
   }
 
   export default Transcriptor
+#+end_src
+
+{{{heading(Test Results)}}}
+
+#+name:typescript-rna-transcription-run-tests
+#+header: :dir typescript/rna-transcription
+#+header: :results output :exports results
+#+begin_src sh
+yarn test 2>&1
 #+end_src
 
 *** TypeScript RNA Transcription Test Code
