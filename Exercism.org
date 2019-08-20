@@ -1,8 +1,8 @@
 # -*- mode:org; fill-column:79; -*-
 #+Title:Exercism Exercises
 #+Author:Pinecone062
-#+Date:Last updated 2019-08-20 11:22
-#+Macro: version Version 0.4.47
+#+Date:Last updated 2019-08-20 11:31
+#+Macro: version Version 0.4.48
 {{{title}}} {{{version}}} {{{date}}}
 * Exercism Home
 :PROPERTIES:
@@ -4152,9 +4152,13 @@ exercism download --exercise=difference-of-squares --track=typescript
 exercism submit typescript/difference-of-squares/difference-of-squares.ts
 #+end_src
 
+#+RESULTS: typescript-difference-of-squares-submit-script
+:     https://exercism.io/my/solutions/d17b1f2cbe9a45d790a39362cac02f6e
+: 
+
 #+name:typescript-difference-of-squares-exercism-metadata
 #+header: :exports none :mkdirp yes
-#+begin_src js :tangle typescript/difference-of-squares/.exercism/meatadata.json
+#+begin_src js :tangle typescript/difference-of-squares/.exercism/metadata.json
   {
       "track":"typescript",
       "exercise":"difference-of-squares",
@@ -4490,7 +4494,7 @@ completed the exercise.
           return sum * sum;
       }
 
-      difference () {
+      get difference () {
           return this.squareOfSum - this.sumOfSquares;
       }
   }
@@ -4514,24 +4518,24 @@ $ /usr/local/dev/programming/Languages/Exercism/typescript/difference-of-squares
 PASS ./difference-of-squares.test.ts
   Squares
     up to 5
-      ✓ gets the square of sum (3ms)
-      ○ skipped gets the sum of squares
-      ○ skipped gets the difference
+      ✓ gets the square of sum (2ms)
+      ✓ gets the sum of squares
+      ✓ gets the difference
     up to 10
-      ○ skipped gets the square of sum
-      ○ skipped gets the sum of squares
-      ○ skipped gets the difference
+      ✓ gets the square of sum
+      ✓ gets the sum of squares
+      ✓ gets the difference
     up to 100
-      ○ skipped gets the square of sum
-      ○ skipped gets the sum of squares
-      ○ skipped gets the difference
+      ✓ gets the square of sum (1ms)
+      ✓ gets the sum of squares
+      ✓ gets the difference
 
 Test Suites: 1 passed, 1 total
-Tests:       8 skipped, 1 passed, 9 total
+Tests:       9 passed, 9 total
 Snapshots:   0 total
-Time:        2.687s
+Time:        2.292s
 Ran all test suites.
-Done in 6.52s.
+Done in 6.10s.
 #+end_example
 
 **** TypeScript Difference of Squares Tests
@@ -4548,11 +4552,11 @@ describe('Squares', () => {
       expect(squares.squareOfSum).toBe(225)
     })
 
-    xit('gets the sum of squares', () => {
+    it('gets the sum of squares', () => {
       expect(squares.sumOfSquares).toBe(55)
     })
 
-    xit('gets the difference', () => {
+    it('gets the difference', () => {
       expect(squares.difference).toBe(170)
     })
 
@@ -4561,15 +4565,15 @@ describe('Squares', () => {
   describe('up to 10', () => {
     const squares = new Squares(10)
 
-    xit('gets the square of sum', () => {
+    it('gets the square of sum', () => {
       expect(squares.squareOfSum).toBe(3025)
     })
 
-    xit('gets the sum of squares', () => {
+    it('gets the sum of squares', () => {
       expect(squares.sumOfSquares).toBe(385)
     })
 
-    xit('gets the difference', () => {
+    it('gets the difference', () => {
       expect(squares.difference).toBe(2640)
     })
 
@@ -4578,15 +4582,15 @@ describe('Squares', () => {
   describe('up to 100', () => {
     const squares = new Squares(100)
 
-    xit('gets the square of sum', () => {
+    it('gets the square of sum', () => {
       expect(squares.squareOfSum).toBe(25502500)
     })
 
-    xit('gets the sum of squares', () => {
+    it('gets the sum of squares', () => {
       expect(squares.sumOfSquares).toBe(338350)
     })
 
-    xit('gets the difference', () => {
+    it('gets the difference', () => {
       expect(squares.difference).toBe(25164150)
     })
 
