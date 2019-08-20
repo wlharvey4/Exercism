@@ -1,8 +1,8 @@
 # -*- mode:org; fill-column:79; -*-
 #+Title:Exercism Exercises
 #+Author:Pinecone062
-#+Date:Last updated 2019-08-19 12:54
-#+Macro: version Version 0.4.43
+#+Date:Last updated 2019-08-20 09:16
+#+Macro: version Version 0.4.44
 {{{title}}} {{{version}}} {{{date}}}
 * Exercism Home
 :PROPERTIES:
@@ -4462,35 +4462,43 @@ completed the exercise.
 *** TypeScript RNA Transcription Solution Code
 #+name:typescript-rna-transcription-rna_transcription
 #+begin_src js -n :tangle typescript/rna-transcription/rna-transcription.ts
+  enum DNA {A, C, G, T}
+  enum RNA {A, C, G, U}
+
+  function isDNA (it : DNA|any) : it is DNA {
+      return DNA[it as DNA] !== undefined;
+  }
+
+  type DNA_STRAND = string;
+  type RNA_STRAND = string;
+
+  interface DNA2RNA {
+      [dna:string]: RNA;
+  }
+
+  const dna_2_rna: DNA2RNA = {
+      G : RNA.C,
+      C : RNA.G,
+      T : RNA.A,
+      A : RNA.U,
+  }
+
   class Transcriptor {
 
-      // enum DNA {A, C, G, T}
-
-      // enum RNA {A, C, G, U}
-
-      // interface DNAStr {
-      //     Array<DNA>
-      // }
-
-      // interface RNAStr {
-      //     Array<RNA>
-      // }
-
-      // static COMPLEMENT:{DNA: RNA} = {
-      //     G: 'C',
-      //     C: 'G',
-      //     T: 'A',
-      //     A: 'U',
-      // };
-
-      toRna( dna : string ): string {
-           // Your code here
-           dna;
-           return 'G';
+      toRna( dna_strand : DNA_STRAND ): RNA_STRAND {
+          return dna_strand
+              .split('')
+              .map(dna => {
+                  if (isDNA(dna)) {
+                      return RNA[dna_2_rna[dna]]
+                  } else
+                      throw new Error('Invalid input DNA.');
+              })
+              .join('');
       }
   }
 
-  export default Transcriptor
+  export default Transcriptor;
 #+end_src
 
 {{{heading(Test Results)}}}
@@ -4514,36 +4522,36 @@ describe('Transcriptor', () => {
     expect(transcriptor.toRna('C')).toEqual('G')
   })
 
-  xit('transcribes guanine to cytosine', () => {
+  it('transcribes guanine to cytosine', () => {
     expect(transcriptor.toRna('G')).toEqual('C')
   })
 
-  xit('transcribes adenine to uracil', () => {
+  it('transcribes adenine to uracil', () => {
     expect(transcriptor.toRna('A')).toEqual('U')
   })
 
-  xit('transcribes thymine to adenine', () => {
+  it('transcribes thymine to adenine', () => {
     expect(transcriptor.toRna('T')).toEqual('A')
   })
 
-  xit('transcribes all dna nucleotides to their rna complements', () => {
+  it('transcribes all dna nucleotides to their rna complements', () => {
     expect(transcriptor.toRna('ACGTGGTCTTAA'))
         .toEqual('UGCACCAGAAUU')
   })
 
-  xit('correctly handles invalid input', () => {
+  it('correctly handles invalid input', () => {
     expect(() => transcriptor.toRna('U')).toThrowError(
       'Invalid input DNA.'
     )
   })
 
-  xit('correctly handles completely invalid input', () => {
+  it('correctly handles completely invalid input', () => {
     expect(() => transcriptor.toRna('XXX')).toThrowError(
       'Invalid input DNA.'
     )
   })
 
-  xit('correctly handles partially invalid input', () => {
+  it('correctly handles partially invalid input', () => {
     expect(() => transcriptor.toRna('ACGTXXXCTTAA')).toThrowError(
       'Invalid input DNA.'
     )
