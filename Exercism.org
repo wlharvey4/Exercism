@@ -1,8 +1,8 @@
 # -*- mode:org; fill-column:79; -*-
 #+Title:Exercism Exercises
 #+Author:Pinecone062
-#+Date:Last updated 2019-08-20 10:49
-#+Macro: version Version 0.4.46
+#+Date:Last updated 2019-08-20 11:22
+#+Macro: version Version 0.4.47
 {{{title}}} {{{version}}} {{{date}}}
 * Exercism Home
 :PROPERTIES:
@@ -4118,7 +4118,7 @@ export default class Gigasecond {
 }
 #+end_src
 ** TypeScript Difference of Squares
-{{{heading(Introductin)}}}
+{{{heading(Introduction)}}}
 
 Find the difference between the square of the sum and the sum of the squares of
 the first N natural numbers.
@@ -4141,17 +4141,14 @@ algorithm for the problem is a key skill in software engineering.
 *** TypeScript Difference of Squares Scripts
 **** TypeScript Difference of Squares Download Script
 #+name:typescript-difference-of-squares-download-script
-#+begin_src sh :results output :exports none
+#+header: :results output
 #+begin_src sh
 exercism download --exercise=difference-of-squares --track=typescript
 #+end_src
 
-#+RESULTS: typescript-difference-of-squares-download-script
-: /usr/local/dev/programming/Languages/Exercism/typescript/difference-of-squares
-
 **** TypeScript Difference of Squares Submit Script
 #+name:typescript-difference-of-squares-submit-script
-#+begin_src sh :results output :exports none
+#+begin_src sh :results output :exports code
 exercism submit typescript/difference-of-squares/difference-of-squares.ts
 #+end_src
 
@@ -4188,6 +4185,8 @@ yarn install
 
 *** TypeScript Difference of Squares Metadata
 **** TypeScript Difference of Squares Package
+{{{heading(Package.json)}}}
+
 #+name:typescript-difference-of-squares-package.json
 #+begin_src js :tangle typescript/difference-of-squares/package.json
 {
@@ -4222,6 +4221,8 @@ yarn install
 #+end_src
 
 **** TypeScript Difference of Squares TSConfig
+{{{heading(TSConfig.json)}}}
+
 #+name:typescript-difference-of-squares-tsconfig.json
 #+begin_src js :tangle typescript/difference-of-squares/tsconfig.json
 {
@@ -4373,6 +4374,8 @@ jest.config.js
 #+end_src
 
 **** TypeScript Difference of Squares Jest Config
+{{{heading(Jest.config.js)}}}
+
 #+name:typescript-difference-of-squares-jest-config
 #+begin_src js :tangle typescript/difference-of-squares/jest.config.js
 module.exports = {
@@ -4399,6 +4402,8 @@ module.exports = {
 #+end_src
 
 *** TypeScript Difference of Squares README
+{{{heading(README)}}}
+
 #+name:typescript-difference-of-squares-README
 #+begin_src markdown :tangle typescript/difference-of-squares/README.md :mkdirp yes
 # Difference Of Squares
@@ -4460,25 +4465,35 @@ completed the exercise.
 
 *** TypeScript Difference of Squares Solution and Tests
 **** TypeScript Difference of Squares Solution
+{{{heading(Difference of Squares Solution)}}}
+
 #+name:typescript-difference-of-squares-solution
 #+begin_src js :tangle typescript/difference-of-squares/difference-of-squares.ts
-export default class Squares {
-    constructor (public num:number) {
-        this.num = num;
-    }
+  export default class Squares {
+      constructor (private num:number) {
+          this.num = num;
+      }
 
-    get sumOfSquares () {
-        return 0;
-    }
+      get sumOfSquares () {
+          let sum = 0;
+          for (let x = 1; x <= this.num; x++) {
+              sum += x * x;
+          }
+          return sum;
+      }
 
-    get squareOfSum () {
-        return 0;
-    }
+      get squareOfSum () {
+          let sum = 0;
+          for (let x = 1; x <= this.num; x++) {
+              sum += x;
+          }
+          return sum * sum;
+      }
 
-    difference () {
-        return this.squareOfSum - this.sumOfSquares;
-    }
-}
+      difference () {
+          return this.squareOfSum - this.sumOfSquares;
+      }
+  }
 #+end_src
 
 {{{heading(Test Solution)}}}
@@ -4487,10 +4502,37 @@ export default class Squares {
 #+header: :dir typescript/difference-of-squares
 #+header: :results output :exports both
 #+begin_src sh
-yarn test
+yarn test 2>&1
 #+end_src
 
 #+RESULTS: typescript-difference-of-squares-test-solution
+#+begin_example
+yarn run v1.16.0
+$ yarn lint:types && jest --no-cache
+$ yarn tsc --noEmit -p .
+$ /usr/local/dev/programming/Languages/Exercism/typescript/difference-of-squares/node_modules/.bin/tsc --noEmit -p .
+PASS ./difference-of-squares.test.ts
+  Squares
+    up to 5
+      ✓ gets the square of sum (3ms)
+      ○ skipped gets the sum of squares
+      ○ skipped gets the difference
+    up to 10
+      ○ skipped gets the square of sum
+      ○ skipped gets the sum of squares
+      ○ skipped gets the difference
+    up to 100
+      ○ skipped gets the square of sum
+      ○ skipped gets the sum of squares
+      ○ skipped gets the difference
+
+Test Suites: 1 passed, 1 total
+Tests:       8 skipped, 1 passed, 9 total
+Snapshots:   0 total
+Time:        2.687s
+Ran all test suites.
+Done in 6.52s.
+#+end_example
 
 **** TypeScript Difference of Squares Tests
 #+name:typescript-difference-of-squares-tests
@@ -4583,13 +4625,10 @@ nucleotide with its complement:
 *** TypeScript RNA Transcription Scripts
 **** TypeScript RNA Transcription Download Script
 #+name:typescript-rna-transcription-download-script
-#+header: :results output :exports none
+#+header: :results output
 #+begin_src sh
 exercism download --exercise=rna-transcription --track=typescript
 #+end_src
-
-#+RESULTS: typescript-rna-transcription-download-script
-: /usr/local/dev/programming/Languages/Exercism/typescript/rna-transcription
 
 **** TypeScript RNA Transcription Install Dependencies
 #+name:typescript-rna-transcription-install-dependencies
