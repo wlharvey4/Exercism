@@ -1,8 +1,8 @@
 # -*- mode:org; fill-column:79; -*-
 #+Title:Exercism Exercises
 #+Author:Pinecone062
-#+Date:Last updated 2019-08-20 09:16
-#+Macro: version Version 0.4.44
+#+Date:Last updated 2019-08-20 09:20
+#+Macro: version Version 0.4.45
 {{{title}}} {{{version}}} {{{date}}}
 * Exercism Home
 :PROPERTIES:
@@ -4177,8 +4177,12 @@ yarn install
 #+name:typescript-rna-transcription-submit-script
 #+header: :results output :exports none
 #+begin_src sh
-exercism submit typescript/rna-transcription/
+exercism submit typescript/rna-transcription/rna-transcription.ts
 #+end_src
+
+#+RESULTS: typescript-rna-transcription-submit-script
+:     https://exercism.io/my/solutions/62a8630b3f034da3ad10af1c8b2b369d
+: 
 
 #+name:tiypescript-rna-transcription-exercism-metadata
 #+header: :mkdirp yes
@@ -4560,7 +4564,6 @@ describe('Transcriptor', () => {
 })
 
 #+end_src
-
 * Python Exercism Track
 - http://exercism.io/languages/python
 - https://github.com/exercism/python
