@@ -1,8 +1,8 @@
 # -*- mode:org; fill-column:79; -*-
 #+Title:Exercism Exercises
 #+Author:Pinecone062
-#+Date:Last updated 2019-08-20 09:20
-#+Macro: version Version 0.4.45
+#+Date:Last updated 2019-08-20 10:49
+#+Macro: version Version 0.4.46
 {{{title}}} {{{version}}} {{{date}}}
 * Exercism Home
 :PROPERTIES:
@@ -4117,6 +4117,442 @@ export default class Gigasecond {
     }
 }
 #+end_src
+** TypeScript Difference of Squares
+{{{heading(Introductin)}}}
+
+Find the difference between the square of the sum and the sum of the squares of
+the first N natural numbers.
+
+- The square of the sum of the first ten natural numbers ::
+  =(1 + 2 + ... + 10)²  = 55² = 3025=
+
+- The sum of the squares of the first ten natural numbers ::
+  =1² + 2² + ... + 10² = 385=
+
+- The difference between the square of the sum of the first ten natural numbers
+  and the sum of the squares of the first ten natural numbers ::
+  =3025 - 385 = 2640=
+
+
+You are not expected to discover an efficient solution to this yourself from
+first principles; research is allowed, indeed, encouraged. Finding the best
+algorithm for the problem is a key skill in software engineering.
+
+*** TypeScript Difference of Squares Scripts
+**** TypeScript Difference of Squares Download Script
+#+name:typescript-difference-of-squares-download-script
+#+begin_src sh :results output :exports none
+#+begin_src sh
+exercism download --exercise=difference-of-squares --track=typescript
+#+end_src
+
+#+RESULTS: typescript-difference-of-squares-download-script
+: /usr/local/dev/programming/Languages/Exercism/typescript/difference-of-squares
+
+**** TypeScript Difference of Squares Submit Script
+#+name:typescript-difference-of-squares-submit-script
+#+begin_src sh :results output :exports none
+exercism submit typescript/difference-of-squares/difference-of-squares.ts
+#+end_src
+
+#+name:typescript-difference-of-squares-exercism-metadata
+#+header: :exports none :mkdirp yes
+#+begin_src js :tangle typescript/difference-of-squares/.exercism/meatadata.json
+  {
+      "track":"typescript",
+      "exercise":"difference-of-squares",
+      "id":"d17b1f2cbe9a45d790a39362cac02f6e",
+      "url":"https://exercism.io/my/solutions/d17b1f2cbe9a45d790a39362cac02f6e",
+      "handle":"wlharvey4",
+      "is_requester":true,
+      "auto_approve":false
+  }
+#+end_src
+
+**** TypeScript Difference of Squares Dependency Installation
+#+name:typescript-difference-of-squares-dependency-install
+#+header: :results output :exports both
+#+begin_src sh :dir typescript/difference-of-squares
+yarn install
+#+end_src
+
+#+RESULTS: typescript-difference-of-squares-dependency-install
+: yarn install v1.16.0
+: info No lockfile found.
+: [1/4] Resolving packages...
+: [2/4] Fetching packages...
+: [3/4] Linking dependencies...
+: [4/4] Building fresh packages...
+: success Saved lockfile.
+: Done in 42.57s.
+
+*** TypeScript Difference of Squares Metadata
+**** TypeScript Difference of Squares Package
+#+name:typescript-difference-of-squares-package.json
+#+begin_src js :tangle typescript/difference-of-squares/package.json
+{
+  "name": "@exercism/typescript",
+  "version": "1.0.0",
+  "description": "Exercism exercises in Typescript.",
+  "author": "",
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/exercism/typescript"
+  },
+  "devDependencies": {
+    "@types/jest": "^24.0.15",
+    "@types/node": "^12.6.8",
+    "@typescript-eslint/eslint-plugin": "^1.13.0",
+    "@typescript-eslint/parser": "^1.13.0",
+    "eslint": "^6.1.0",
+    "eslint-plugin-import": "^2.18.2",
+    "jest": "^24.8.0",
+    "ts-jest": "^24.0.2",
+    "typescript": "^3.5.3"
+  },
+  "scripts": {
+    "test": "yarn lint:types && jest --no-cache",
+    "lint": "yarn lint:types && yarn lint:ci",
+    "lint:types": "yarn tsc --noEmit -p .",
+    "lint:ci": "eslint . --ext .tsx,.ts"
+  },
+  "dependencies": {}
+}
+#+end_src
+
+**** TypeScript Difference of Squares TSConfig
+#+name:typescript-difference-of-squares-tsconfig.json
+#+begin_src js :tangle typescript/difference-of-squares/tsconfig.json
+{
+  "compilerOptions": {
+    /* Basic Options */
+    "target": "es2017",                       /* Specify ECMAScript target version: 'ES3' (default), 'ES5', 'ES2015', 'ES2016', 'ES2017','ES2018' or 'ESNEXT'. */
+    "module": "commonjs",                     /* Specify module code generation: 'none', 'commonjs', 'amd', 'system', 'umd', 'es2015', or 'ESNext'. */
+    "lib": ["esnext", "es2016", "es2017"],    /* Specify library files to be included in the compilation. */
+    // "allowJs": true,                       /* Allow javascript files to be compiled. */
+    // "checkJs": true,                       /* Report errors in .js files. */
+    // "jsx": "preserve",                     /* Specify JSX code generation: 'preserve', 'react-native', or 'react'. */
+    // "declaration": true,                   /* Generates corresponding '.d.ts' file. */
+    // "declarationMap": true,                /* Generates a sourcemap for each corresponding '.d.ts' file. */
+    "sourceMap": true,                        /* Generates corresponding '.map' file. */
+    // "outFile": "./",                       /* Concatenate and emit output to single file. */
+    "outDir": "./build",                      /* Redirect output structure to the directory. */
+    // "rootDirs": ["./"],                    /* Specify the root directory of input files. Use to control the output directory structure with --outDir. */
+    // "composite": true,                     /* Enable project compilation */
+    // "removeComments": true,                /* Do not emit comments to output. */
+    // "noEmit": true,                        /* Do not emit outputs. */
+    // "importHelpers": true,                 /* Import emit helpers from 'tslib'. */
+    // "downlevelIteration": true,            /* Provide full support for iterables in 'for-of', spread, and destructuring when targeting 'ES5' or 'ES3'. */
+    "isolatedModules": true,                  /* Transpile each file as a separate module (similar to 'ts.transpileModule'). */
+    "noEmitOnError": true,                    /* Do not emit outputs when compilation fails. */
+
+    /* Strict Type-Checking Options */
+    "strict": true,                           /* Enable all strict type-checking options. */
+    // "noImplicitAny": true,                 /* Raise error on expressions and declarations with an implied 'any' type. */
+    // "strictNullChecks": true,              /* Enable strict null checks. */
+    // "strictFunctionTypes": true,           /* Enable strict checking of function types. */
+    // "strictBindCallApply": true,           /* Enable strict 'bind', 'call', and 'apply' methods on functions. */
+    // "strictPropertyInitialization": true,  /* Enable strict checking of property initialization in classes. */
+    // "noImplicitThis": true,                /* Raise error on 'this' expressions with an implied 'any' type. */
+    // "alwaysStrict": true,                  /* Parse in strict mode and emit "use strict" for each source file. */
+
+    /* Additional Checks */
+    // "noUnusedLocals": true,                /* Report errors on unused locals. */
+    "noUnusedParameters": true,               /* Report errors on unused parameters. */
+    // "noImplicitReturns": true,             /* Report error when not all code paths in function return a value. */
+    // "noFallthroughCasesInSwitch": true,    /* Report errors for fallthrough cases in switch statement. */
+
+    /* Module Resolution Options */
+    "moduleResolution": "node",               /* Specify module resolution strategy: 'node' (Node.js) or 'classic' (TypeScript pre-1.6). */
+    // "baseUrl": "./",                       /* Base directory to resolve non-absolute module names. */
+    // "paths": { "~src/*": ["./src/*"] },                           /* A series of entries which re-map imports to lookup locations relative to the 'baseUrl'. */
+    // "rootDirs": [],                        /* List of root folders whose combined content represents the structure of the project at runtime. */
+    // "typeRoots": [],                       /* List of folders to include type definitions from. */
+    // "types": [],                           /* Type declaration files to be included in compilation. */
+    "allowSyntheticDefaultImports": true,     /* Allow default imports from modules with no default export. This does not affect code emit, just typechecking. */
+    "esModuleInterop": true                   /* Enables emit interoperability between CommonJS and ES Modules via creation of namespace objects for all imports. Implies 'allowSyntheticDefaultImports'. */
+    // "preserveSymlinks": true,              /* Do not resolve the real path of symlinks. */
+
+    /* Source Map Options */
+    // "sourceRoot": "",                      /* Specify the location where debugger should locate TypeScript files instead of source locations. */
+    // "mapRoot": "",                         /* Specify the location where debugger should locate map files instead of generated locations. */
+    // "inlineSourceMap": true,               /* Emit a single file with source maps instead of having a separate file. */
+    // "inlineSources": true,                 /* Emit the source alongside the sourcemaps within a single file; requires '--inlineSourceMap' or '--sourceMap' to be set. */
+
+    /* Experimental Options */
+    // "experimentalDecorators": true,        /* Enables experimental support for ES7 decorators. */
+    // "emitDecoratorMetadata": true,         /* Enables experimental support for emitting type metadata for decorators. */
+  },
+  "compileOnSave": true,
+  "exclude": [
+    "node_modules"
+  ]
+}
+#+end_src
+
+**** TypeScript Difference of Squares ESLint
+{{{heading(.eslintrc File)}}}
+
+#+name:typescript-difference-of-squares-tslint.json
+#+begin_src js :tangle typescript/difference-of-squares/.eslintrc
+{
+  "root": true,
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "project": "./tsconfig.json",
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "ecmaVersion": 2018,
+    "sourceType": "module"
+  },
+  "env": {
+    "browser": true,
+    "es6": true
+  },
+  "extends": [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:@typescript-eslint/recommended",
+  ],
+  "globals": {
+    "Atomics": "readonly",
+    "SharedArrayBuffer": "readonly"
+  },
+  "plugins": [
+    "@typescript-eslint"
+  ],
+  "rules": {
+    "@typescript-eslint/array-type": "off", // Styling not forced upon the student
+    "@typescript-eslint/explicit-function-return-type": [
+      "warn", {
+        "allowExpressions": false,
+        "allowTypedFunctionExpressions": true,
+        "allowHigherOrderFunctions": true
+      }
+    ], // Prevent bugs
+    "@typescript-eslint/explicit-member-accessibility": "off", // Styling not forced upon the student
+    "@typescript-eslint/indent": "off", // Styling not forced upon the student
+    "@typescript-eslint/member-delimiter-style": "off", // Styling not forced upon the student
+    "@typescript-eslint/no-non-null-assertion": "off",
+    "@typescript-eslint/no-parameter-properties": [
+      "warn", {
+        "allows": [
+          "private", "protected", "public",
+          "private readonly", "protected readonly", "public readonly"
+        ]
+      }
+    ], // only disallow readonly without an access modifier
+    "@typescript-eslint/no-unused-vars": "off", // Covered by the tsc compiler (noUnusedLocals)
+    "@typescript-eslint/no-use-before-define": [
+      "error", {
+        "functions": false,
+        "typedefs": false
+      }
+    ], // Prevent bugs, not styling
+    "semi": "off", // Always disable base-rule
+    "@typescript-eslint/semi": "off" // Styling not forced upon student
+  }
+}
+
+#+end_src
+
+{{{heading(.eslintignore File)}}}
+
+#+name:typescript-difference-of-squares-eslintignore
+#+begin_src js :tangle typescript/difference-of-squares/.eslintignore
+bin/*
+dist/*
+docs/*
+node_modules/*
+production_node_modules/*
+test/fixtures/*
+tmp/*
+jest.config.js
+#+end_src
+
+**** TypeScript Difference of Squares Jest Config
+#+name:typescript-difference-of-squares-jest-config
+#+begin_src js :tangle typescript/difference-of-squares/jest.config.js
+module.exports = {
+  verbose: true,
+  projects: [
+    '<rootDir>'
+  ],
+  testMatch: [
+    "**/__tests__/**/*.[jt]s?(x)",
+    "**/test/**/*.[jt]s?(x)",
+    "**/?(*.)+(spec|test).[jt]s?(x)"
+  ],
+  testPathIgnorePatterns: [
+    '/(?:production_)?node_modules/',
+    '.d.ts$',
+    '<rootDir>/test/fixtures',
+    '<rootDir>/test/helpers',
+    '__mocks__'
+  ],
+  transform: {
+    '^.+\\.[jt]sx?$': 'ts-jest',
+  },
+};
+#+end_src
+
+*** TypeScript Difference of Squares README
+#+name:typescript-difference-of-squares-README
+#+begin_src markdown :tangle typescript/difference-of-squares/README.md :mkdirp yes
+# Difference Of Squares
+
+Find the difference between the square of the sum and the sum of the squares of the first N natural numbers.
+
+The square of the sum of the first ten natural numbers is
+(1 + 2 + ... + 10)² = 55² = 3025.
+
+The sum of the squares of the first ten natural numbers is
+1² + 2² + ... + 10² = 385.
+
+Hence the difference between the square of the sum of the first
+ten natural numbers and the sum of the squares of the first ten
+natural numbers is 3025 - 385 = 2640.
+
+You are not expected to discover an efficient solution to this yourself from
+first principles; research is allowed, indeed, encouraged. Finding the best
+algorithm for the problem is a key skill in software engineering.
+
+## Setup
+
+Go through the setup instructions for TypeScript to install the necessary
+dependencies:
+
+[https://exercism.io/tracks/typescript/installation](https://exercism.io/tracks/typescript/installation)
+
+## Requirements
+
+Install assignment dependencies:
+
+```bash
+$ yarn install
+```
+
+## Making the test suite pass
+
+Execute the tests with:
+
+```bash
+$ yarn test
+```
+
+In the test suites all tests but the first have been skipped.
+
+Once you get a test passing, you can enable the next one by changing `xit` to
+`it`.
+
+## Source
+
+Problem 6 at Project Euler [http://projecteuler.net/problem=6](http://projecteuler.net/problem=6)
+
+## Submitting Incomplete Solutions
+
+It's possible to submit an incomplete solution so you can see how others have
+completed the exercise.
+
+#+end_src
+
+*** TypeScript Difference of Squares Solution and Tests
+**** TypeScript Difference of Squares Solution
+#+name:typescript-difference-of-squares-solution
+#+begin_src js :tangle typescript/difference-of-squares/difference-of-squares.ts
+export default class Squares {
+    constructor (public num:number) {
+        this.num = num;
+    }
+
+    get sumOfSquares () {
+        return 0;
+    }
+
+    get squareOfSum () {
+        return 0;
+    }
+
+    difference () {
+        return this.squareOfSum - this.sumOfSquares;
+    }
+}
+#+end_src
+
+{{{heading(Test Solution)}}}
+
+#+name:typescript-difference-of-squares-test-solution
+#+header: :dir typescript/difference-of-squares
+#+header: :results output :exports both
+#+begin_src sh
+yarn test
+#+end_src
+
+#+RESULTS: typescript-difference-of-squares-test-solution
+
+**** TypeScript Difference of Squares Tests
+#+name:typescript-difference-of-squares-tests
+#+begin_src js :tangle typescript/difference-of-squares/difference-of-squares.test.ts
+import Squares from './difference-of-squares'
+
+describe('Squares', () => {
+
+  describe('up to 5', () => {
+    const squares = new Squares(5)
+
+    it('gets the square of sum', () => {
+      expect(squares.squareOfSum).toBe(225)
+    })
+
+    xit('gets the sum of squares', () => {
+      expect(squares.sumOfSquares).toBe(55)
+    })
+
+    xit('gets the difference', () => {
+      expect(squares.difference).toBe(170)
+    })
+
+  })
+
+  describe('up to 10', () => {
+    const squares = new Squares(10)
+
+    xit('gets the square of sum', () => {
+      expect(squares.squareOfSum).toBe(3025)
+    })
+
+    xit('gets the sum of squares', () => {
+      expect(squares.sumOfSquares).toBe(385)
+    })
+
+    xit('gets the difference', () => {
+      expect(squares.difference).toBe(2640)
+    })
+
+  })
+
+  describe('up to 100', () => {
+    const squares = new Squares(100)
+
+    xit('gets the square of sum', () => {
+      expect(squares.squareOfSum).toBe(25502500)
+    })
+
+    xit('gets the sum of squares', () => {
+      expect(squares.sumOfSquares).toBe(338350)
+    })
+
+    xit('gets the difference', () => {
+      expect(squares.difference).toBe(25164150)
+    })
+
+  })
+
+})
+#+end_src
+
 ** TypeScript RNA Transcription
 Given a DNA strand, return its RNA complement (per RNA transcription).
 
