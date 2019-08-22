@@ -1,8 +1,8 @@
 # -*- mode:org; fill-column:79; -*-
 #+Title:Exercism Exercises
 #+Author:Pinecone062
-#+Date:Last updated 2019-08-20 11:31
-#+Macro: version Version 0.4.48
+#+Date:Last updated 2019-08-21 23:46
+#+Macro: version Version 0.4.49
 {{{title}}} {{{version}}} {{{date}}}
 * Exercism Home
 :PROPERTIES:
@@ -4599,6 +4599,463 @@ describe('Squares', () => {
 })
 #+end_src
 
+** TypeScript Word Count
+Given a phrase, count the occurrences of each word in that phrase.
+
+For example for the input "olly olly in come free"
+
+#+begin_example
+olly: 2
+in: 1
+come: 1
+free: 1
+#+end_example
+
+*** TypeScript Word Count Scripts
+**** TypeScript Word Count Install Script
+#+name:typescript-word-count-install-script
+#+begin_src sh :results output :mkdirp yes
+exercism download --exercise=word-count --track=typescript
+#+end_src
+
+#+RESULTS: typescript-word-count-install-script
+: /Users/pine/Dev/Programming/Languages/Exercism/typescript/word-count
+
+**** TypeScript Word Count Submit Script
+#+name:typescript-word-count-submit-script
+#+begin_src sh :results output
+exercism submit typescript/word-count/word-count.ts
+#+end_src
+
+#+RESULTS: typescript-word-count-submit-script
+:     https://exercism.io/my/solutions/c14ff64228e547229f6b7d766650898c
+: 
+
+#+name:typescript-word-count-exercism-metadata
+#+header: :mkdirp yes :exports none
+#+begin_src js :tangle typescript/word-count/.exercism/metadata.json
+{
+    "track":"typescript",
+    "exercise":"word-count",
+    "id":"c14ff64228e547229f6b7d766650898c",
+    "url":"https://exercism.io/my/solutions/c14ff64228e547229f6b7d766650898c",
+    "handle":"wlharvey4",
+    "is_requester":true,
+    "auto_approve":false
+}
+#+end_src
+
+*** TypeScript Word Count README
+#+name:typescript-word-count-readme
+#+begin_src markdown :tangle typescript/word-count/README.md
+# Word Count
+
+Given a phrase, count the occurrences of each word in that phrase.
+
+For example for the input `"olly olly in come free"`
+
+```text
+olly: 2
+in: 1
+come: 1
+free: 1
+```
+
+## Setup
+
+Go through the setup instructions for TypeScript to install the necessary
+dependencies:
+
+[https://exercism.io/tracks/typescript/installation](https://exercism.io/tracks/typescript/installation)
+
+## Requirements
+
+Install assignment dependencies:
+
+```bash
+$ yarn install
+```
+
+## Making the test suite pass
+
+Execute the tests with:
+
+```bash
+$ yarn test
+```
+
+In the test suites all tests but the first have been skipped.
+
+Once you get a test passing, you can enable the next one by changing `xit` to
+`it`.
+
+## Source
+
+This is a classic toy problem, but we were reminded of it by seeing it in the Go Tour.
+
+## Submitting Incomplete Solutions
+
+It's possible to submit an incomplete solution so you can see how others have
+completed the exercise.
+
+#+end_src
+*** TypeScript Word Count Metadata
+**** TypeScript Word Count Package File
+{{{heading(Package.json)}}}
+
+#+name:typescript-word-count-metadata-package.json
+#+begin_src js :tangle typescript/word-count/package.json
+{
+  "name": "@exercism/typescript",
+  "version": "1.0.0",
+  "description": "Exercism exercises in Typescript.",
+  "author": "",
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/exercism/typescript"
+  },
+  "devDependencies": {
+    "@types/jest": "^24.0.15",
+    "@types/node": "^12.6.8",
+    "@typescript-eslint/eslint-plugin": "^1.13.0",
+    "@typescript-eslint/parser": "^1.13.0",
+    "eslint": "^6.1.0",
+    "eslint-plugin-import": "^2.18.2",
+    "jest": "^24.8.0",
+    "ts-jest": "^24.0.2",
+    "typescript": "^3.5.3"
+  },
+  "scripts": {
+    "test": "yarn lint:types && jest --no-cache",
+    "lint": "yarn lint:types && yarn lint:ci",
+    "lint:types": "yarn tsc --noEmit -p .",
+    "lint:ci": "eslint . --ext .tsx,.ts"
+  },
+  "dependencies": {}
+}
+#+end_src
+
+{{{heading(Install Package Dependencies Script)}}}
+
+#+name:typescript-word-count-package-install-script
+#+header: :dir typescript/word-count
+#+header: :results output :exports both
+#+begin_src sh
+yarn install
+#+end_src
+
+#+RESULTS: typescript-word-count-package-install-script
+: yarn install v1.17.3
+: info No lockfile found.
+: [1/4] Resolving packages...
+: [2/4] Fetching packages...
+: [3/4] Linking dependencies...
+: [4/4] Building fresh packages...
+: success Saved lockfile.
+: Done in 11.65s.
+
+**** TypeScript Word Count TSConfig File
+{{{heading(TSConfig.json)}}}
+
+{{{subheading(tsconfig.json)}}}
+
+#+name:typescript-word-count-metadata-tsconfig.json
+#+begin_src js :tangle typescript/word-count/tsconfig.json
+{
+  "compilerOptions": {
+    /* Basic Options */
+    "target": "es2017",                       /* Specify ECMAScript target version: 'ES3' (default), 'ES5', 'ES2015', 'ES2016', 'ES2017','ES2018' or 'ESNEXT'. */
+    "module": "commonjs",                     /* Specify module code generation: 'none', 'commonjs', 'amd', 'system', 'umd', 'es2015', or 'ESNext'. */
+    "lib": ["esnext", "es2016", "es2017"],    /* Specify library files to be included in the compilation. */
+    // "allowJs": true,                       /* Allow javascript files to be compiled. */
+    // "checkJs": true,                       /* Report errors in .js files. */
+    // "jsx": "preserve",                     /* Specify JSX code generation: 'preserve', 'react-native', or 'react'. */
+    // "declaration": true,                   /* Generates corresponding '.d.ts' file. */
+    // "declarationMap": true,                /* Generates a sourcemap for each corresponding '.d.ts' file. */
+    "sourceMap": true,                        /* Generates corresponding '.map' file. */
+    // "outFile": "./",                       /* Concatenate and emit output to single file. */
+    "outDir": "./build",                      /* Redirect output structure to the directory. */
+    // "rootDirs": ["./"],                    /* Specify the root directory of input files. Use to control the output directory structure with --outDir. */
+    // "composite": true,                     /* Enable project compilation */
+    // "removeComments": true,                /* Do not emit comments to output. */
+    // "noEmit": true,                        /* Do not emit outputs. */
+    // "importHelpers": true,                 /* Import emit helpers from 'tslib'. */
+    // "downlevelIteration": true,            /* Provide full support for iterables in 'for-of', spread, and destructuring when targeting 'ES5' or 'ES3'. */
+    "isolatedModules": true,                  /* Transpile each file as a separate module (similar to 'ts.transpileModule'). */
+    "noEmitOnError": true,                    /* Do not emit outputs when compilation fails. */
+
+    /* Strict Type-Checking Options */
+    "strict": true,                           /* Enable all strict type-checking options. */
+    // "noImplicitAny": true,                 /* Raise error on expressions and declarations with an implied 'any' type. */
+    // "strictNullChecks": true,              /* Enable strict null checks. */
+    // "strictFunctionTypes": true,           /* Enable strict checking of function types. */
+    // "strictBindCallApply": true,           /* Enable strict 'bind', 'call', and 'apply' methods on functions. */
+    // "strictPropertyInitialization": true,  /* Enable strict checking of property initialization in classes. */
+    // "noImplicitThis": true,                /* Raise error on 'this' expressions with an implied 'any' type. */
+    // "alwaysStrict": true,                  /* Parse in strict mode and emit "use strict" for each source file. */
+
+    /* Additional Checks */
+    // "noUnusedLocals": true,                /* Report errors on unused locals. */
+    "noUnusedParameters": true,               /* Report errors on unused parameters. */
+    // "noImplicitReturns": true,             /* Report error when not all code paths in function return a value. */
+    // "noFallthroughCasesInSwitch": true,    /* Report errors for fallthrough cases in switch statement. */
+
+    /* Module Resolution Options */
+    "moduleResolution": "node",               /* Specify module resolution strategy: 'node' (Node.js) or 'classic' (TypeScript pre-1.6). */
+    // "baseUrl": "./",                       /* Base directory to resolve non-absolute module names. */
+    // "paths": { "~src/*": ["./src/*"] },                           /* A series of entries which re-map imports to lookup locations relative to the 'baseUrl'. */
+    // "rootDirs": [],                        /* List of root folders whose combined content represents the structure of the project at runtime. */
+    // "typeRoots": [],                       /* List of folders to include type definitions from. */
+    // "types": [],                           /* Type declaration files to be included in compilation. */
+    "allowSyntheticDefaultImports": true,     /* Allow default imports from modules with no default export. This does not affect code emit, just typechecking. */
+    "esModuleInterop": true                   /* Enables emit interoperability between CommonJS and ES Modules via creation of namespace objects for all imports. Implies 'allowSyntheticDefaultImports'. */
+    // "preserveSymlinks": true,              /* Do not resolve the real path of symlinks. */
+
+    /* Source Map Options */
+    // "sourceRoot": "",                      /* Specify the location where debugger should locate TypeScript files instead of source locations. */
+    // "mapRoot": "",                         /* Specify the location where debugger should locate map files instead of generated locations. */
+    // "inlineSourceMap": true,               /* Emit a single file with source maps instead of having a separate file. */
+    // "inlineSources": true,                 /* Emit the source alongside the sourcemaps within a single file; requires '--inlineSourceMap' or '--sourceMap' to be set. */
+
+    /* Experimental Options */
+    // "experimentalDecorators": true,        /* Enables experimental support for ES7 decorators. */
+    // "emitDecoratorMetadata": true,         /* Enables experimental support for emitting type metadata for decorators. */
+  },
+  "compileOnSave": true,
+  "exclude": [
+    "node_modules"
+  ]
+}
+#+end_src
+
+**** TypeScript Word Count ESLintrc File
+{{{heading(ESLintRC File)}}}
+
+{{{subheading(.eslintrc)}}}
+
+#+name:typescript-word-count-metadata-eslintrc
+#+begin_src js :tangle typescript/word-count/.eslintrc
+{
+  "root": true,
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "project": "./tsconfig.json",
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "ecmaVersion": 2018,
+    "sourceType": "module"
+  },
+  "env": {
+    "browser": true,
+    "es6": true
+  },
+  "extends": [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:@typescript-eslint/recommended",
+  ],
+  "globals": {
+    "Atomics": "readonly",
+    "SharedArrayBuffer": "readonly"
+  },
+  "plugins": [
+    "@typescript-eslint"
+  ],
+  "rules": {
+    "@typescript-eslint/array-type": "off", // Styling not forced upon the student
+    "@typescript-eslint/explicit-function-return-type": [
+      "warn", {
+        "allowExpressions": false,
+        "allowTypedFunctionExpressions": true,
+        "allowHigherOrderFunctions": true
+      }
+    ], // Prevent bugs
+    "@typescript-eslint/explicit-member-accessibility": "off", // Styling not forced upon the student
+    "@typescript-eslint/indent": "off", // Styling not forced upon the student
+    "@typescript-eslint/member-delimiter-style": "off", // Styling not forced upon the student
+    "@typescript-eslint/no-non-null-assertion": "off",
+    "@typescript-eslint/no-parameter-properties": [
+      "warn", {
+        "allows": [
+          "private", "protected", "public",
+          "private readonly", "protected readonly", "public readonly"
+        ]
+      }
+    ], // only disallow readonly without an access modifier
+    "@typescript-eslint/no-unused-vars": "off", // Covered by the tsc compiler (noUnusedLocals)
+    "@typescript-eslint/no-use-before-define": [
+      "error", {
+        "functions": false,
+        "typedefs": false
+      }
+    ], // Prevent bugs, not styling
+    "semi": "off", // Always disable base-rule
+    "@typescript-eslint/semi": "off" // Styling not forced upon student
+  }
+}
+#+end_src
+
+{{{heading(ESLintIgnore File)}}}
+
+{{{subheading(.eslintignore)}}}
+
+#+name:typescript-word-count-metadata-eslintignore
+#+begin_src sh :tangle typescript/word-count/.eslintignore
+bin/*
+dist/*
+docs/*
+node_modules/*
+production_node_modules/*
+test/fixtures/*
+tmp/*
+jest.config.js
+#+end_src
+
+**** TypeScript Word Count Jest Config File
+{{{heading(Jest Config File)}}}
+
+{{{subheading(jest.config.js)}}}
+
+#+name:typescript-word-count-jest.config.js
+#+begin_src js :tangle typescript/word-count/jest.config.js
+module.exports = {
+  verbose: true,
+  projects: [
+    '<rootDir>'
+  ],
+  testMatch: [
+    "**/__tests__/**/*.[jt]s?(x)",
+    "**/test/**/*.[jt]s?(x)",
+    "**/?(*.)+(spec|test).[jt]s?(x)"
+  ],
+  testPathIgnorePatterns: [
+    '/(?:production_)?node_modules/',
+    '.d.ts$',
+    '<rootDir>/test/fixtures',
+    '<rootDir>/test/helpers',
+    '__mocks__'
+  ],
+  transform: {
+    '^.+\\.[jt]sx?$': 'ts-jest',
+  },
+};
+#+end_src
+
+*** TypeScript Word Count Test File
+{{{heading(Word Count Test File)}}}
+
+{{{subheading(word-count.test.js)}}}
+
+#+name:typescript-word-count-test-file
+#+begin_src js :tangle typescript/word-count/word-count.test.ts
+import Words from './word-count'
+
+describe('words()', () => {
+  const words = new Words()
+
+  it('counts one word', () => {
+    const expectedCounts = new Map(Object.entries({ word: 1 }))
+    expect(words.count('word')).toEqual(expectedCounts)
+  })
+
+  it('counts one of each', () => {
+    const expectedCounts = new Map(Object.entries({ one: 1, of: 1, each: 1 }))
+    expect(words.count('one of each')).toEqual(expectedCounts)
+  })
+
+  it('counts multiple occurrences', () => {
+    const expectedCounts = new Map(Object.entries({ one : 1, fish: 4, two: 1, red: 1, blue: 1 }))
+    expect(words.count('one fish two fish red fish blue fish')).toEqual(expectedCounts)
+  })
+
+  it('includes punctuation', () => {
+    const expectedCounts = new Map(Object.entries({ car: 1, ':': 2, carpet: 1, as: 1, java: 1, 'javascript!!&@$%^&': 1 }))
+    expect(words.count('car : carpet as java : javascript!!&@$%^&')).toEqual(expectedCounts)
+  })
+
+  it('includes numbers', () => {
+    const expectedCounts = new Map(Object.entries({ testing: 2, 1: 1, 2: 1 }))
+    expect(words.count('1 2 testing testing')).toEqual(expectedCounts)
+  })
+
+  it('normalizes to lower case', () => {
+    const expectedCounts = new Map(Object.entries({ go: 3 }))
+    expect(words.count('go Go GO')).toEqual(expectedCounts)
+  })
+
+  it('counts properly international characters', () => {
+    const expectedCounts = new Map(Object.entries({ '¡hola!': 1, '¿qué': 1, 'tal?': 1, 'привет!': 1 }))
+    expect(words.count('¡Hola! ¿Qué tal? Привет!')).toEqual(expectedCounts)
+  })
+
+  it('counts multiline', () => {
+    const expectedCounts = new Map(Object.entries({ hello: 1, world: 1 }))
+    expect(words.count('hello\nworld')).toEqual(expectedCounts)
+  })
+
+  it('counts tabs', () => {
+    const expectedCounts = new Map(Object.entries({ hello: 1, world: 1 }))
+    expect(words.count('hello\tworld')).toEqual(expectedCounts)
+  })
+
+  it('counts multiple spaces as one', () => {
+    const expectedCounts = new Map(Object.entries({ hello: 1, world: 1 }))
+    expect(words.count('hello  world')).toEqual(expectedCounts)
+  })
+
+  it('does not count leading or trailing whitespace', () => {
+    const expectedCounts = new Map(Object.entries({ introductory: 1, course: 1 }))
+    expect(words.count('\t\tIntroductory Course      ')).toEqual(expectedCounts)
+  })
+
+  it('handles properties that exist on Object’s prototype', () => {
+    const expectedCounts = new Map(Object.entries({ reserved: 1, words : 1, like : 1,  constructor: 1, and : 1, tostring: 1,  'ok?': 1}))
+    expect(words.count('reserved words like constructor and toString ok?')).toEqual(expectedCounts)
+  })
+})
+
+#+end_src
+
+*** TypeScript Word Count Solution File
+{{{heading(Word Count Solution)}}}
+
+{{{subheading(word-count.ts)}}}
+
+#+name:typescript-word-count-solution-file
+#+begin_src js :tangle typescript/word-count/word-count.ts
+export default class Words {
+
+    count (phrase:string) {
+        const map = new Map();
+        const spl = new RegExp(/[\s\n\t]+/);
+
+        phrase
+            .trim()
+            .toLowerCase()
+            .replace(/^spl/,'')
+            .split(spl)
+            .forEach(e => {
+                if (map.has(e)) {
+                    map.set(e, map.get(e) + 1);
+                } else {
+                    map.set(e, 1);
+                }
+            });
+        return map;
+    }
+}
+#+end_src
+
+{{{heading(Test Solution Script)}}}
+
+#+name:typescript-word-count-test-solution-file
+#+header: :dir typescript/word-count
+#+header: :results output :exports both
+#+begin_src sh
+yarn test 2>&1
+#+end_src
 ** TypeScript RNA Transcription
 Given a DNA strand, return its RNA complement (per RNA transcription).
 
