@@ -1,8 +1,8 @@
 # -*- mode:org; fill-column:79; -*-
 #+Title:Exercism Exercises
 #+Author:Pinecone062
-#+Date:Last updated 2020-10-19 11:35
-#+Macro: version Version 0.4.50
+#+Date:Last updated 2020-10-19 12:35
+#+Macro: version Version 0.5.0
 {{{title}}} {{{version}}} {{{date}}}
 * Exercism Home
 :PROPERTIES:
@@ -11537,6 +11537,246 @@ It's possible to submit an incomplete solution so you can see how others have co
 (provide 'difference-of-squares)
 ;;; difference-of-squares.el ends here
 #+end_src
+
+* Common Lisp Track
+:PROPERTIES:
+:mentors:  5
+:students: 1916
+:exercises: 43
+:as-of:    2020-10-19
+:joined:   2020-10-19
+:END:
+{{{heading(About Common lisp)}}}
+
+[[file:/usr/local/dev/Languages/Exercism/resources/png/common-lisp.png]]
+
+Common  Lisp is  an offshoot  of the  long-running family  of Lisp  programming
+languages. It's a multi-paradigm programming language that allows you to choose
+the approach and paradigm according to your application domain.
+
+Common  Lisp has  fast prototyping  capabilities, and  exceptional support  for
+object oriented programming. It also boasts  a macro system which allows you to
+adapt  the language  to your  needs, and  a run-time  environment which  allows
+modification of running applications.
+
+To learn more about Common Lisp, take a look at [[https://common-lisp.net/][the Common Lisp Homepage]].
+** Common Lisp on Exercism
+*** Installing Common Lisp
+{{{heading(What's Needed)}}}
+
+The basic items needed for developing in Common Lisp are:
+
+- A Lisp "Implementation", which will allow you to compile and execute code, as
+  well as supply a REPL.
+
+- A text editor with facilities for Lisp code.
+
+- The often-used reference for the Common Lisp language, the [[https://exercism.io/tracks/common-lisp/installation]["Common Lisp
+  Hyperspec]]"
+
+
+{{{heading(Fast Start)}}}
+
+Newbies to CL,  particularly ones with previous experience with  Emacs, can get
+an  easy  & quick  start  by  installing  Portacle,  the Portable  Common  Lisp
+Environment. Free and full featured, it works in all common platforms and comes
+pre-configured "out of the box". This will supply:
+
+- A Lisp implementation: SBCL, including Quicklisp and ASDF.
+- A Text editor: Emacs ... with lots of add-ons for writing with Lisp code:
+- SLIME, the  "Superior Lisp  Interaction Mode  for Emacs"  turns Emacs  into a
+  Common Lisp IDE
+- ParEdit, which makes working with parentheses easy.
+
+
+Everything  comes  already configured  out  of  the  box. Install  Portacle  by
+downloading from the [[https://portacle.github.io/][front page]].
+
+
+{{{heading(Traditional Start)}}}
+
+If  you  prefer  installing  components  separately,  besides  installing  your
+favorite editor for Lisp code, these would be the steps:
+
+1. Install a lisp implementation such as:
+   - [[http://www.sbcl.org/][SBCL]] or
+   - [[http://clisp.org/][CLisp]].
+
+   Both can be installed via Homebrew on Mac OS X.
+
+2. Install [[http://www.quicklisp.org/beta/#installation][QuickLisp]] for Lisp library management:
+   - Download it using ~curl~:
+     : curl -O https://beta.quicklisp.org/quicklisp.lisp
+
+   - Now  launch  lisp, and  copy-paste  the  following expressions  to  finish
+     QuickLisp installation:
+
+   #+begin_example
+   > (load "quicklisp.lisp")         ;; this will load the downloaded lisp file
+   > (quicklisp-quickstart:install)  ;; this will install quicklisp
+   > (ql:add-to-init-file)           ;; this will add quicklisp setup to your init file (recommended)
+#+end_example
+
+3. Load QuickLisp
+   See  the  documentation   of  your  lisp  implementation  on   how  to  load
+   ~quicklisp.lisp~ into lisp.
+
+   - [[https://www.quicklisp.org/beta/#loading][QuickLisp documentation]]
+   - To  load  Quicklisp  into  your  Common Lisp  session  after  the  initial
+     installation, load  the file  ~quicklisp/setup.lisp~ with the  Common Lisp
+     ~load~ function.
+     : (load "~/quicklisp/setup.lisp")
+     The path must be adjusted if Quicklisp is loaded in a different location.
+   - The function ~ql:add-to-init-file~  will add code to do this  to your init
+     file  automatically, so  Quicklisp  will load  whenever  your Common  Lisp
+     session starts.
+
+4. Load Software
+   To load software, use:
+   : (ql:quickload system-name)
+   Quicklisp will  automatically download any  supporting software it  needs to
+   load the system.
+
+   To find out what's available in Quicklisp, use:
+   : (ql:system-apropos substring)
+
+5. Install SLIME
+   To install and configure SLIME, use:
+   : (ql:quickload "quicklisp-slime-helper")
+   Then follow the directions it displays. ~quicklisp-slime-helper~ will create
+   a file you can load in Emacs that configures the right load-path for loading
+   Quicklisp's installation of SLIME.
+
+6. Update Software
+   : (ql:update-dist "quicklisp")
+
+*** Running the Tests
+- https://exercism.io/tracks/common-lisp/tests
+
+
+Start up  your Lisp  implementation in  the directory of  the exercise  you are
+working  on (or  change  the  current directory  for  an  already running  Lisp
+implementation to that directory).
+
+Load the  test file into your  running Lisp implementation, for  example,
+: (load "point-mutations-test").
+This will run the  tests the first time automatically.  After  that you can run
+the test suite in the REPL with
+: (lisp-unit:run-tests :all :point-mutations-test).
+
+**** Making your first Common Lisp solution
+
+To create lisp  code that can be  loaded with ~(load "hamming")~  for the first
+exercise, put this code in ~hamming.lisp~:
+
+#+begin_src lisp
+(defpackage #:hamming
+  (:use #:cl)
+  (:export #:distance))
+
+(in-package #:hamming)
+
+(defun distance (dna1 dna2)
+  "Number of positional differences in two equal length dna strands."
+  ;;; your solution here
+  )
+#+end_src
+
+**** How to run the tests
+If you have a  running Lisp implementation you can load the  test file with the
+command: ~(load "hamming-tests")~.
+
+If instead you'd  like to do it from  the command line the command  you need to
+run depends upon the implementation. Please refer to the documentation for your
+implementation.  Here  we'll give  examples  of  how to  do  it  in two  common
+implementations: =Clisp= and =SBCL=.
+
+It  is  important  to  make  sure  that the  command  you  run  will  load  the
+implementation's ~init~ file, which is  needed to ensure ~QuickLisp~ is loaded,
+then loads the test file, then exits back the command line.
+
+{{{heading(Clisp)}}}
+
+Either of the following commands will work:
+#+begin_src lisp
+clisp -i ~/.clisprc.lisp hamming-test.lisp
+clisp -i hamming-test.lisp -x '(ext:exit)'
+#+end_src
+
+{{{heading(SBCL)}}}
+: sbcl --load hamming-test.lisp --quit
+
+*** Learning and Using Common Lisp
+Exercism provides exercises and feedback but  can be difficult to jump into for
+those learning Common Lisp for the first time. These resources can help you get
+started:
+
+- [[http://stevelosh.com/blog/2018/08/a-road-to-common-lisp/][A Road to Common  Lisp]] :: a blog post explaining one  person's road to Common
+  Lisp and their opinions on how to get started with it.
+
+- [[http://www.gigamonkeys.com/book/][Practical Common Lisp]] :: a complete  book for learning Common Lisp, available
+  free online
+
+- [[http://cliki.net/Getting%20Started][Cliki.net Getting Start Started Page]] :: by various contributors
+
+- [[Wikibooks book of Common Lisp, First steps][Common Lisp First Steps]] ::  by various contributors
+
+- [[http://learnxinyminutes.com/docs/common-lisp/][Learn X in Y minutes: where X = Common Lisp]] :: by Paul Nathan
+
+- [[http://www.cs.northwestern.edu/academics/courses/325/readings/readings.php][Northwestern University EECS 325 Readings]] :: by Chris Riesbeck
+
+
+There are many more excellent resources, most of them crosslinked in one of the
+learning section.
+
+{{{heading(Important Resources)}}}
+
+- [[http://www.lispworks.com/documentation/common-lisp.html][The Common Lisp HyperSpec]] :: by X3J13 committee. The Common Lisp Standard
+
+- [[http://www.cs.cmu.edu/Groups/AI/html/cltl/cltl2.html][Common Lisp the Language, 2nd Edition]] :: by Guy Steele
+
+- [[http://cdr.eurolisp.org/][Common  Lisp Document  Repository]] ::  a collection  of emergent  and de-facto
+  standards
+
+- [[http://common-lisp.net/][Common-Lisp.net]] :: project hosting and gateway
+
+- [[http://www.cliki.net/][The Common Lisp Wiki]] :: Wiki
+
+
+{{{heading(Free Books)}}}
+
+There are  many other great  books you  can find links  to. These are  the most
+popularly linked introductory works.
+
+- [[http://www.gigamonkeys.com/book/][Practical Common Lisp]] :: by Peter Seibel
+
+- [[http://www-cgi.cs.cmu.edu/afs/cs.cmu.edu/user/dst/www/LispBook/index.html][Common Lisp: A Gentle Introduction to Symbolic Computation]] :: by
+  David S. Touretzky
+
+- [[http://www.cse.buffalo.edu/~shapiro/Commonlisp/][Common Lisp: An Interactive Approach]] :: by Stuart C. Shapiro
+
+- [[http://successful-lisp.blogspot.com/][Successful Lisp: How to Understand and Use Common Lisp]] :: by David B. Lamkins
+
+
+Following these are two more advanced  books, but beginners shouldn't be afraid
+of them, they're quite accessible and "classics".
+
+- [[http://www.paulgraham.com/onlisptext.html][On Lisp]] :: by Paul Graham
+
+- [[http://mitpress.mit.edu/sicp/][Structure and Interpretation of Computer Programs]] :: by Abelson, Sussman, and
+  Sussman
+
+
+{{{heading(Quck Reference)}}}
+
+- [[http://lispcookbook.github.io/cl-cookbook/][The Common Lisp  Cookbook]] :: by various contributors, includes  quick help on
+  often used commands or features.
+
+- [[http://clqr.boundp.org/][Common Lisp Quick Reference]] :: is a print-it-yourself booklet for having a
+  quick reference handy.
+
+- [[http://jtra.cz/stuff/lisp/sclr/index.html][Simplified  Common Lisp  Reference]]  :: gives  a quick  glance  at often  used
+  commands, ideal for newcomers.
 
 * Exercism Makefile
 #+name:Exercism-Makefile
