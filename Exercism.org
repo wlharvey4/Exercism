@@ -1,8 +1,8 @@
 # -*- mode:org; fill-column:79; -*-
 #+Title:Exercism Exercises
 #+Author:Pinecone062
-#+Date:Last updated 2019-08-23 09:52
-#+Macro: version Version 0.4.49
+#+Date:Last updated 2020-10-19 11:35
+#+Macro: version Version 0.4.50
 {{{title}}} {{{version}}} {{{date}}}
 * Exercism Home
 :PROPERTIES:
@@ -4647,7 +4647,7 @@ exercism submit typescript/word-count/word-count.ts
 
 *** TypeScript Word Count README
 #+name:typescript-word-count-readme
-#+begin_src markdown :tangle typescript/word-count/README.md
+#+begin_src markdown :tangle typescript/word-count/README.md :mkdirp yes
 # Word Count
 
 Given a phrase, count the occurrences of each word in that phrase.
