@@ -1,8 +1,8 @@
 # -*- mode:org; fill-column:79; -*-
 #+Title:Exercism Exercises
 #+Author:Pinecone062
-#+Date:Last updated 2020-10-19 12:35
-#+Macro: version Version 0.5.0
+#+Date:Last updated 2020-10-20 02:05
+#+Macro: version Version 0.5.1
 {{{title}}} {{{version}}} {{{date}}}
 * Exercism Home
 :PROPERTIES:
@@ -106,21 +106,71 @@ This code extracts all of the Exercism files to disk upon Export.
 #+END_SRC
 
 * JavaScript Exercism Track
+[[file:resources/svg/nodejs-new-pantone-black.svg]]
+
 - https://exercism.io/my/tracks/javascript
 
-** Installing JavaScript
-Install [[https://nodejs.org/en/][Node.js]] from its [[https://nodejs.org/en/download/][Downloads]] page
 
-or
+This track relies  on ~NodeJS~ throughout to provide a  runtime for JavaScript.
+This means  that we assume  all execution of  JavaScript on your  computer will
+happen using ~NodeJS~.
 
-from a [[https://nodejs.org/en/download/package-manager/][package manager]].
+The  =JavaScript= Exercism  Track runs  via ~NodeJS~  and all  dependencies are
+installed via [[https://yarnpkg.com][Yarn]].
+
+- [[https://nodejs.org/en/][~NodeJS~]] :: a  JavaScript runtime built on Chrome's V8  JavaScript engine; it
+  is an asynchronous event-driven JavaScript runtime designed to build scalable
+  network  applications. It  presents  an  event loop  as  a runtime  construct
+  instead  of  as a  library.  ~NodeJS~  simply  enters  the event  loop  after
+  executing the input  script. ~NodeJS~ exits the event loop  when there are no
+  more callbacks to perform.
+  - LTS version :: currently 12.19.0
+  - Current version :: currently 14.14.0
+  - Installation using MacPorts :: =port install nodejs<major-version>=
+
+- ~Yarn~ :: a package  manager that doubles down as project  manager. Yarn is a
+  package manager for your code. It allows you to use and share code with other
+  developers from around  the world. Code is shared through  something called a
+  package.  A  package  contains  all  the  code being  shared  as  well  as  a
+  package.json file (called a manifest) which describes the package.
+
+** JavaScript Requires Node.js and Yarn
+
+*** Node.js
+ #+header: :results output :exports results
+ #+begin_src sh
+ node=$(which node)
+ [[ -z $node ]] \
+   && { \
+     echo "Node.js was not found";
+     echo "Install Node.js before proceeding.";
+     exit 0;
+   } || { \
+     echo "Found Node.js";
+     node -v;
+   }
+ #+end_src
+
+*** Yarn
+#+header: :results output :exports results
+#+begin_src sh
+yarn=$(which yarn)
+[[ -z $yarn ]] \
+  && { \
+       echo "Yarn was not found.";
+       echo "Install Yarn before proceeding.";
+     } || { \
+       echo "Found Yarn.";
+       yarn --version;
+     }
+#+end_src
 
 ** Required Tools for the JavaScript Track
 Each assignment needs some tools to run the tests.  *NOTE* that they can be
 installed by running the following command from within each assignment
 directory:
 
-: npm install
+: yarn install
 
 - [[https://facebook.github.io/jest/][Jest]]: a test runner based on Jasmine; to install globally for CLI usage:
 
@@ -303,7 +353,7 @@ JavaScript module:
 
 : import { Bob } from './bob.js';
 
-You just need to export your implementation from the referenced file, bob.js:
+You just need to export your implementation from the referenced file, ~bob.js~:
 
 #+begin_src js
 export class Bob {
@@ -11782,7 +11832,7 @@ of them, they're quite accessible and "classics".
 #+name:Exercism-Makefile
 #+begin_src makefile :tangle Makefile
 BASE_DIR := $(shell cat ~/.config/exercism/user.json | sed -n '/workspace/ s///p' | tr -d '": ')
-LANGUAGES = javascript typescript python perl5 ocaml bash elisp
+LANGUAGES = javascript typescript python perl5 ocaml bash elisp lisp
 HTML_SRC = *.html
 TEXINFO_SRC = *.{texi,info,pdf}
 DVI_SRC = *.{aux,log,toc}
@@ -11790,14 +11840,17 @@ DVI_SRC = *.{aux,log,toc}
 .phony : texinfo-clean
 texinfo-clean :
 	cd $(BASE_DIR) && rm -vrf $(TEXINFO_SRC)
+	rm -vrf $(TEXINFO_SRC)
 
 .phony : html-clean
 html-clean :
 	cd $(BASE_DIR) && rm -vrf $(HTML_SRC)
+	rm -vrf $(HTML_SRC)
 
 .phony : dist-clean
 dist-clean :
 	cd $(BASE_DIR) && rm -vrf $(LANGUAGES) README.md $(DVI_SRC)
+	rm -vrf $(LANGUAGES) README.md $(DVI_SRC)
 
 .phony : world-clean
 world-clean : dist-clean html-clean texinfo-clean
