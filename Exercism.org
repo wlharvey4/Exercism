@@ -1,8 +1,8 @@
 # -*- mode:org; fill-column:79; -*-
 #+Title:Exercism Exercises
 #+Author:Pinecone062
-#+Date:Last updated 2020-10-20 02:05
-#+Macro: version Version 0.5.1
+#+Date:Last updated 2020-10-20 07:32
+#+Macro: version Version 0.5.2
 {{{title}}} {{{version}}} {{{date}}}
 * Exercism Home
 :PROPERTIES:
@@ -10712,7 +10712,7 @@ It's possible to submit an incomplete solution so you can see how others have co
 *** Emacs Lisp Hello World Scripts
 
 **** Emacs Lisp Hello World Download
-#+elisp-hello-world-download
+#+name:elisp-hello-world-download
 #+begin_src sh :results output
 exercism download --exercise=hello-world --track=elisp
 #+end_src
@@ -11769,7 +11769,7 @@ started:
 
 - [[http://cliki.net/Getting%20Started][Cliki.net Getting Start Started Page]] :: by various contributors
 
-- [[Wikibooks book of Common Lisp, First steps][Common Lisp First Steps]] ::  by various contributors
+- [[https://en.wikibooks.org/wiki/Common_Lisp/First_steps][Common Lisp First Steps]] ::  by various contributors
 
 - [[http://learnxinyminutes.com/docs/common-lisp/][Learn X in Y minutes: where X = Common Lisp]] :: by Paul Nathan
 
@@ -11827,6 +11827,208 @@ of them, they're quite accessible and "classics".
 
 - [[http://jtra.cz/stuff/lisp/sclr/index.html][Simplified  Common Lisp  Reference]]  :: gives  a quick  glance  at often  used
   commands, ideal for newcomers.
+** Common Lisp Hello World
+{{{heading(Introduction)}}}
+
+The classical introductory exercise. Just say "Hello, World!".
+
+"Hello, World!" is the traditional first program for beginning programming in a
+new language or environment.
+
+The objectives are simple:
+
+- Write a function that returns the string "Hello, World!".
+- Run the test suite and make sure that it succeeds.
+- Submit your solution and check it at the website.
+
+
+If everything goes well, you will be ready to fetch your first real exercise.
+
+{{{subheading(Setup)}}}
+
+Check out [[https://exercism.io/tracks/common-lisp/installation][Installing Common Lisp]] for instructions to get started or take a look
+at the guides available in the track's side bar.
+
+{{{subheading(Formatting)}}}
+
+While  Common Lisp  doesn't  care about  indentation and  layout  of code,  nor
+whether  you  use spaces  or  tabs,  this  is  an important  consideration  for
+submissions to exercism.io. Excercism.io's code  widget cannot handle mixing of
+tab and space characters  well so using only spaces is  recommended to make the
+code more readable to the human  reviewers. Please review your editors settings
+on  how to  accomplish this.  Below are  instructions for  popular editors  for
+Common LiWhile Common  Lisp doesn't care about indentation and  layout of code,
+nor whether  you use  spaces or  tabs, this is  an important  consideration for
+submissions to exercism.io. Excercism.io's code  widget cannot handle mixing of
+tab and space characters  well so using only spaces is  recommended to make the
+code more readable to the human  reviewers. Please review your editors settings
+on  how to  accomplish this.  Below are  instructions for  popular editors  for
+Common Lisp.
+
+*** Using Emacs
+Emacs is very well suited for editing  Common Lisp and has many powerful add-on
+packages available. The only  thing that one needs to do with  a stock emacs to
+make it work well with exercism.io is to evaluate the following code:
+
+#+begin_src elisp :results silent :exports results
+(setq-default indent-tabs-mode nil)
+#+end_src
+
+{{{subheading(SLIME)}}}
+
+One suggested  add-on for  Emacs and  Common Lisp is  SLIME which  offers tight
+integration with the REPL; making iterative coding and testing very easy.
+
+*** Common Lisp Hello World Readme
+#+name:common-lisp-hello-world-readme
+#+begin_src markdown :tangle common-lisp/hello-world/README.md :mkdirp yes
+# Hello World
+
+The classical introductory exercise. Just say "Hello, World!".
+
+["Hello, World!"](http://en.wikipedia.org/wiki/%22Hello,_world!%22_program) is
+the traditional first program for beginning programming in a new language
+or environment.
+
+The objectives are simple:
+
+- Write a function that returns the string "Hello, World!".
+- Run the test suite and make sure that it succeeds.
+- Submit your solution and check it at the website.
+
+If everything goes well, you will be ready to fetch your first real exercise.
+
+## Setup
+
+Check out [Installing Common
+Lisp](https://exercism.io/tracks/common-lisp/installation) for
+instructions to get started or take a look at the guides available in
+the [track's side bar](https://exercism.io/my/tracks/common-lisp).
+
+## Formatting
+
+While Common Lisp doesn't care about indentation and layout of code,
+nor whether you use spaces or tabs, this is an important consideration
+for submissions to exercism.io. Excercism.io's code widget cannot
+handle mixing of tab and space characters well so using only spaces is recommended to make
+the code more readable to the human reviewers. Please review your
+editors settings on how to accomplish this. Below are instructions for
+popular editors for Common Lisp.
+
+### VIM
+
+Use the following commands to ensure VIM uses only spaces for
+indentation:
+
+```vimscript
+:set tabstop=2
+:set shiftwidth=2
+:set expandtab
+```
+
+(or as a oneliner `:set tabstop=2 shiftwidth=2 expandtab`). This can
+be added to your `~/.vimrc` file to use it all the time.
+
+### Emacs
+
+Emacs is very well suited for editing Common Lisp and has many
+powerful add-on packages available. The only thing that one needs to
+do with a stock emacs to make it work well with exercism.io is to
+evaluate the following code:
+
+`(setq-default indent-tabs-mode nil)`
+
+This can be placed in your `~/.emacs` (or `~/.emacs.d/init.el`) in
+order to have it set whenever Emacs is launched.
+
+One suggested add-on for Emacs and Common Lisp is
+[SLIME](https://github.com/slime/slime) which offers tight integration
+with the REPL; making iterative coding and testing very easy.
+
+## Source
+
+This is an exercise to introduce users to using Exercism [http://en.wikipedia.org/wiki/%22Hello,_world!%22_program](http://en.wikipedia.org/wiki/%22Hello,_world!%22_program)
+
+## Submitting Incomplete Solutions
+It's possible to submit an incomplete solution so you can see how others have completed the exercise.
+#+end_src
+
+*** Common Lisp Hello World Metadata
+#+name:common-lisp-hello-world-exercism-metadata
+#+begin_src js :tangle common-lisp/hello-world/.exercism/metadata.json :mkdirp yes
+  {
+      "track":"common-lisp",
+      "exercise":"hello-world",
+      "id":"79b68b2b43324642b307180cc701827c",
+      "url":"https://exercism.io/my/solutions/79b68b2b43324642b307180cc701827c",
+      "handle":"wlharvey4",
+      "is_requester":true,
+      "auto_approve":true
+  }
+#+end_src
+*** Common Lisp Hello World Scripts
+**** Common Lisp Hello World Download Script
+
+#+begin_src sh :results output :exports never
+exercism download --exercise=hello-world --track=common-lisp
+#+end_src
+
+#+RESULTS:
+: /Users/lolh-mbp/.exercism/common-lisp/hello-world
+
+**** Common Lisp Hello World Submit Script
+
+#+begin_src sh :results output :exports never
+exercism submit common-lisp/hello-world/hello-world.lisp
+#+end_src
+*** Common Lisp Hello World Code
+#+caption:Common Lisp Hello World
+#+name:common-lisp-hello-world-code
+#+begin_src lisp :tangle common-lisp/hello-world/hello-world.lisp :mkdirp yes
+  (in-package #:cl-user)
+  (defpackage #:hello-world
+    (:use #:cl)
+    (:export #:hello))
+  (in-package #:hello-world)
+
+  (defun hello ()
+      (print "Hello, World!"))
+#+end_src
+
+*** Common Lisp Hello World Tests
+#+caption:Common Lisp Hello World Test
+#+name:common-lisp-hello-world-test
+#+begin_src lisp :tangle common-lisp/hello-world/hello-world-test.lisp :mkdirp yes
+;;;
+;;; hello-world v1.1.0
+;;;
+(ql:quickload "lisp-unit")
+#-xlisp-test (load "hello-world")
+
+(defpackage #:hello-world-test
+  (:use #:common-lisp #:lisp-unit))
+(in-package #:hello-world-test)
+
+(define-test
+  say-hi!
+  (assert-equal
+    "Hello, World!"
+    (hello-world:hello)))
+
+#-xlisp-test
+(let ((*print-errors* t)
+      (*print-failures* t))
+  (run-tests :all))
+#+end_src
+
+**** Common Lisp Hello World Test Result
+ #+caption:Common Lisp Hello World Test Results
+ #+name:common-lisp-hello-world-run-test
+ #+header: :dir common-lisp/hello-world
+ #+header: :results output :exports results
+ #+begin_src sh
+ ccl --batch --load hello-world-test.lisp
+ #+end_src
 
 * Exercism Makefile
 #+name:Exercism-Makefile
