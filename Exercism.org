@@ -1,8 +1,8 @@
 # -*- mode:org; fill-column:79; -*-
 #+Title:Exercism Exercises
 #+Author:Pinecone062
-#+Date:Last updated 2020-10-21 10:30
-#+Macro: version Version 0.5.4
+#+Date:Last updated 2020-10-21 13:30
+#+Macro: version Version 0.5.5
 {{{title}}} {{{version}}} {{{date}}}
 * Exercism Home
 :PROPERTIES:
@@ -12173,7 +12173,7 @@ exercism download --exercise=two-fer --track=common-lisp
 **** Common Lisp Two Fer Submit Script
 
 #+begin_src sh :results output :exports never
-exercism submit common-lisp/two-fer/two-fer.lisp
+/usr/local/bin/exercism submit common-lisp/two-fer/two-fer.lisp
 #+end_src
 
 #+RESULTS:
@@ -12194,7 +12194,7 @@ exercism submit common-lisp/two-fer/two-fer.lisp
 
   (defun twofer (&optional name)
     (format nil "One for ~A, one for me."
-            (if (null name) "you" name)))
+            (or name "you")))
 #+end_src
 
 #+caption: Common Lisp Two-Fer Test Run
@@ -12207,24 +12207,20 @@ ccl --batch --load two-fer-test.lisp
 #+RESULTS: common-lisp-two-fer-run-test
 #+begin_example
 To load "lisp-unit":
-  Load 1 ASDF system:
+  Install 1 Quicklisp release:
     lisp-unit
+; Fetching #<URL "http://beta.quicklisp.org/archive/lisp-unit/2017-01-24/lisp-unit-20170124-git.tgz">
+; 17.74KB
+==================================================
+18,163 bytes in 0.00 seconds (18690.52KB/sec)
 ; Loading "lisp-unit"
-
-
-"One for you, one for me." 
+[package lisp-unit].........................
 NO-NAME-GIVEN-NIL: 1 assertions passed, 0 failed.
 
-
-"One for you, one for me." 
 NO-NAME-GIVEN: 1 assertions passed, 0 failed.
 
-
-"One for Alice, one for me." 
 A-NAME-GIVEN: 1 assertions passed, 0 failed.
 
-
-"One for Bob, one for me." 
 ANOTHER-NAME-GIVEN: 1 assertions passed, 0 failed.
 
 Unit Test Summary
