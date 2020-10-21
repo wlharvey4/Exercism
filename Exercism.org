@@ -1,8 +1,8 @@
 # -*- mode:org; fill-column:79; -*-
 #+Title:Exercism Exercises
 #+Author:Pinecone062
-#+Date:Last updated 2020-10-20 07:32
-#+Macro: version Version 0.5.2
+#+Date:Last updated 2020-10-20 21:33
+#+Macro: version Version 0.5.3
 {{{title}}} {{{version}}} {{{date}}}
 * Exercism Home
 :PROPERTIES:
@@ -11981,6 +11981,11 @@ exercism download --exercise=hello-world --track=common-lisp
 #+begin_src sh :results output :exports never
 exercism submit common-lisp/hello-world/hello-world.lisp
 #+end_src
+
+#+RESULTS:
+:     https://exercism.io/my/solutions/79b68b2b43324642b307180cc701827c
+: 
+
 *** Common Lisp Hello World Code
 #+caption:Common Lisp Hello World
 #+name:common-lisp-hello-world-code
@@ -12029,6 +12034,226 @@ exercism submit common-lisp/hello-world/hello-world.lisp
  #+begin_src sh
  ccl --batch --load hello-world-test.lisp
  #+end_src
+** Common Lisp Two Fer
+- https://github.com/exercism/problem-specifications/issues/757
+
+
+{{{heading(Introduction)}}}
+
+Two-fer or 2-fer is short for two for one. One for you and one for me.
+
+Given a name, return a string with the message:
+: One for X, one for me.
+Where X is the given name.
+
+However, if the name is missing, return the string:
+: One for you, one for me.
+
+Here are some examples:
+
+|--------+-----------------------------|
+| Name   | String to Return            |
+|--------+-----------------------------|
+| Alice  | One for Alice, one for me.  |
+| Bob    | One for Bob, one for me.    |
+|        | One for you, one for me.    |
+| Zaphod | One for Zaphod, one for me. |
+|--------+-----------------------------|
+*** Common Lisp Two Fer README
+
+#+caption: Common Lisp Two Fer Readme
+#+name:common-lisp-two-fer-README
+#+header: :mkdirp yes
+#+begin_src markdown :tangle common-lisp/two-fer/README.md
+# Two Fer
+
+`Two-fer` or `2-fer` is short for two for one. One for you and one for me.
+
+Given a name, return a string with the message:
+
+```text
+One for X, one for me.
+```
+
+Where X is the given name.
+
+However, if the name is missing, return the string:
+
+```text
+One for you, one for me.
+```
+
+Here are some examples:
+
+|Name    |String to return 
+|:-------|:------------------
+|Alice   |One for Alice, one for me. 
+|Bob     |One for Bob, one for me.
+|        |One for you, one for me.
+|Zaphod  |One for Zaphod, one for me.
+
+## Setup
+
+Check out [Installing Common
+Lisp](https://exercism.io/tracks/common-lisp/installation) for
+instructions to get started or take a look at the guides available in
+the [track's side bar](https://exercism.io/my/tracks/common-lisp).
+
+## Formatting
+
+While Common Lisp doesn't care about indentation and layout of code,
+nor whether you use spaces or tabs, this is an important consideration
+for submissions to exercism.io. Excercism.io's code widget cannot
+handle mixing of tab and space characters well so using only spaces is recommended to make
+the code more readable to the human reviewers. Please review your
+editors settings on how to accomplish this. Below are instructions for
+popular editors for Common Lisp.
+
+### VIM
+
+Use the following commands to ensure VIM uses only spaces for
+indentation:
+
+```vimscript
+:set tabstop=2
+:set shiftwidth=2
+:set expandtab
+```
+
+(or as a oneliner `:set tabstop=2 shiftwidth=2 expandtab`). This can
+be added to your `~/.vimrc` file to use it all the time.
+
+### Emacs
+
+Emacs is very well suited for editing Common Lisp and has many
+powerful add-on packages available. The only thing that one needs to
+do with a stock emacs to make it work well with exercism.io is to
+evaluate the following code:
+
+`(setq-default indent-tabs-mode nil)`
+
+This can be placed in your `~/.emacs` (or `~/.emacs.d/init.el`) in
+order to have it set whenever Emacs is launched.
+
+One suggested add-on for Emacs and Common Lisp is
+[SLIME](https://github.com/slime/slime) which offers tight integration
+with the REPL; making iterative coding and testing very easy.
+
+## Source
+
+[https://github.com/exercism/problem-specifications/issues/757](https://github.com/exercism/problem-specifications/issues/757)
+
+## Submitting Incomplete Solutions
+It's possible to submit an incomplete solution so you can see how others have completed the exercise.
+#+end_src
+
+#+header: :mkdirp yes
+#+begin_src js :tangle common-lisp/two-fer/.exercism/metadata.json
+  {
+      "track":"common-lisp",
+      "exercise":"two-fer",
+      "id":"b7cb659356a94cd8a4be295158f0d251",
+      "url":"https://exercism.io/my/solutions/b7cb659356a94cd8a4be295158f0d251",
+      "handle":"wlharvey4",
+      "is_requester":true,
+      "auto_approve":false
+  }
+#+end_src
+
+*** Common Lisp Two Fer Scripts
+**** Common Lisp Two Fer Download Script
+
+#+begin_src sh :results output :exports never
+exercism download --exercise=two-fer --track=common-lisp
+#+end_src
+
+#+RESULTS:
+: /usr/local/dev/programming/Exercism/common-lisp/two-fer
+
+**** Common Lisp Two Fer Submit Script
+
+#+begin_src sh :results output :exports never
+exercism submit common-lisp/two-fer/two-fer.lisp
+#+end_src
+
+#+RESULTS:
+:     https://exercism.io/my/solutions/b7cb659356a94cd8a4be295158f0d251
+: 
+
+*** Common Lisp Two Fer Code
+
+#+caption: Common Lisp Two-Fer Code
+#+name:common-lisp-two-fer-code
+#+header: :mkdirp yes
+#+begin_src lisp :tangle common-lisp/two-fer/two-fer.lisp
+  (in-package #:cl-user)
+  (defpackage #:two-fer
+    (:use #:cl)
+    (:export #:twofer))
+  (in-package #:two-fer)
+
+  (defun twofer (&optional name)
+    (if (null name)
+        (print "One for you, one for me.")
+        (print (format nil "One for ~A, one for me." name))))
+#+end_src
+
+#+caption: Common Lisp Two-Fer Test Run
+#+name:common-lisp-two-fer-run-test
+#+header: :dir common-lisp/two-fer
+#+begin_src sh :results output :exports results
+ccl --batch --load two-fer-test.lisp
+#+end_src
+
+#+RESULTS: common-lisp-two-fer-run-test
+
+*** Common Lisp Two Fer Test
+
+#+caption:Common Lisp Two-Fer Test
+#+name:common-lisp-two-fer-test
+#+header: :mkdirp yes
+#+begin_src lisp :tangle common-lisp/two-fer/two-fer-test.lisp
+;;;
+;;; two-fer v1.2.0
+;;;
+(ql:quickload "lisp-unit")
+#-xlisp-test (load "two-fer")
+
+(defpackage #:two-fer-test
+  (:use #:common-lisp #:lisp-unit))
+(in-package #:two-fer-test)
+
+(define-test
+    no-name-given-nil
+    (assert-equal
+     "One for you, one for me."
+     (two-fer:twofer nil)))
+
+
+(define-test
+  a-name-given
+  (assert-equal
+    "One for Alice, one for me."
+    (two-fer:twofer "Alice")))
+
+
+(define-test
+    another-name-given
+    (assert-equal
+     "One for Bob, one for me."
+     (two-fer:twofer "Bob")))
+
+(define-test
+    no-name-given
+    (assert-equal
+     "One for you, one for me."
+     (two-fer:twofer)))
+
+#-xlisp-test
+(let ((*print-errors* t)
+      (*print-failures* t))
+  (run-tests :all))
+#+end_src
 
 * Exercism Makefile
 #+name:Exercism-Makefile
