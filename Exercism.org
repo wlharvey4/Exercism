@@ -1,8 +1,8 @@
 # -*- mode:org; fill-column:79; -*-
 #+Title:Exercism Exercises
 #+Author:Pinecone062
-#+Date:Last updated 2020-10-20 21:33
-#+Macro: version Version 0.5.3
+#+Date:Last updated 2020-10-21 10:30
+#+Macro: version Version 0.5.4
 {{{title}}} {{{version}}} {{{date}}}
 * Exercism Home
 :PROPERTIES:
@@ -12193,9 +12193,8 @@ exercism submit common-lisp/two-fer/two-fer.lisp
   (in-package #:two-fer)
 
   (defun twofer (&optional name)
-    (if (null name)
-        (print "One for you, one for me.")
-        (print (format nil "One for ~A, one for me." name))))
+    (format nil "One for ~A, one for me."
+            (if (null name) "you" name)))
 #+end_src
 
 #+caption: Common Lisp Two-Fer Test Run
@@ -12206,6 +12205,43 @@ ccl --batch --load two-fer-test.lisp
 #+end_src
 
 #+RESULTS: common-lisp-two-fer-run-test
+#+begin_example
+To load "lisp-unit":
+  Load 1 ASDF system:
+    lisp-unit
+; Loading "lisp-unit"
+
+
+"One for you, one for me." 
+NO-NAME-GIVEN-NIL: 1 assertions passed, 0 failed.
+
+
+"One for you, one for me." 
+NO-NAME-GIVEN: 1 assertions passed, 0 failed.
+
+
+"One for Alice, one for me." 
+A-NAME-GIVEN: 1 assertions passed, 0 failed.
+
+
+"One for Bob, one for me." 
+ANOTHER-NAME-GIVEN: 1 assertions passed, 0 failed.
+
+Unit Test Summary
+ | 4 assertions total
+ | 4 passed
+ | 0 failed
+ | 0 execution errors
+ | 0 missing tests
+
+Clozure Common Lisp Version 1.12  DarwinX8664
+
+For more information about CCL, please see http://ccl.clozure.com.
+
+CCL is free software.  It is distributed under the terms of the Apache
+Licence, Version 2.0.
+? 
+#+end_example
 
 *** Common Lisp Two Fer Test
 
