@@ -1,8 +1,8 @@
 # -*- mode:org; fill-column:79; -*-
 #+Title:Exercism Exercises
 #+Author:Pinecone062
-#+Date:Last updated 2020-10-21 23:57
-#+Macro: version Version 0.5.6
+#+Date:Last updated 2020-10-22 07:54
+#+Macro: version Version 0.5.7
 {{{title}}} {{{version}}} {{{date}}}
 * Exercism Home
 :PROPERTIES:
@@ -12282,6 +12282,217 @@ Licence, Version 2.0.
       (*print-failures* t))
   (run-tests :all))
 #+end_src
+** Common Lisp Hamming
+   :PROPERTIES:
+   :source:   http://rosalind.info/problems/hamm/
+   :started:  2020-10-22
+   :END:
+
+"Calculate the Hamming difference between two DNA strands."
+
+{{{heading(Introduction)}}}
+
+Your body is made up of cells  that contain DNA. Those cells regularly wear out
+and need  replacing, which  they achieve  by dividing  into daughter  cells. In
+fact, the average human body experiences about 10 quadrillion cell divisions in
+a lifetime!
+
+When  cells divide,  their DNA  replicates too.  Sometimes during  this process
+mistakes  happen and  single  pieces  of DNA  get  encoded  with the  incorrect
+information. If we compare two strands of DNA and count the differences between
+them we  can see  how many  mistakes occurred.  This is  known as  the "Hamming
+Distance".
+
+We read DNA using the letters C,A,G and T. Two strands might look like this:
+
+#+begin_example
+GAGCCTACTAACGGGAT
+CATCGTAATGACGGCCT
+^ ^ ^  ^ ^    ^^
+#+end_example
+
+They have 7 differences, and therefore the Hamming Distance is 7.
+
+The Hamming Distance is useful for lots of things in science, not just biology,
+so it's a nice phrase to be familiar with :)
+
+{{{heading(Implementation Notes)}}}
+
+The  Hamming distance  is only  defined for  sequences of  equal length,  so an
+attempt to calculate it between sequences of different lengths should not work.
+The general handling of this situation (e.g., raising an exception vs returning
+a special value) may differ between languages.
+
+*** Common Lisp Hamming Metadata
+**** Common Lisp Hamming README
+ #+header: :mkdirp yes
+ #+begin_src markdown :tangle common-lisp/hamming/README.md
+ # Hamming
+
+ Calculate the Hamming Distance between two DNA strands.
+
+ Your body is made up of cells that contain DNA. Those cells regularly wear out and need replacing, which they achieve by dividing into daughter cells. In fact, the average human body experiences about 10 quadrillion cell divisions in a lifetime!
+
+ When cells divide, their DNA replicates too. Sometimes during this process mistakes happen and single pieces of DNA get encoded with the incorrect information. If we compare two strands of DNA and count the differences between them we can see how many mistakes occurred. This is known as the "Hamming Distance".
+
+ We read DNA using the letters C,A,G and T. Two strands might look like this:
+
+     GAGCCTACTAACGGGAT
+     CATCGTAATGACGGCCT
+     ^ ^ ^  ^ ^    ^^
+
+ They have 7 differences, and therefore the Hamming Distance is 7.
+
+ The Hamming Distance is useful for lots of things in science, not just biology, so it's a nice phrase to be familiar with :)
+
+ # Implementation notes
+
+ The Hamming distance is only defined for sequences of equal length, so
+ an attempt to calculate it between sequences of different lengths should
+ not work. The general handling of this situation (e.g., raising an
+ exception vs returning a special value) may differ between languages.
+
+ ## Setup
+
+ Check out [Installing Common
+ Lisp](https://exercism.io/tracks/common-lisp/installation) for
+ instructions to get started or take a look at the guides available in
+ the [track's side bar](https://exercism.io/my/tracks/common-lisp).
+
+ ## Formatting
+
+ While Common Lisp doesn't care about indentation and layout of code,
+ nor whether you use spaces or tabs, this is an important consideration
+ for submissions to exercism.io. Excercism.io's code widget cannot
+ handle mixing of tab and space characters well so using only spaces is recommended to make
+ the code more readable to the human reviewers. Please review your
+ editors settings on how to accomplish this. Below are instructions for
+ popular editors for Common Lisp.
+
+ ### VIM
+
+ Use the following commands to ensure VIM uses only spaces for
+ indentation:
+
+ ```vimscript
+ :set tabstop=2
+ :set shiftwidth=2
+ :set expandtab
+ ```
+
+ (or as a oneliner `:set tabstop=2 shiftwidth=2 expandtab`). This can
+ be added to your `~/.vimrc` file to use it all the time.
+
+ ### Emacs
+
+ Emacs is very well suited for editing Common Lisp and has many
+ powerful add-on packages available. The only thing that one needs to
+ do with a stock emacs to make it work well with exercism.io is to
+ evaluate the following code:
+
+ `(setq-default indent-tabs-mode nil)`
+
+ This can be placed in your `~/.emacs` (or `~/.emacs.d/init.el`) in
+ order to have it set whenever Emacs is launched.
+
+ One suggested add-on for Emacs and Common Lisp is
+ [SLIME](https://github.com/slime/slime) which offers tight integration
+ with the REPL; making iterative coding and testing very easy.
+
+ ## Source
+
+ The Calculating Point Mutations problem at Rosalind [http://rosalind.info/problems/hamm/](http://rosalind.info/problems/hamm/)
+
+ ## Submitting Incomplete Solutions
+ It's possible to submit an incomplete solution so you can see how others have completed the exercise.
+ #+end_src
+**** Common Lisp Hamming Exercism Metadata
+#+header: :mkdirp yes
+#+begin_src js :tangle common-lisp/hamming/.exercism/metadata.json
+  {
+      "track":"common-lisp",
+      "exercise":"hamming",
+      "id":"0c129229bba340559a7e83864964570d",
+      "url":"https://exercism.io/my/solutions/0c129229bba340559a7e83864964570d",
+      "handle":"wlharvey4",
+      "is_requester":true,
+      "auto_approve":false
+  }
+#+end_src
+*** Common Lisp Hamming Scripts
+**** Common Lisp Hamming Download Script
+#+header: :exports never
+#+begin_src sh
+exercism download --exercise=hamming --track=common-lisp
+#+end_src
+
+#+RESULTS:
+: /usr/local/dev/programming/Exercism/common-lisp/hamming
+
+**** Common Lisp Hamming Submit Script
+#+header: :exports never
+#+begin_src sh
+exercism submit common-lisp/hamming/hamming.lisp
+#+end_src
+*** Common Lisp Hamming Code
+#+caption: Common Lisp Hamming Code
+#+name: common-lisp-hamming-code
+#+begin_src lisp :tangle common-lisp/hamming/hamming.lisp
+  (defpackage #:hamming
+    (:use #:cl)
+    (:export #:distance))
+
+  (in-package #:hamming)
+
+  (defun distance (dna1 dna2)
+    "Number of positional differences in two equal length dna strands."
+    0)
+#+end_src
+
+#+header: :exports results :results output
+#+header: :dir common-lisp/hamming
+#+begin_src sh
+  ccl --batch --load hamming-test.lisp
+#+end_src
+
+*** Common Lisp Hamming Tests
+#+caption: Common Lisp Hamming Tests
+#+name:common-lisp-hamming-tests
+#+header: :mkdirp yes
+#+begin_src lisp :tangle common-lisp/hamming/hamming-test.lisp
+(ql:quickload "lisp-unit")
+#-xlisp-test (load "hamming")
+
+(defpackage #:hamming-test
+  (:use #:common-lisp #:lisp-unit))
+
+(in-package #:hamming-test)
+
+(define-test no-difference-between-empty-strands
+  (assert-equal 0 (hamming:distance "" "")))
+
+(define-test no-difference-between-identical-strands
+  (assert-equal 0 (hamming:distance "GGACTGA" "GGACTGA")))
+
+(define-test complete-hamming-distance-in-small-strand
+  (assert-equal 3 (hamming:distance "ACT" "GGA")))
+
+(define-test small-hamming-distance-in-middle-somewhere
+  (assert-equal 1 (hamming:distance "GGACG" "GGTCG")))
+
+(define-test larger-distance
+  (assert-equal 2 (hamming:distance "ACCAGGG" "ACTATGG")))
+
+(define-test invalid-to-get-distance-for-different-length-strings
+  (assert-equal nil (hamming:distance "AGACAACAGCCAGCCGCCGGATT" "AGGCAA"))
+  (assert-equal nil (hamming:distance "AGACAACAGCCAGCCGCCGGATT" "AGACATCTTTCAGCCGCCGGATTAGGCAA"))
+  (assert-equal nil (hamming:distance "AGG" "AGACAACAGCCAGCCGCCGGATT")))
+
+#-xlisp-test
+(let ((*print-errors* t)
+      (*print-failures* t))
+  (run-tests :all :hamming-test))
+#+end_src
 
 * Exercism Makefile
 #+name:Exercism-Makefile
@@ -12365,4 +12576,5 @@ world-clean : dist-clean html-clean texinfo-clean
 * Local Variables                                                  :noexport:
 # Local Variables:
 # time-stamp-pattern:"8/^\\#\\+[dD]ate:Last updated %:y-%02m-%02d %02H:%02M$"
+# indent-tabs-mode: nil
 # End:
