@@ -1,8 +1,8 @@
 # -*- mode:org; fill-column:79; -*-
 #+Title:Exercism Exercises
 #+Author:Pinecone062
-#+Date:Last updated 2020-10-22 07:54
-#+Macro: version Version 0.5.7
+#+Date:Last updated 2020-10-22 18:18
+#+Macro: version Version 0.5.8
 {{{title}}} {{{version}}} {{{date}}}
 * Exercism Home
 :PROPERTIES:
@@ -12434,6 +12434,10 @@ exercism download --exercise=hamming --track=common-lisp
 #+begin_src sh
 exercism submit common-lisp/hamming/hamming.lisp
 #+end_src
+
+#+RESULTS:
+: https://exercism.io/my/solutions/0c129229bba340559a7e83864964570d
+
 *** Common Lisp Hamming Code
 #+caption: Common Lisp Hamming Code
 #+name: common-lisp-hamming-code
@@ -12446,14 +12450,57 @@ exercism submit common-lisp/hamming/hamming.lisp
 
   (defun distance (dna1 dna2)
     "Number of positional differences in two equal length dna strands."
-    0)
+    (if (not (eql (length dna1) (length dna2)))
+        nil
+        (labels ((dist (d1 d2)
+                   (if (and (equal "" d1) (equal "" d2))
+                       0
+                       (+ (dist (subseq d1 1) (subseq d2 1))
+                          (if (equal (elt d1 0) (elt d2 0))
+                              0 1)))))
+          (dist dna1 dna2))))
 #+end_src
 
 #+header: :exports results :results output
 #+header: :dir common-lisp/hamming
 #+begin_src sh
-  ccl --batch --load hamming-test.lisp
+  ccl --load hamming-test.lisp
 #+end_src
+
+#+RESULTS:
+#+begin_example
+To load "lisp-unit":
+  Load 1 ASDF system:
+    lisp-unit
+; Loading "lisp-unit"
+
+LARGER-DISTANCE: 1 assertions passed, 0 failed.
+
+NO-DIFFERENCE-BETWEEN-IDENTICAL-STRANDS: 1 assertions passed, 0 failed.
+
+INVALID-TO-GET-DISTANCE-FOR-DIFFERENT-LENGTH-STRINGS: 3 assertions passed, 0 failed.
+
+SMALL-HAMMING-DISTANCE-IN-MIDDLE-SOMEWHERE: 1 assertions passed, 0 failed.
+
+NO-DIFFERENCE-BETWEEN-EMPTY-STRANDS: 1 assertions passed, 0 failed.
+
+COMPLETE-HAMMING-DISTANCE-IN-SMALL-STRAND: 1 assertions passed, 0 failed.
+
+Unit Test Summary
+ | 8 assertions total
+ | 8 passed
+ | 0 failed
+ | 0 execution errors
+ | 0 missing tests
+
+Clozure Common Lisp Version 1.12  DarwinX8664
+
+For more information about CCL, please see http://ccl.clozure.com.
+
+CCL is free software.  It is distributed under the terms of the Apache
+Licence, Version 2.0.
+? 
+#+end_example
 
 *** Common Lisp Hamming Tests
 #+caption: Common Lisp Hamming Tests
