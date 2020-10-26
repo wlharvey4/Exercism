@@ -1,8 +1,8 @@
 # -*- mode:org; fill-column:79; -*-
 #+Title:Exercism Exercises
 #+Author:Pinecone062
-#+Date:Last updated 2020-10-25 02:07
-#+Macro: version Version 0.5.9
+#+Date:Last updated 2020-10-25 21:22
+#+Macro: version Version 0.5.10
 {{{title}}} {{{version}}} {{{date}}}
 * Exercism Home
 :PROPERTIES:
@@ -12451,13 +12451,14 @@ exercism submit common-lisp/hamming/hamming.lisp
   (defun distance (dna1 dna2)
     "Number of positional differences in two equal length dna strands."
     (when (= (length dna1) (length dna2))
-      (labels ((dist (d1 d2)
+      (labels ((dist (d1 d2 diff)
                  (if (string= "" d1)
-                     0
-                     (+ (dist (subseq d1 1) (subseq d2 1))
-                        (if (string= d1 d2 :start1 0 :end1 1 :start2 0 :end2 1)
-                            0 1)))))
-        (dist dna1 dna2))))
+                     diff
+                     (dist (subseq d1 1) (subseq d2 1)
+                           (+ diff
+                              (if (string= d1 d2 :start1 0 :end1 1 :start2 0 :end2 1)
+                                  0 1))))))
+        (dist dna1 dna2 0))))
 #+end_src
 
 #+header: :exports results :results output
