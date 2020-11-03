@@ -1,8 +1,8 @@
 # -*- mode:org; fill-column:79; -*-
 #+Title:Exercism Exercises
 #+Author:Pinecone062
-#+Date:Last updated 2020-11-03 07:19
-#+Macro: version Version 0.5.10
+#+Date:Last updated 2020-11-03 09:26
+#+Macro: version Version 0.5.11
 {{{title}}} {{{version}}} {{{date}}}
 * Exercism Home
 :PROPERTIES:
@@ -12672,6 +12672,9 @@ exercism download --exercise=rna-transcription --track=common-lisp
 exercism submit common-lisp/rna-transcription/rna-transcription.lisp
 #+end_src
 
+#+RESULTS:
+: https://exercism.io/my/solutions/5b24c439b938451d99e8422df554c0b8
+
 **** RNA Transcription Metadata
 #+header: :tangle common-lisp/rna-transcription/.exercism/metadata.json
 #+header: :mkdirp yes
@@ -12707,16 +12710,49 @@ exercism submit common-lisp/rna-transcription/rna-transcription.lisp
   - T -> A
   - A -> U"
 
-  (setq complements ((#\G . #\C) (#\C . #\G) (#\T . #\A) (#\A . #\U)))
-  "")
+  (setq complements '(("G" . #\C) ("C" . #\G) ("T" . #\A) ("A" . #\U)))
+  (map 'string
+        (lambda (dna-nucleotide)
+          (cdr (assoc dna-nucleotide complements :test #'string=)))
+        str))
 #+end_src
 
 #+header: :dir common-lisp/rna-transcription
 #+header: :shebang "#!/usr/bin/env sh"
-#+header: :results output
+#+header: :results output :exports results
 #+begin_src sh
-ccl -Qb -l rna-transcription-test.lisp
+  ccl -Qb -l rna-transcription-test.lisp
 #+end_src
+
+#+RESULTS:
+#+begin_example
+TRANSCRIBES-CYTIDINE-TO-GUANOSINE: 1 assertions passed, 0 failed.
+
+IT-TRANSCRIBES-ALL-NUCLEOTIDES: 1 assertions passed, 0 failed.
+
+IT-TRANSCRIBES-THYMIDINE-TO-ADENOSINE: 1 assertions passed, 0 failed.
+
+IT-VALIDATES-DNA-STRANDS: 1 assertions passed, 0 failed.
+
+TRANSCRIBES-ADENOSINE-TO-URACILE: 1 assertions passed, 0 failed.
+
+TRANSCRIBES-GUANOSINE-TO-CYTIDINE: 1 assertions passed, 0 failed.
+
+Unit Test Summary
+ | 6 assertions total
+ | 6 passed
+ | 0 failed
+ | 0 execution errors
+ | 0 missing tests
+
+Clozure Common Lisp Version 1.12  DarwinX8664
+
+For more information about CCL, please see http://ccl.clozure.com.
+
+CCL is free software.  It is distributed under the terms of the Apache
+Licence, Version 2.0.
+? 
+#+end_example
 
 *** RNA Transcriptions Tests
 #+header: :tangle common-lisp/rna-transcription/rna-transcription-test.lisp
