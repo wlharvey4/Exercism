@@ -1,8 +1,8 @@
 # -*- mode:org; fill-column:79; -*-
 #+Title:Exercism Exercises
 #+Author:Pinecone062
-#+Date:Last updated 2020-11-03 09:31
-#+Macro: version Version 0.5.11
+#+Date:Last updated 2020-11-05 07:58
+#+Macro: version Version 0.5.12
 {{{title}}} {{{version}}} {{{date}}}
 * Exercism Home
 :PROPERTIES:
@@ -12788,6 +12788,177 @@ Licence, Version 2.0.
       (*print-failures* t))
   (run-tests :all :rna-transcription-test))
 #+end_src
+** Common Lisp Leap
+*** Common Lisp Readme
+#+header: :tangle common-lisp/leap/README.md
+#+header: :mkdirp yes
+#+begin_src markdown
+# Leap
+
+Given a year, report if it is a leap year.
+
+The tricky thing here is that a leap year in the Gregorian calendar occurs:
+
+```text
+on every year that is evenly divisible by 4
+  except every year that is evenly divisible by 100
+    unless the year is also evenly divisible by 400
+```
+
+For example, 1997 is not a leap year, but 1996 is.  1900 is not a leap
+year, but 2000 is.
+
+## Notes
+
+Though our exercise adopts some very simple rules, there is more to
+learn!
+
+For a delightful, four minute explanation of the whole leap year
+phenomenon, go watch [this youtube video][video].
+
+[video]: http://www.youtube.com/watch?v=xX96xng7sAE
+
+## Setup
+
+Check out [Installing Common
+Lisp](https://exercism.io/tracks/common-lisp/installation) for
+instructions to get started or take a look at the guides available in
+the [track's side bar](https://exercism.io/my/tracks/common-lisp).
+
+## Formatting
+
+While Common Lisp doesn't care about indentation and layout of code,
+nor whether you use spaces or tabs, this is an important consideration
+for submissions to exercism.io. Excercism.io's code widget cannot
+handle mixing of tab and space characters well so using only spaces is recommended to make
+the code more readable to the human reviewers. Please review your
+editors settings on how to accomplish this. Below are instructions for
+popular editors for Common Lisp.
+
+### VIM
+
+Use the following commands to ensure VIM uses only spaces for
+indentation:
+
+```vimscript
+:set tabstop=2
+:set shiftwidth=2
+:set expandtab
+```
+
+(or as a oneliner `:set tabstop=2 shiftwidth=2 expandtab`). This can
+be added to your `~/.vimrc` file to use it all the time.
+
+### Emacs
+
+Emacs is very well suited for editing Common Lisp and has many
+powerful add-on packages available. The only thing that one needs to
+do with a stock emacs to make it work well with exercism.io is to
+evaluate the following code:
+
+`(setq-default indent-tabs-mode nil)`
+
+This can be placed in your `~/.emacs` (or `~/.emacs.d/init.el`) in
+order to have it set whenever Emacs is launched.
+
+One suggested add-on for Emacs and Common Lisp is
+[SLIME](https://github.com/slime/slime) which offers tight integration
+with the REPL; making iterative coding and testing very easy.
+
+## Source
+
+JavaRanch Cattle Drive, exercise 3 [http://www.javaranch.com/leap.jsp](http://www.javaranch.com/leap.jsp)
+
+## Submitting Incomplete Solutions
+It's possible to submit an incomplete solution so you can see how others have completed the exercise.
+
+#+end_src
+*** Common Lisp Scripts
+**** Common Lisp Download Script
+#+begin_src sh :results output
+exercism download --exercise=leap --track=common-lisp
+#+end_src
+
+#+RESULTS:
+: /usr/local/dev/programming/Exercism/common-lisp/leap
+
+**** Common Lisp Upload Script
+#+begin_src sh :results output
+exercism submit common-lisp/leap/leap.lisp
+#+end_src
+*** Common Lisp Code
+#+header: :tangle common-lisp/leap/leap.lisp
+#+header: :mkdirp yes
+#+begin_src lisp
+(defpackage #:leap
+  (:use #:common-lisp)
+  (:export #:leap-year-p))
+(in-package #:leap)
+
+(defun leap-year-p (year)
+  t)
+#+end_src
+
+#+caption: Common Lisp Leap Results
+#+name: leap-run-test-results
+#+header: :dir common-lisp/leap
+#+header: :results output
+#+header: :exports results
+#+begin_src sh
+ccl -l leap-test.lisp -e '(quit)'
+#+end_src
+
+*** Common Lisp Tests
+#+header: :tangle common-lisp/leap/leap-test.lisp
+#+header: :mkdirp yes
+#+begin_src lisp
+(ql:quickload "lisp-unit" :silent t)
+#-xlisp-test (load "leap")
+
+(defpackage #:leap-test
+  (:use #:common-lisp #:lisp-unit))
+
+(in-package #:leap-test)
+
+(define-test vanilla-leap-year
+  (assert-true (leap:leap-year-p 1996)))
+
+(define-test any-old-year
+  (assert-false (leap:leap-year-p 1997)))
+
+(define-test non-leap-even-year
+  (assert-false (leap:leap-year-p 1998)))
+
+(define-test century
+  (assert-false (leap:leap-year-p 1900)))
+
+(define-test exceptional-century
+  (assert-true (leap:leap-year-p 2400)))
+
+#-xlisp-test
+(let ((*print-errors* t)
+      (*print-failures* t))
+  (run-tests :all :leap-test))
+
+#+end_src
+
+*** Common Lisp Metadata
+
+#+header: :tangle common-lisp/leap/.exercism/metadata.json
+#+header: :mkdirp yes
+#+begin_src js
+  {
+      "track":"common-lisp",
+      "exercise":"leap",
+      "id":"22252ed48dc049aa873121316fad0645",
+      "url":"https://exercism.io/my/solutions/22252ed48dc049aa873121316fad0645",
+      "handle":"wlharvey4",
+      "is_requester":true,
+      "auto_approve":false
+  }
+#+end_src
+
+
 * Exercism Makefile
 #+name:Exercism-Makefile
 #+begin_src makefile :tangle Makefile
