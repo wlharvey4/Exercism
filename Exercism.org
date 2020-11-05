@@ -1,8 +1,8 @@
 # -*- mode:org; fill-column:79; -*-
 #+Title:Exercism Exercises
 #+Author:Pinecone062
-#+Date:Last updated 2020-11-05 07:58
-#+Macro: version Version 0.5.12
+#+Date:Last updated 2020-11-05 08:31
+#+Macro: version Version 0.5.13
 {{{title}}} {{{version}}} {{{date}}}
 * Exercism Home
 :PROPERTIES:
@@ -12886,17 +12886,27 @@ exercism download --exercise=leap --track=common-lisp
 #+begin_src sh :results output
 exercism submit common-lisp/leap/leap.lisp
 #+end_src
+
+#+RESULTS:
+:     https://exercism.io/my/solutions/22252ed48dc049aa873121316fad0645
+: 
+
 *** Common Lisp Code
 #+header: :tangle common-lisp/leap/leap.lisp
 #+header: :mkdirp yes
 #+begin_src lisp
-(defpackage #:leap
-  (:use #:common-lisp)
-  (:export #:leap-year-p))
-(in-package #:leap)
+    (defpackage #:leap
+      (:use #:common-lisp)
+      (:export #:leap-year-p))
+    (in-package #:leap)
 
-(defun leap-year-p (year)
-  t)
+    (defun leap-year-p (year)
+      (let ((div4   (zerop (mod year 4)))
+            (div100 (zerop (mod year 100)))
+            (div400 (zerop (mod year 400))))
+        (and div4
+             (not (and div100
+                       (not div400))))))
 #+end_src
 
 #+caption: Common Lisp Leap Results
@@ -12907,6 +12917,32 @@ exercism submit common-lisp/leap/leap.lisp
 #+begin_src sh
 ccl -l leap-test.lisp -e '(quit)'
 #+end_src
+
+#+RESULTS: leap-run-test-results
+#+begin_example
+To load "lisp-unit":
+  Load 1 ASDF system:
+    lisp-unit
+; Loading "lisp-unit"
+
+CENTURY: 1 assertions passed, 0 failed.
+
+ANY-OLD-YEAR: 1 assertions passed, 0 failed.
+
+EXCEPTIONAL-CENTURY: 1 assertions passed, 0 failed.
+
+NON-LEAP-EVEN-YEAR: 1 assertions passed, 0 failed.
+
+VANILLA-LEAP-YEAR: 1 assertions passed, 0 failed.
+
+Unit Test Summary
+ | 5 assertions total
+ | 5 passed
+ | 0 failed
+ | 0 execution errors
+ | 0 missing tests
+
+#+end_example
 
 *** Common Lisp Tests
 #+header: :tangle common-lisp/leap/leap-test.lisp
@@ -12957,7 +12993,6 @@ ccl -l leap-test.lisp -e '(quit)'
       "auto_approve":false
   }
 #+end_src
-
 
 * Exercism Makefile
 #+name:Exercism-Makefile
