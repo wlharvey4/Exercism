@@ -1,8 +1,8 @@
 # -*- mode:org; fill-column:79; -*-
 #+Title:Exercism Exercises
 #+Author:Pinecone062
-#+Date:Last updated 2020-11-06 08:23
-#+Macro: version Version 0.5.16
+#+Date:Last updated 2020-11-06 09:52
+#+Macro: version Version 0.5.17
 {{{title}}} {{{version}}} {{{date}}}
 * Exercism Home
 :PROPERTIES:
@@ -13095,9 +13095,9 @@ exercism submit common-lisp/anagram/anagram.lisp
     (let ((subject-sorted (sort (string-downcase subject) #'char<)))
       (remove-if-not
        (lambda (candidate)
-         (unless (string= subject candidate)
+         (unless (string= (string-downcase subject) (string-downcase candidate))
            (let ((candiate-sorted (sort (string-downcase candidate) #'char<)))
-             (every #'char= subject-sorted candiate-sorted))))
+             (string= subject-sorted candiate-sorted))))
          candidates)))
 #+end_src
 
