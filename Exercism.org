@@ -1,8 +1,8 @@
 # -*- mode:org; fill-column:79; -*-
 #+Title:Exercism Exercises
 #+Author:Pinecone062
-#+Date:Last updated 2020-11-05 08:31
-#+Macro: version Version 0.5.13
+#+Date:Last updated 2020-11-06 06:48
+#+Macro: version Version 0.5.14
 {{{title}}} {{{version}}} {{{date}}}
 * Exercism Home
 :PROPERTIES:
@@ -12993,6 +12993,24 @@ Unit Test Summary
       "auto_approve":false
   }
 #+end_src
+** Common Lisp Anagram
+   :PROPERTIES:
+   :cite:     https://exercism.io/my/solutions/6ee4f173fe4546698be15def9e94d81c
+   :date-started: 2020-11-06
+   :END:
+*** Common Lisp Anagram Readme
+*** Common Lisp Anagram Scripts
+**** Common Lisp Anagram Download Script
+#+begin_src sh :results output :mkdirp yes
+exercism download --exercise=anagram --track=common-lisp
+#+end_src
+**** Common Lisp Anagram Upload Script
+#+begin_src sh :results output
+exercism submit common-lisp/anagram/anagram.lisp
+#+end_src
+*** Common Lisp Anagram Code
+*** Common Lisp Anagram Tests
+*** Common Lisp Anagram Metadata
 
 * Exercism Makefile
 #+name:Exercism-Makefile
