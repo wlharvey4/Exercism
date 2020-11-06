@@ -1,8 +1,8 @@
 # -*- mode:org; fill-column:79; -*-
 #+Title:Exercism Exercises
 #+Author:Pinecone062
-#+Date:Last updated 2020-11-06 09:52
-#+Macro: version Version 0.5.17
+#+Date:Last updated 2020-11-06 10:04
+#+Macro: version Version 0.5.18
 {{{title}}} {{{version}}} {{{date}}}
 * Exercism Home
 :PROPERTIES:
@@ -13078,6 +13078,11 @@ exercism download --exercise=anagram --track=common-lisp
 #+begin_src sh :results output
 exercism submit common-lisp/anagram/anagram.lisp
 #+end_src
+
+#+RESULTS:
+:     https://exercism.io/my/solutions/6ee4f173fe4546698be15def9e94d81c
+: 
+
 *** Common Lisp Anagram Code
 #+caption:Common Lisp Anagram Code
 #+name:common-lisp-anagram-code
@@ -13092,12 +13097,14 @@ exercism submit common-lisp/anagram/anagram.lisp
 
   (defun anagrams-for (subject candidates)
     "Returns a sublist of candidates which are anagrams of the subject."
-    (let ((subject-sorted (sort (string-downcase subject) #'char<)))
+   (let* ((subject-dc (string-downcase subject))
+          (subject-dc-sorted (sort (copy-seq subject-dc) #'char<)))
       (remove-if-not
        (lambda (candidate)
-         (unless (string= (string-downcase subject) (string-downcase candidate))
-           (let ((candiate-sorted (sort (string-downcase candidate) #'char<)))
-             (string= subject-sorted candiate-sorted))))
+         (let* ((candidate-dc (string-downcase candidate))
+                (candidate-dc-sorted (sort (copy-seq candidate-dc) #'char<)))
+           (unless (string= subject-dc candidate-dc)
+             (string= subject-dc-sorted candidate-dc-sorted))))
          candidates)))
 #+end_src
 
@@ -13108,6 +13115,35 @@ exercism submit common-lisp/anagram/anagram.lisp
 #+begin_src sh
 ccl -l anagram-test.lisp -e '(quit)'
 #+end_src
+
+#+RESULTS: common-lisp-anagram-test-results
+#+begin_example
+CASE-INSENSITIVE-ANAGRAMS: 1 assertions passed, 0 failed.
+
+WORD-IS-NOT-OWN-ANAGRAM: 1 assertions passed, 0 failed.
+
+MULTIPLE-ANAGRAMS: 1 assertions passed, 0 failed.
+
+DETECT-ANAGRAM: 1 assertions passed, 0 failed.
+
+DOES-NOT-CONFUSE-DIFFERENT-DUPLICATES: 1 assertions passed, 0 failed.
+
+DETECT-SIMPLE-ANAGRAM: 1 assertions passed, 0 failed.
+
+ELIMINATE-ANAGRAM-SUBSETS: 1 assertions passed, 0 failed.
+
+NO-MATCHES: 1 assertions passed, 0 failed.
+
+WORD-IS-NOT-OWN-ANAGRAM-CASE-INSENSITIVELY: 1 assertions passed, 0 failed.
+
+Unit Test Summary
+ | 9 assertions total
+ | 9 passed
+ | 0 failed
+ | 0 execution errors
+ | 0 missing tests
+
+#+end_example
 
 *** Common Lisp Anagram Tests
 #+caption: Common Lisp Anagram Code Tests
