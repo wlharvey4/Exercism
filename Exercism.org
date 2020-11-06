@@ -1,8 +1,8 @@
 # -*- mode:org; fill-column:79; -*-
 #+Title:Exercism Exercises
 #+Author:Pinecone062
-#+Date:Last updated 2020-11-06 07:10
-#+Macro: version Version 0.5.15
+#+Date:Last updated 2020-11-06 08:23
+#+Macro: version Version 0.5.16
 {{{title}}} {{{version}}} {{{date}}}
 * Exercism Home
 :PROPERTIES:
@@ -13083,16 +13083,22 @@ exercism submit common-lisp/anagram/anagram.lisp
 #+name:common-lisp-anagram-code
 #+header: :mkdirp yes :tangle common-lisp/anagram/anagram.lisp
 #+begin_src lisp
-(in-package #:cl-user)
-(defpackage #:anagram
-  (:use #:common-lisp)
-  (:export #:anagrams-for))
+  (in-package #:cl-user)
+  (defpackage #:anagram
+    (:use #:common-lisp)
+    (:export #:anagrams-for))
 
-(in-package #:anagram)
+  (in-package #:anagram)
 
-(defun anagrams-for (subject candidates)
-  "Returns a sublist of candidates which are anagrams of the subject."
-  '(error))
+  (defun anagrams-for (subject candidates)
+    "Returns a sublist of candidates which are anagrams of the subject."
+    (let ((subject-sorted (sort (string-downcase subject) #'char<)))
+      (remove-if-not
+       (lambda (candidate)
+         (unless (string= subject candidate)
+           (let ((candiate-sorted (sort (string-downcase candidate) #'char<)))
+             (every #'char= subject-sorted candiate-sorted))))
+         candidates)))
 #+end_src
 
 #+caption:Common Lisp Anagram Test Results
