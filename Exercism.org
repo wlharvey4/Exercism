@@ -1,8 +1,8 @@
 # -*- mode:org; fill-column:79; -*-
 #+Title:Exercism Exercises
 #+Author:Pinecone062
-#+Date:Last updated 2020-11-06 06:48
-#+Macro: version Version 0.5.14
+#+Date:Last updated 2020-11-06 07:10
+#+Macro: version Version 0.5.15
 {{{title}}} {{{version}}} {{{date}}}
 * Exercism Home
 :PROPERTIES:
@@ -12999,18 +12999,185 @@ Unit Test Summary
    :date-started: 2020-11-06
    :END:
 *** Common Lisp Anagram Readme
+#+name:Common Lisp Anagram README
+#+header: :mkdirp yes :tangle common-lisp/anagram/README.md
+#+begin_src markdown
+# Anagram
+
+Given a word and a list of possible anagrams, select the correct sublist.
+
+Given `"listen"` and a list of candidates like `"enlists" "google"
+"inlets" "banana"` the program should return a list containing
+`"inlets"`.
+
+## Setup
+
+Check out [Installing Common
+Lisp](https://exercism.io/tracks/common-lisp/installation) for
+instructions to get started or take a look at the guides available in
+the [track's side bar](https://exercism.io/my/tracks/common-lisp).
+
+## Formatting
+
+While Common Lisp doesn't care about indentation and layout of code,
+nor whether you use spaces or tabs, this is an important consideration
+for submissions to exercism.io. Excercism.io's code widget cannot
+handle mixing of tab and space characters well so using only spaces is recommended to make
+the code more readable to the human reviewers. Please review your
+editors settings on how to accomplish this. Below are instructions for
+popular editors for Common Lisp.
+
+### VIM
+
+Use the following commands to ensure VIM uses only spaces for
+indentation:
+
+```vimscript
+:set tabstop=2
+:set shiftwidth=2
+:set expandtab
+```
+
+(or as a oneliner `:set tabstop=2 shiftwidth=2 expandtab`). This can
+be added to your `~/.vimrc` file to use it all the time.
+
+### Emacs
+
+Emacs is very well suited for editing Common Lisp and has many
+powerful add-on packages available. The only thing that one needs to
+do with a stock emacs to make it work well with exercism.io is to
+evaluate the following code:
+
+`(setq-default indent-tabs-mode nil)`
+
+This can be placed in your `~/.emacs` (or `~/.emacs.d/init.el`) in
+order to have it set whenever Emacs is launched.
+
+One suggested add-on for Emacs and Common Lisp is
+[SLIME](https://github.com/slime/slime) which offers tight integration
+with the REPL; making iterative coding and testing very easy.
+
+## Source
+
+Inspired by the Extreme Startup game [https://github.com/rchatley/extreme_startup](https://github.com/rchatley/extreme_startup)
+
+## Submitting Incomplete Solutions
+It's possible to submit an incomplete solution so you can see how others have completed the exercise.
+
+#+end_src
 *** Common Lisp Anagram Scripts
 **** Common Lisp Anagram Download Script
 #+begin_src sh :results output :mkdirp yes
 exercism download --exercise=anagram --track=common-lisp
 #+end_src
+
+#+RESULTS:
+: /usr/local/dev/programming/Exercism/common-lisp/anagram
+
 **** Common Lisp Anagram Upload Script
 #+begin_src sh :results output
 exercism submit common-lisp/anagram/anagram.lisp
 #+end_src
 *** Common Lisp Anagram Code
+#+caption:Common Lisp Anagram Code
+#+name:common-lisp-anagram-code
+#+header: :mkdirp yes :tangle common-lisp/anagram/anagram.lisp
+#+begin_src lisp
+(in-package #:cl-user)
+(defpackage #:anagram
+  (:use #:common-lisp)
+  (:export #:anagrams-for))
+
+(in-package #:anagram)
+
+(defun anagrams-for (subject candidates)
+  "Returns a sublist of candidates which are anagrams of the subject."
+  '(error))
+#+end_src
+
+#+caption:Common Lisp Anagram Test Results
+#+name:common-lisp-anagram-test-results
+#+header: :results output :exports results
+#+header: :dir common-lisp/anagram
+#+begin_src sh
+ccl -l anagram-test.lisp -e '(quit)'
+#+end_src
+
 *** Common Lisp Anagram Tests
+#+caption: Common Lisp Anagram Code Tests
+#+name:common-lisp-anagram-code-tests
+#+header: :mkdirp yes :tangle common-lisp/anagram/anagram-test.lisp
+#+header: :dir common-lisp/anagram
+#+begin_src lisp
+(ql:quickload "lisp-unit" :silent t)
+#-xlisp-test (load "anagram")
+
+(defpackage #:anagram-test
+  (:use #:common-lisp #:lisp-unit))
+
+(in-package #:anagram-test)
+
+(define-test no-matches
+  (assert-equal '()
+      (anagram:anagrams-for
+       "diaper"
+       '("hello" "world" "zombies" "pants"))))
+
+(define-test detect-simple-anagram
+  (assert-equal '("tan")
+      (anagram:anagrams-for "ant" '("tan" "stand" "at"))))
+
+(define-test does-not-confuse-different-duplicates
+  (assert-equal '() (anagram:anagrams-for "galea" '("eagle"))))
+
+(define-test eliminate-anagram-subsets
+  (assert-equal '() (anagram:anagrams-for "good" '("dog" "goody"))))
+
+(define-test detect-anagram
+  (assert-equal '("inlets")
+      (anagram:anagrams-for
+       "listen"
+       '("enlists" "google" "inlets" "banana"))))
+
+(define-test multiple-anagrams
+  (assert-equal '("gallery" "regally" "largely")
+      (anagram:anagrams-for
+       "allergy"
+       '("gallery" "ballerina" "regally" "clergy" "largely" "leading"))))
+
+(define-test case-insensitive-anagrams
+  (assert-equal '("Carthorse")
+      (anagram:anagrams-for
+       "Orchestra"
+       '("cashregister" "Carthorse" "radishes"))))
+
+(define-test word-is-not-own-anagram
+  (assert-equal '()
+      (anagram:anagrams-for "banana" '("banana"))))
+
+(define-test word-is-not-own-anagram-case-insensitively
+  (assert-equal '()
+      (anagram:anagrams-for "bananarama" '("BananaRama"))))
+
+#-xlisp-test
+(let ((*print-errors* t)
+      (*print-failures* t))
+  (run-tests :all :anagram-test))
+
+#+end_src
 *** Common Lisp Anagram Metadata
+#+header: :mkdirp yes :tangle common-lisp/anagram/.exercism/metadata.json
+#+begin_src js
+  {
+      "track":"common-lisp",
+      "exercise":"anagram",
+      "id":"6ee4f173fe4546698be15def9e94d81c",
+      "url":"https://exercism.io/my/solutions/6ee4f173fe4546698be15def9e94d81c",
+      "handle":"wlharvey4",
+      "is_requester":true,
+      "auto_approve":false
+  }
+#+end_src
 
 * Exercism Makefile
 #+name:Exercism-Makefile
