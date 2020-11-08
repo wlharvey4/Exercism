@@ -1,8 +1,8 @@
 # -*- mode:org; fill-column:79; -*-
 #+Title:Exercism Exercises
 #+Author:Pinecone062
-#+Date:Last updated 2020-11-06 10:04
-#+Macro: version Version 0.5.18
+#+Date:Last updated 2020-11-08 09:30
+#+Macro: version Version 0.5.19
 {{{title}}} {{{version}}} {{{date}}}
 * Exercism Home
 :PROPERTIES:
@@ -13220,6 +13220,40 @@ Unit Test Summary
       "auto_approve":false
   }
 #+end_src
+** Common Lisp Beer Song
+*** Common Lisp Beer Song Readme
+#+header: :mkdirp yes
+#+header: :tangle common-lisp/beer-song/README.md
+#+begin_src markdown
+#+end_src
+*** Common Lisp Beer Song Scripts and Metadata
+**** Common Lisp Beer Song Download Script
+#+begin_src sh :mkdirp yes
+exercism download --exercise=beer-song --track=common-lisp
+#+end_src
+**** Common Lisp Beer Song Upload Script
+#+begin_src sh :dir common-lisp/beer-song
+exercism submit beer-song.lisp
+#+end_src
+**** Common Lisp Beer Song Metadata
+#+begin_src js :tangle common-lisp/beer-song/.exercism/metadata.json :mkdirp yes
+#+end_src
+*** Common Lisp Code
+#+header: :mkdirp yes
+#+header: :tangle common-lisp/beer-song/beer-song.lisp
+#+begin_src lisp
+#+end_src
+
+#+header: :results output
+#+begin_src sh
+ccl -Q -l beer-song-tests.lisp
+#+end_src
+*** Common Lisp Tests
+#+header: :mkdirp yes
+#+header: :tangle common-lisp/beer-song/beer-song-tests.lisp
+#+begin_src lisp
+#+end_src
+
 
 * Exercism Makefile
 #+name:Exercism-Makefile
