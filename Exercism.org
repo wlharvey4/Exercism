@@ -1,8 +1,8 @@
 # -*- mode:org; fill-column:79; -*-
 #+Title:Exercism Exercises
 #+Author:Pinecone062
-#+Date:Last updated 2020-11-08 22:07
-#+Macro: version Version 0.5.21
+#+Date:Last updated 2020-11-08 23:33
+#+Macro: version Version 0.5.22
 {{{title}}} {{{version}}} {{{date}}}
 * Exercism Home
 :PROPERTIES:
@@ -13615,6 +13615,10 @@ exercism download --exercise=beer-song --track=common-lisp
 #+begin_src sh :dir common-lisp/beer-song
 exercism submit beer-song.lisp
 #+end_src
+
+#+RESULTS:
+: https://exercism.io/my/solutions/5e1c5241d7054d43bef690f3671d02b2
+
 **** Common Lisp Beer Song Metadata
 #+begin_src js :tangle common-lisp/beer-song/.exercism/metadata.json :mkdirp yes
   {
@@ -13650,8 +13654,8 @@ exercism submit beer-song.lisp
 
   (defun bottles (n o p z)
     " n: number of bottles; 0 <= n <= 99
-      o: on the wall; nil: no t: yes
-      p: punctuation; 0=, 1=.~&
+      o: on the wall; nil: no, t: yes
+      p: punctuation; 0=`,' 1=`.~&'
       z: 0=capitalize; 1=lower case"
     (concatenate 'string
                  (format nil "~[~@(~a~)~;~a~]" z (format nil "~[no more ~:;~d ~]" n n))
@@ -13671,23 +13675,42 @@ exercism submit beer-song.lisp
 
   (defun verse (n)
     "Returns a string verse for a given number."
-    (concatenate 'string
-                 (bottles n t 0 0)
-                 (bottles n nil 1 1)
-                 (take n)
-                 (bottles (if (> n 0) (1- n) 99) t 1 1)))
+    (let ((nxt (if (> n 0) (1- n) 99)))
+      (concatenate 'string
+                   (bottles n t 0 0)
+                   (bottles n nil 1 1)
+                   (take n)
+                   (bottles nxt t 1 1))))
 
   (defun sing (start &optional (end 0))
     "Returns a string of verses for a given range of numbers."
-    "Sing not implemented.")
+    (loop for num from start downto end
+          with sang = (make-array 1 :element-type 'character :fill-pointer 0 :adjustable t)
+          do (format sang "~a~%" (verse num))
+          finally (return sang)))
 #+end_src
 
 #+name: common-lisp-beer-song-run-tests
 #+header: :results output
 #+header: :dir common-lisp/beer-song
 #+begin_src sh
-ccl -Q -l beer-song-test.lisp
+ccl -Q -l beer-song-test.lisp -e '(quit)'
 #+end_src
+
+#+RESULTS: common-lisp-beer-song-run-tests
+#+begin_example
+TEST-VERSE: 3 assertions passed, 0 failed.
+
+TEST-SONG: 2 assertions passed, 0 failed.
+
+Unit Test Summary
+ | 5 assertions total
+ | 5 passed
+ | 0 failed
+ | 0 execution errors
+ | 0 missing tests
+
+#+end_example
 
 *** Common Lisp Tests
 #+header: :mkdirp yes
