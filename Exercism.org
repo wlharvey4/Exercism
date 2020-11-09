@@ -1,8 +1,8 @@
 # -*- mode:org; fill-column:79; -*-
 #+Title:Exercism Exercises
 #+Author:Pinecone062
-#+Date:Last updated 2020-11-08 09:45
-#+Macro: version Version 0.5.20
+#+Date:Last updated 2020-11-08 22:07
+#+Macro: version Version 0.5.21
 {{{title}}} {{{version}}} {{{date}}}
 * Exercism Home
 :PROPERTIES:
@@ -13631,19 +13631,55 @@ exercism submit beer-song.lisp
 #+header: :mkdirp yes
 #+header: :tangle common-lisp/beer-song/beer-song.lisp
 #+begin_src lisp
-(in-package #:cl-user)
-(defpackage #:beer
-  (:use #:common-lisp)
-  (:export #:verse #:sing))
+  (in-package #:cl-user)
+  (defpackage #:beer
+    (:use #:common-lisp)
+    (:export #:verse #:sing))
 
-(in-package #:beer)
-(defun verse (n)
-  "Returns a string verse for a given number."
-  "Verse not implemented.")
+  (in-package #:beer)
 
-(defun sing (start &optional (end 0))
-  "Returns a string of verses for a given range of numbers."
-  "Sing not implemented.")
+  #|
+
+  [ n==0: No more | n>=1: n ] bottle[s] of beer[.|] [|on the wall[.|,]]
+
+  [ n==0: Go to the store | n>=1: Take [it | one] down ]
+  and
+  [ n==0: buy some more | n>=1: pass it around ]
+
+  |#
+
+  (defun bottles (n o p z)
+    " n: number of bottles; 0 <= n <= 99
+      o: on the wall; nil: no t: yes
+      p: punctuation; 0=, 1=.~&
+      z: 0=capitalize; 1=lower case"
+    (concatenate 'string
+                 (format nil "~[~@(~a~)~;~a~]" z (format nil "~[no more ~:;~d ~]" n n))
+                 (format nil "bottle~p of beer" n)
+                 (format nil "~:[~; on the wall~]" o)
+                 (format nil "~[, ~;.~&~]" p)))
+
+  (defun take (n)
+    (let ((o (cond
+               ((= n 0) "")
+               ((= n 1) "it")
+               (t "one"))))
+      (concatenate 'string
+                   (format nil "~[Go to the store~:;Take ~]" n)
+                   (format nil "~[~a~:;~a down~] and " n o)
+                   (format nil "~[buy some more~:;pass it around~], " n))))
+
+  (defun verse (n)
+    "Returns a string verse for a given number."
+    (concatenate 'string
+                 (bottles n t 0 0)
+                 (bottles n nil 1 1)
+                 (take n)
+                 (bottles (if (> n 0) (1- n) 99) t 1 1)))
+
+  (defun sing (start &optional (end 0))
+    "Returns a string of verses for a given range of numbers."
+    "Sing not implemented.")
 #+end_src
 
 #+name: common-lisp-beer-song-run-tests
@@ -13652,6 +13688,7 @@ exercism submit beer-song.lisp
 #+begin_src sh
 ccl -Q -l beer-song-test.lisp
 #+end_src
+
 *** Common Lisp Tests
 #+header: :mkdirp yes
 #+header: :tangle common-lisp/beer-song/beer-song-test.lisp
