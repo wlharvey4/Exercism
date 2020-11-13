@@ -1,8 +1,8 @@
 # -*- mode:org; fill-column:79; -*-
 #+Title:Exercism Exercises
 #+Author:Pinecone062
-#+Date:Last updated 2020-11-12 19:57
-#+Macro: version Version 0.5.23
+#+Date:Last updated 2020-11-13 07:53
+#+Macro: version Version 0.5.24
 {{{title}}} {{{version}}} {{{date}}}
 * Exercism Home
 :PROPERTIES:
@@ -13888,20 +13888,15 @@ It's possible to submit an incomplete solution so you can see how others have co
 #+end_src
 *** Common Lisp Roman Numerals Scripts and Metadata
 **** Common Lisp Roman Numerals Download Script
-#+begin_src sh :tangle common-lisp/roman-numerals :mkdirp yes
+#+begin_src sh
 exercism download --exercise=roman-numerals --track=common-lisp
 #+end_src
-
-#+RESULTS:
-: /usr/local/dev/programming/Exercism/common-lisp/roman-numerals
 
 **** Common Lisp Roman Numerals Upload Script
 #+begin_src lisp
 exercism submit common-lisp/roman-numerals/roman-numerals.lisp
 #+end_src
-#+begin_src js :tangle common-lisp/roman-numerals/.exercism/metadata.json :mkdirp yes
 
-#+end_src
 **** Common Lisp Roman Numerals Metadata
 #+header: :tangle common-lisp/roman-numerals/.exercism/metadata.json
 #+header: :mkdirp yes
