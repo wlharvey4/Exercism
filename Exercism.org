@@ -1,8 +1,8 @@
 # -*- mode:org; fill-column:79; -*-
 #+Title:Exercism Exercises
 #+Author:Pinecone062
-#+Date:Last updated 2020-11-13 07:53
-#+Macro: version Version 0.5.24
+#+Date:Last updated 2020-11-13 10:25
+#+Macro: version Version 0.5.25
 {{{title}}} {{{version}}} {{{date}}}
 * Exercism Home
 :PROPERTIES:
@@ -13915,15 +13915,33 @@ exercism submit common-lisp/roman-numerals/roman-numerals.lisp
 #+header: :mkdirp yes
 #+header: :tangle common-lisp/roman-numerals/roman-numerals.lisp
 #+begin_src lisp
-(defpackage #:roman
-  (:use #:cl)
-  (:export #:romanize))
+  (defpackage #:roman
+    (:use #:cl)
+    (:export #:romanize))
 
-(in-package #:roman)
+  (in-package #:roman)
 
-(defun romanize (number)
-  "Returns the Roman numeral representation for a given number."
-  "I")
+  (defvar roman-numerals
+          '(("I" 1)
+            ("V" 5)
+            ("X" 10)
+            ("L" 50)
+            ("C" 100)
+            ("D" 500)
+            ("M" 1000)))
+
+  (defun ea-roman-numeral (n)
+    (loop for (r d) in (reverse roman-numerals)
+          with roman = "I"
+          do (format t "Roman numeral: ~a  Digit: ~a~%" r d)
+          finally (return roman)))
+
+
+
+
+  (defun romanize (number)
+    "Returns the Roman numeral representation for a given number."
+    "I")
 #+end_src
 
 #+header: :dir common-lisp/roman-numerals
