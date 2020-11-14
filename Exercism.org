@@ -1,8 +1,8 @@
 # -*- mode:org; fill-column:79; -*-
 #+Title:Exercism Exercises
 #+Author:Pinecone062
-#+Date:Last updated 2020-11-13 10:25
-#+Macro: version Version 0.5.25
+#+Date:Last updated 2020-11-14 07:44
+#+Macro: version Version 0.5.26
 {{{title}}} {{{version}}} {{{date}}}
 * Exercism Home
 :PROPERTIES:
@@ -13930,18 +13930,64 @@ exercism submit common-lisp/roman-numerals/roman-numerals.lisp
             ("D" 500)
             ("M" 1000)))
 
-  (defun ea-roman-numeral (n)
-    (loop for (r d) in (reverse roman-numerals)
-          with roman = "I"
-          do (format t "Roman numeral: ~a  Digit: ~a~%" r d)
-          finally (return roman)))
+  (defun simplify (roman)
+    roman)
 
+  (defun mult (ds pos)
+    (if (or (< pos 0) (> pos 6))
+         ""
+        (let* ((rd (elt roman-numerals pos))
+               (r (car rd))
+               (a ""))
+          (dotimes (it ds a)
+            (setf a (concatenate 'string a r))))))
 
+  (defun d2r (ds)
+    "Transform a list of digits representing Roman numerals into a
+  string of Roman numerals.  Then simplify and return.
 
+  Simplify means to transform 'IIII' => 'IV', 'VIIII' => 'IX', etc."
+    (loop for d in ds with roman = "" with pos   = 0
+          do
+             ;; mult produces a repeated Roman numeral (d times) of
+             ;; magnitude pos, where pos is the placeholder 0<=pos<=6
+             ;; representing the Roman numeral
+             (setf roman (concatenate 'string roman (mult d pos)))
+             (incf pos)
+             ;; simplify turns IIII into IV, and XXXX into XL etc.
+          finally (return (simplify (reverse roman)))))
 
   (defun romanize (number)
-    "Returns the Roman numeral representation for a given number."
-    "I")
+    "Turn a decimal number into a string of Roman digits.
+
+  Loop through the list of Roman digit and decimal values, divide the
+  current number by the decimal value to obtain how many Roman digits
+  the current number represents, store that number in a list with its
+  position representing its base value, and its value representing how
+  many, then loop again, using the remainder as the new number. At the
+  completion of the loop, transform the list of digits into Roman
+  digits, and simplify."
+
+    (loop for (nil val) in (reverse roman-numerals) ; only need the
+                                                    ; Roman digit's
+                                                    ; decimal value;
+                                                    ; start with the
+                                                    ; highest value and
+                                                    ; work down.
+          with roman = () ; will hold the result of the loop; will be a
+                          ; list of decimal values representing
+                          ; placeholders (which Roman digit) and no. of
+                          ; Roman digits
+          with num = number ; let's be functional about this
+          do
+             ;; truncate of the division produces the number of Roman
+             ;; digits this number represents; mod (the remainder of the
+             ;; division) represents the value of the number in the next
+             ;; iteration
+             (setf roman (cons (truncate (/   num val)) roman)
+                   num                   (mod num val))
+          finally (return (d2r roman)))) ; transform the list of digits
+                                         ; into Roman digits
 #+end_src
 
 #+header: :dir common-lisp/roman-numerals
