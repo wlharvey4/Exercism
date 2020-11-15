@@ -1,8 +1,8 @@
 # -*- mode:org; fill-column:79; -*-
 #+Title:Exercism Exercises
 #+Author:Pinecone062
-#+Date:Last updated 2020-11-15 07:30
-#+Macro: version Version 0.5.27
+#+Date:Last updated 2020-11-15 08:38
+#+Macro: version Version 0.5.28
 {{{title}}} {{{version}}} {{{date}}}
 * Exercism Home
 :PROPERTIES:
@@ -13893,9 +13893,12 @@ exercism download --exercise=roman-numerals --track=common-lisp
 #+end_src
 
 **** Common Lisp Roman Numerals Upload Script
-#+begin_src lisp
+#+begin_src sh
 exercism submit common-lisp/roman-numerals/roman-numerals.lisp
 #+end_src
+
+#+RESULTS:
+: https://exercism.io/my/solutions/472ca4efdd4e428db07d9ea2d9a8ca00
 
 **** Common Lisp Roman Numerals Metadata
 #+header: :tangle common-lisp/roman-numerals/.exercism/metadata.json
@@ -13921,49 +13924,59 @@ exercism submit common-lisp/roman-numerals/roman-numerals.lisp
 
   (in-package #:roman)
 
-  (defvar roman-numerals
-          '(("I" 1)
-            ("V" 5)
-            ("X" 10)
-            ("L" 50)
-            ("C" 100)
-            ("D" 500)
-            ("M" 1000)))
-
-  (defun simplify (r pos ds)
-    ;(format t "simplifying: pos: ~a   ds:~a   r: ~a" pos ds r)
-    (let ((r2 (if (eql (elt ds (1+ pos)) 1)
-                  (car (elt roman-numerals (+ 2 pos)))
-                  (car (elt roman-numerals (+ 1 pos))))))
-      (format nil "~a~a" r2 r)))
-
+  (defparameter roman-numerals
+    '(("I" 1)
+      ("V" 5)
+      ("X" 10)
+      ("L" 50)
+      ("C" 100)
+      ("D" 500)
+      ("M" 1000)))
 
   ;; (defun m
-  (defun mult (d pos ds)
-    ;(format t "mult--d: ~a  pos: ~a  ds: ~a  " d pos ds)
+  (defun repeat (d pos ds)
+    "Return a string  of multiple characters of one  Roman numeral, e.g.
+  'III' or  'CC', where  'd' represents  the length  of the  string, and
+  'pos' represents  its place  value in the  parameter 'roman-numerals'.
+  However, make sure the string is reduced, e.g., from 'IIII' to 'IV' or
+  'VIIII' to 'IX'."
     (if (or (< pos 0) (> pos 6))
         ""
-        (let ((r (car (elt roman-numerals pos)))
-              (a ""))
-          ;(format t "r: ~a~%" r)
+        (let ((r (car (elt roman-numerals pos))); current Roman numeral
+              (a "")); variable to hold the string
+          ;; This if checks if the current value needs to be simplified;
+          ;; it  needs to  be simplified  if 'd'  equals 4  in positions
+          ;; between 0 and 4.
           (if
            (and (< pos 5) (= d 4))
-           (simplify r pos ds)
+           ;; 'r' is  a single  instance of  the current  Roman numeral,
+           ;; preceded  by either  the  next higher  value  or the  next
+           ;; higher value after that, depending on whether the value is
+           ;; a 4 or a 9. It is a  4 if the next higher digit is a zero,
+           ;; while it is a 9 if the next higher digit is a 1.
+           (format nil "~a~a"
+                   (car (elt roman-numerals
+                         (+ pos
+                            (if (eql (elt ds (1+ pos)) 1) 2 1))))
+                   r)
+           ;; this   'do-loop'  applies   in  all   instances  when   no
+           ;; simplification is needed.
            (dotimes (it d a)
              (setf a (concatenate 'string a r)))))))
 
   (defun d2r (ds)
-    "Transform a list of digits representing Roman numerals into a
-  string of Roman numerals.  Then simplify and return.
+    "Transform a list of digits  ('ds') representing Roman numerals into
+  a string of Roman numerals, simplified.
 
-  Simplify means to transform 'IIII' => 'IV', 'VIIII' => 'IX', etc."
-    ;(format t "d2r--ds: ~a~%" ds)
+  'ds' is a list of six  digits, each element representing the magnitude
+  of the Roman numeral at that place, i.e. (2 3 0 4 1 2)."
     (loop for d in ds with roman = "" with pos = 0
           do
-             ;; mult produces a repeated Roman numeral (d times) of
-             ;; magnitude pos, where pos is the placeholder 0<=pos<=6
-             ;; representing the Roman numeral
-             (setf roman (concatenate 'string roman (mult d pos ds)))
+             ;; 'repeat' produces a string of Roman numerals of the same
+             ;; value, simplified.
+             (setf roman (concatenate 'string roman (repeat d pos ds)))
+             ;; this  removes  the  next  digit if  a  simplified  Roman
+             ;; numeral was just produced.
              (when (and (eql d 4) (< pos 5)) (setf (elt ds (1+ pos)) 0))
              (incf pos)
           finally (return (reverse roman))))
@@ -13977,28 +13990,27 @@ exercism submit common-lisp/roman-numerals/roman-numerals.lisp
   position representing its base value, and its value representing how
   many, then loop again, using the remainder as the new number. At the
   completion of the loop, transform the list of digits into Roman
-  digits, and simplify."
-
+  digits."
     (loop for (nil val) in (reverse roman-numerals) ; only need the
                                                     ; Roman digit's
                                                     ; decimal value;
                                                     ; start with the
                                                     ; highest value and
                                                     ; work down.
-          with roman = () ; will hold the result of the loop; will be a
-                          ; list of decimal values representing
-                          ; placeholders (which Roman digit) and no. of
-                          ; Roman digits
+          with ds  = () ; will  hold the result  of the loop; will  be a
+                       ; list    of    decimal    values    representing
+                       ; placeholders  (which Roman  digit)  and no.  of
+                       ; Roman digits
           with num = number ; let's be functional about this
           do
              ;; truncate of the division produces the number of Roman
              ;; digits this number represents; mod (the remainder of the
              ;; division) represents the value of the number in the next
              ;; iteration
-             (setf roman (cons (truncate (/   num val)) roman)
-                   num                   (mod num val))
-          finally (return (d2r roman)))) ; transform the list of digits
-                                         ; into Roman digits
+             (setf ds (cons (truncate (/   num val)) ds)
+                   num                (mod num val))
+          finally (return  (d2r ds))))  ; transform  the list  of digits
+                                        ; into Roman digits
 #+end_src
 
 #+header: :dir common-lisp/roman-numerals
