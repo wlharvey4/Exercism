@@ -1,8 +1,8 @@
 # -*- mode:org; fill-column:79; -*-
 #+Title:Exercism Exercises
 #+Author:Pinecone062
-#+Date:Last updated 2020-11-14 07:44
-#+Macro: version Version 0.5.26
+#+Date:Last updated 2020-11-15 07:30
+#+Macro: version Version 0.5.27
 {{{title}}} {{{version}}} {{{date}}}
 * Exercism Home
 :PROPERTIES:
@@ -13930,32 +13930,43 @@ exercism submit common-lisp/roman-numerals/roman-numerals.lisp
             ("D" 500)
             ("M" 1000)))
 
-  (defun simplify (roman)
-    roman)
+  (defun simplify (r pos ds)
+    ;(format t "simplifying: pos: ~a   ds:~a   r: ~a" pos ds r)
+    (let ((r2 (if (eql (elt ds (1+ pos)) 1)
+                  (car (elt roman-numerals (+ 2 pos)))
+                  (car (elt roman-numerals (+ 1 pos))))))
+      (format nil "~a~a" r2 r)))
 
-  (defun mult (ds pos)
+
+  ;; (defun m
+  (defun mult (d pos ds)
+    ;(format t "mult--d: ~a  pos: ~a  ds: ~a  " d pos ds)
     (if (or (< pos 0) (> pos 6))
-         ""
-        (let* ((rd (elt roman-numerals pos))
-               (r (car rd))
-               (a ""))
-          (dotimes (it ds a)
-            (setf a (concatenate 'string a r))))))
+        ""
+        (let ((r (car (elt roman-numerals pos)))
+              (a ""))
+          ;(format t "r: ~a~%" r)
+          (if
+           (and (< pos 5) (= d 4))
+           (simplify r pos ds)
+           (dotimes (it d a)
+             (setf a (concatenate 'string a r)))))))
 
   (defun d2r (ds)
     "Transform a list of digits representing Roman numerals into a
   string of Roman numerals.  Then simplify and return.
 
   Simplify means to transform 'IIII' => 'IV', 'VIIII' => 'IX', etc."
-    (loop for d in ds with roman = "" with pos   = 0
+    ;(format t "d2r--ds: ~a~%" ds)
+    (loop for d in ds with roman = "" with pos = 0
           do
              ;; mult produces a repeated Roman numeral (d times) of
              ;; magnitude pos, where pos is the placeholder 0<=pos<=6
              ;; representing the Roman numeral
-             (setf roman (concatenate 'string roman (mult d pos)))
+             (setf roman (concatenate 'string roman (mult d pos ds)))
+             (when (and (eql d 4) (< pos 5)) (setf (elt ds (1+ pos)) 0))
              (incf pos)
-             ;; simplify turns IIII into IV, and XXXX into XL etc.
-          finally (return (simplify (reverse roman)))))
+          finally (return (reverse roman))))
 
   (defun romanize (number)
     "Turn a decimal number into a string of Roman digits.
@@ -13991,10 +14002,62 @@ exercism submit common-lisp/roman-numerals/roman-numerals.lisp
 #+end_src
 
 #+header: :dir common-lisp/roman-numerals
-#+header: :results value :exports results
+#+header: :results output :exports results
 #+begin_src sh
 ccl -Q -l roman-numerals-test.lisp -e '(quit)'
 #+end_src
+
+#+RESULTS:
+#+begin_example
+To load "lisp-unit":
+  Load 1 ASDF system:
+    lisp-unit
+; Loading "lisp-unit"
+
+TEST-48: 1 assertions passed, 0 failed.
+
+TEST-9: 1 assertions passed, 0 failed.
+
+TEST-27: 1 assertions passed, 0 failed.
+
+TEST-59: 1 assertions passed, 0 failed.
+
+TEST-4: 1 assertions passed, 0 failed.
+
+TEST-5: 1 assertions passed, 0 failed.
+
+TEST-575: 1 assertions passed, 0 failed.
+
+TEST-1: 1 assertions passed, 0 failed.
+
+TEST-6: 1 assertions passed, 0 failed.
+
+TEST-2: 1 assertions passed, 0 failed.
+
+TEST-3000: 1 assertions passed, 0 failed.
+
+TEST-1024: 1 assertions passed, 0 failed.
+
+TEST-911: 1 assertions passed, 0 failed.
+
+TEST-141: 1 assertions passed, 0 failed.
+
+TEST-93: 1 assertions passed, 0 failed.
+
+TEST-402: 1 assertions passed, 0 failed.
+
+TEST-3: 1 assertions passed, 0 failed.
+
+TEST-163: 1 assertions passed, 0 failed.
+
+Unit Test Summary
+ | 18 assertions total
+ | 18 passed
+ | 0 failed
+ | 0 execution errors
+ | 0 missing tests
+
+#+end_example
 
 *** Common Lisp Roman Numerals Tests
 #+header: :mkdirp yes
