@@ -1,8 +1,8 @@
 # -*- mode:org; fill-column:79; -*-
 #+Title:Exercism Exercises
 #+Author:Pinecone062
-#+Date:Last updated 2020-11-15 08:38
-#+Macro: version Version 0.5.28
+#+Date:Last updated 2020-11-15 20:18
+#+Macro: version Version 0.5.29
 {{{title}}} {{{version}}} {{{date}}}
 * Exercism Home
 :PROPERTIES:
@@ -13924,7 +13924,7 @@ exercism submit common-lisp/roman-numerals/roman-numerals.lisp
 
   (in-package #:roman)
 
-  (defparameter roman-numerals
+  (defconstant +ROMAN-NUMERALS+
     '(("I" 1)
       ("V" 5)
       ("X" 10)
@@ -13937,12 +13937,12 @@ exercism submit common-lisp/roman-numerals/roman-numerals.lisp
   (defun repeat (d pos ds)
     "Return a string  of multiple characters of one  Roman numeral, e.g.
   'III' or  'CC', where  'd' represents  the length  of the  string, and
-  'pos' represents  its place  value in the  parameter 'roman-numerals'.
+  'pos' represents  its place  value in the  parameter '+ROMAN-NUMERALS+'.
   However, make sure the string is reduced, e.g., from 'IIII' to 'IV' or
   'VIIII' to 'IX'."
     (if (or (< pos 0) (> pos 6))
         ""
-        (let ((r (car (elt roman-numerals pos))); current Roman numeral
+        (let ((r (car (elt +ROMAN-NUMERALS+ pos))); current Roman numeral
               (a "")); variable to hold the string
           ;; This if checks if the current value needs to be simplified;
           ;; it  needs to  be simplified  if 'd'  equals 4  in positions
@@ -13955,9 +13955,9 @@ exercism submit common-lisp/roman-numerals/roman-numerals.lisp
            ;; a 4 or a 9. It is a  4 if the next higher digit is a zero,
            ;; while it is a 9 if the next higher digit is a 1.
            (format nil "~a~a"
-                   (car (elt roman-numerals
+                   (car (elt +ROMAN-NUMERALS+
                          (+ pos
-                            (if (eql (elt ds (1+ pos)) 1) 2 1))))
+                            (if (= (elt ds (1+ pos)) 1) 2 1))))
                    r)
            ;; this   'do-loop'  applies   in  all   instances  when   no
            ;; simplification is needed.
@@ -13977,7 +13977,7 @@ exercism submit common-lisp/roman-numerals/roman-numerals.lisp
              (setf roman (concatenate 'string roman (repeat d pos ds)))
              ;; this  removes  the  next  digit if  a  simplified  Roman
              ;; numeral was just produced.
-             (when (and (eql d 4) (< pos 5)) (setf (elt ds (1+ pos)) 0))
+             (when (and (= d 4) (< pos 5)) (setf (elt ds (1+ pos)) 0))
              (incf pos)
           finally (return (reverse roman))))
 
@@ -13991,7 +13991,7 @@ exercism submit common-lisp/roman-numerals/roman-numerals.lisp
   many, then loop again, using the remainder as the new number. At the
   completion of the loop, transform the list of digits into Roman
   digits."
-    (loop for (nil val) in (reverse roman-numerals) ; only need the
+    (loop for (nil val) in (reverse +ROMAN-NUMERALS+) ; only need the
                                                     ; Roman digit's
                                                     ; decimal value;
                                                     ; start with the
