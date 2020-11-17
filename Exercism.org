@@ -1,8 +1,8 @@
 # -*- mode:org; fill-column:79; -*-
 #+Title:Exercism Exercises
 #+Author:Pinecone062
-#+Date:Last updated 2020-11-15 20:18
-#+Macro: version Version 0.5.29
+#+Date:Last updated 2020-11-16 17:47
+#+Macro: version Version 0.5.30
 {{{title}}} {{{version}}} {{{date}}}
 * Exercism Home
 :PROPERTIES:
@@ -14007,8 +14007,9 @@ exercism submit common-lisp/roman-numerals/roman-numerals.lisp
              ;; digits this number represents; mod (the remainder of the
              ;; division) represents the value of the number in the next
              ;; iteration
-             (setf ds (cons (truncate (/   num val)) ds)
-                   num                (mod num val))
+             (multiple-value-bind (quo rem) (truncate num val)
+               (setf ds (cons quo ds)
+                     num rem))
           finally (return  (d2r ds))))  ; transform  the list  of digits
                                         ; into Roman digits
 #+end_src
