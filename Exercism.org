@@ -1,8 +1,8 @@
 # -*- mode:org; fill-column:79; -*-
 #+Title:Exercism Exercises
 #+Author:Pinecone062
-#+Date:Last updated 2020-11-16 17:47
-#+Macro: version Version 0.5.30
+#+Date:Last updated 2020-11-23 21:59
+#+Macro: version Version 0.5.31
 {{{title}}} {{{version}}} {{{date}}}
 * Exercism Home
 :PROPERTIES:
@@ -14142,6 +14142,267 @@ Unit Test Summary
 (let ((*print-errors* t)
       (*print-failures* t))
   (run-tests :all :roman-test))
+
+#+end_src
+** Common Lisp Word Count
+   :PROPERTIES:
+   :site:     https://exercism.io/my/solutions/14be464bd8ed4d109d986f50f3816626
+   :date:     2020-11-23
+   :END:
+*** Common Lisp Word Count README and Metadata
+#+header: :tangle common-lisp/word-count/README.md :mkdirp yes
+#+begin_src makedown
+# Word Count
+
+Given a phrase, count the occurrences of each _word_ in that phrase.
+
+For the purposes of this exercise you can expect that a _word_ will always be one of:
+
+1. A _number_ composed of one or more ASCII digits (ie "0" or "1234") OR
+2. A _simple word_ composed of one or more ASCII letters (ie "a" or "they") OR
+3. A _contraction_ of two _simple words_ joined by a single apostrophe (ie "it's" or "they're")
+
+When counting words you can assume the following rules:
+
+1. The count is _case insensitive_ (ie "You", "you", and "YOU" are 3 uses of the same word)
+2. The count is _unordered_; the tests will ignore how words and counts are ordered
+3. Other than the apostrophe in a _contraction_ all forms of _punctuation_ are ignored
+4. The words can be separated by _any_ form of whitespace (ie "\t", "\n", " ")
+
+For example, for the phrase `"That's the password: 'PASSWORD 123'!", cried the Special Agent.\nSo I fled.` the count would be:
+
+```text
+that's: 1
+the: 2
+password: 2
+123: 1
+cried: 1
+special: 1
+agent: 1
+so: 1
+i: 1
+fled: 1
+```
+
+## Setup
+
+Check out [Installing Common
+Lisp](https://exercism.io/tracks/common-lisp/installation) for
+instructions to get started or take a look at the guides available in
+the [track's side bar](https://exercism.io/my/tracks/common-lisp).
+
+## Formatting
+
+While Common Lisp doesn't care about indentation and layout of code,
+nor whether you use spaces or tabs, this is an important consideration
+for submissions to exercism.io. Excercism.io's code widget cannot
+handle mixing of tab and space characters well so using only spaces is recommended to make
+the code more readable to the human reviewers. Please review your
+editors settings on how to accomplish this. Below are instructions for
+popular editors for Common Lisp.
+
+### VIM
+
+Use the following commands to ensure VIM uses only spaces for
+indentation:
+
+```vimscript
+:set tabstop=2
+:set shiftwidth=2
+:set expandtab
+```
+
+(or as a oneliner `:set tabstop=2 shiftwidth=2 expandtab`). This can
+be added to your `~/.vimrc` file to use it all the time.
+
+### Emacs
+
+Emacs is very well suited for editing Common Lisp and has many
+powerful add-on packages available. The only thing that one needs to
+do with a stock emacs to make it work well with exercism.io is to
+evaluate the following code:
+
+`(setq-default indent-tabs-mode nil)`
+
+This can be placed in your `~/.emacs` (or `~/.emacs.d/init.el`) in
+order to have it set whenever Emacs is launched.
+
+One suggested add-on for Emacs and Common Lisp is
+[SLIME](https://github.com/slime/slime) which offers tight integration
+with the REPL; making iterative coding and testing very easy.
+
+## Source
+
+This is a classic toy problem, but we were reminded of it by seeing it in the Go Tour.
+
+## Submitting Incomplete Solutions
+It's possible to submit an incomplete solution so you can see how others have completed the exercise.
+#+end_src
+
+#+header: :tangle common-lisp/word-count/.exercism/metadata.json :mkdirp yes
+#+begin_src js
+  {
+      "track":"common-lisp",
+      "exercise":"word-count",
+      "id":"14be464bd8ed4d109d986f50f3816626",
+      "url":"https://exercism.io/my/solutions/14be464bd8ed4d109d986f50f3816626",
+      "handle":"wlharvey4",
+      "is_requester":true,
+      "auto_approve":false
+  }
+#+end_src
+*** Common Lisp Word Count Scripts
+**** Common Lisp Word Count Download Script
+#+begin_src sh
+exercism download --exercise=word-count --track=common-lisp
+#+end_src
+
+#+RESULTS:
+: /usr/local/dev/programming/Exercism/common-lisp/word-count
+
+**** Common Lisp Word Count Upload Script
+#+begin_src sh
+exercism submit common-lisp/word-count/word-count.lisp
+#+end_src
+*** Common Lisp Word Count Code
+#+caption:Common Lisp Word Count Code
+#+name:common-lisp-word-count-code
+#+begin_src lisp :tangle common-lisp/word-count/word-count.lisp :mkdirp yes
+(in-package #:cl-user)
+(defpackage #:word-count
+  (:use #:cl)
+  (:export #:count-words))
+(in-package #:word-count)
+
+(defun count-words (sentence))
+
+#+end_src
+*** Common Lisp Word Count Tests
+#+caption:Common Lisp Word Count Test Code
+#+name:common-lisp-word-count-test-code
+#+begin_src lisp :tangle common-lisp/word-count/word-count-test.lisp :mkdirp yes
+;;;
+;;; word-count v1.4.0
+;;;
+;;; For each word in the input, count the number of times it appears in the
+;;; entire sentence.
+;;;
+(ql:quickload "lisp-unit" :silent t)
+#-xlisp-test (load "word-count")
+
+(defpackage #:word-count-test
+  (:use #:common-lisp #:lisp-unit))
+(in-package #:word-count-test)
+
+(defun assert-alist-equal (expected actual)
+  "The association lists must have the same length and the keys and
+   values of the items must match. But the order is not
+   important. Equality is tested with equal"
+  (assert-equal
+   (sort (copy-seq expected) #'string< :key #'car)
+   (sort (copy-seq actual) #'string< :key #'car)))
+
+(define-test
+  count-one-word
+  (assert-alist-equal
+    '(("word" . 1))
+    (word-count:count-words "word")))
+
+
+(define-test
+  count-one-of-each-word
+  (assert-alist-equal
+    '(("one" . 1) ("of" . 1) ("each" . 1))
+    (word-count:count-words "one of each")))
+
+
+(define-test
+  multiple-occurrences-of-a-word
+  (assert-alist-equal
+    '(("one" . 1) ("fish" . 4) ("two" . 1) ("red" . 1) ("blue" . 1))
+    (word-count:count-words "one fish two fish red fish blue fish")))
+
+
+(define-test
+  handles-cramped-lists
+  (assert-alist-equal
+    '(("one" . 1) ("two" . 1) ("three" . 1))
+    (word-count:count-words "one,two,three")))
+
+
+(define-test
+  handles-expanded-lists
+  (assert-alist-equal
+    '(("one" . 1) ("two" . 1) ("three" . 1))
+    (word-count:count-words "one,
+two,
+three")))
+
+
+(define-test
+  ignore-punctuation
+  (assert-alist-equal
+    '(("car" . 1) ("carpet" . 1) ("as" . 1) ("java" . 1) ("javascript" . 1))
+    (word-count:count-words "car: carpet as java: javascript!!&@$%^&")))
+
+
+(define-test
+  include-numbers
+  (assert-alist-equal
+    '(("testing" . 2) ("1" . 1) ("2" . 1))
+    (word-count:count-words "testing, 1, 2 testing")))
+
+
+(define-test
+  normalize-case
+  (assert-alist-equal
+    '(("go" . 3) ("stop" . 2))
+    (word-count:count-words "go Go GO Stop stop")))
+
+
+(define-test
+  with-apostrophes
+  (assert-alist-equal
+    '(("first" . 1) ("don't" . 2) ("laugh" . 1) ("then" . 1) ("cry" . 1))
+    (word-count:count-words "First: don't laugh. Then: don't cry.")))
+
+
+(define-test
+  with-quotations
+  (assert-alist-equal
+    '(("joe" . 1) ("can't" . 1) ("tell" . 1) ("between" . 1) ("large" . 2)
+      ("and" . 1))
+    (word-count:count-words "Joe can't tell between 'large' and large.")))
+
+
+(define-test
+  substrings-from-the-beginning
+  (assert-alist-equal
+    '(("joe" . 1) ("can't" . 1) ("tell" . 1) ("between" . 1) ("app" . 1)
+      ("apple" . 1) ("and" . 1) ("a" . 1))
+    (word-count:count-words "Joe can't tell between app, apple and a.")))
+
+
+(define-test
+  multiple-spaces-not-detected-as-a-word
+  (assert-alist-equal
+    '(("multiple" . 1) ("whitespaces" . 1))
+    (word-count:count-words " multiple   whitespaces")))
+
+
+(define-test
+  alternating-word-separators-not-detected-as-a-word
+  (assert-alist-equal
+    '(("one" . 1) ("two" . 1) ("three" . 1))
+    (word-count:count-words ",
+,one,
+ ,two
+ 'three'")))
+
+#-xlisp-test
+(let ((*print-errors* t)
+      (*print-failures* t))
+  (run-tests :all))
 
 #+end_src
 
