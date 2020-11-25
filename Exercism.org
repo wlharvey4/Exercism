@@ -1,8 +1,8 @@
 # -*- mode:org; fill-column:79; -*-
 #+Title:Exercism Exercises
 #+Author:Pinecone062
-#+Date:Last updated 2020-11-25 00:11
-#+Macro: version Version 0.5.33
+#+Date:Last updated 2020-11-25 00:26
+#+Macro: version Version 0.5.34
 {{{title}}} {{{version}}} {{{date}}}
 * Exercism Home
 :PROPERTIES:
@@ -14269,20 +14269,27 @@ exercism submit common-lisp/word-count/word-count.lisp
 #+name:common-lisp-word-count-code
 #+begin_src lisp :tangle common-lisp/word-count/word-count.lisp :mkdirp yes
   (in-package #:cl-user)
+  (ql:quickload "cl-ppcre" :silent t)
   (defpackage #:word-count
     (:use #:cl)
+    (:import-from #:cl-ppcre #:split)
     (:export #:count-words))
   (in-package #:word-count)
 
   (defun count-words (sentence)
     (setf set ())
-    (dolist (w (split "[^\\w']" (string-upcase sentence)) set)
+    (dolist (w (split "[^\\w']" (string-downcase sentence)) set)
       (let ((e (assoc w set :test #'string=)))
         (if (consp e)
               (incf (cdr e))
               (setf set (cons (cons w 1) set))))))
-
 #+end_src
+
+#+header: :dir common-lisp/word-count
+#+begin_src sh :results output :exports results
+ccl -Q -l word-count-test.lisp -e '(quit)'
+#+end_src
+
 *** Common Lisp Word Count Tests
 #+caption:Common Lisp Word Count Test Code
 #+name:common-lisp-word-count-test-code
