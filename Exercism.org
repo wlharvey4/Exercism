@@ -1,8 +1,8 @@
 # -*- mode:org; fill-column:79; -*-
 #+Title:Exercism Exercises
 #+Author:Pinecone062
-#+Date:Last updated 2020-11-25 00:26
-#+Macro: version Version 0.5.34
+#+Date:Last updated 2020-11-25 01:18
+#+Macro: version Version 0.5.35
 {{{title}}} {{{version}}} {{{date}}}
 * Exercism Home
 :PROPERTIES:
@@ -14272,13 +14272,16 @@ exercism submit common-lisp/word-count/word-count.lisp
   (ql:quickload "cl-ppcre" :silent t)
   (defpackage #:word-count
     (:use #:cl)
-    (:import-from #:cl-ppcre #:split)
+    (:import-from #:cl-ppcre #:split #:regex-replace)
     (:export #:count-words))
   (in-package #:word-count)
 
   (defun count-words (sentence)
     (setf set ())
     (dolist (w (split "[^\\w']" (string-downcase sentence)) set)
+      (multiple-value-bind (neww newp)
+          (regex-replace "'(\\w+)'" w "\\1")
+        (when newp (setf w neww)))
       (let ((e (assoc w set :test #'string=)))
         (if (consp e)
               (incf (cdr e))
