@@ -1,8 +1,8 @@
 # -*- mode:org; fill-column:79; -*-
 #+Title:Exercism Exercises
 #+Author:Pinecone062
-#+Date:Last updated 2020-11-25 07:33
-#+Macro: version Version 0.5.37
+#+Date:Last updated 2020-11-25 07:40
+#+Macro: version Version 0.5.38
 {{{title}}} {{{version}}} {{{date}}}
 * Exercism Home
 :PROPERTIES:
@@ -14281,7 +14281,7 @@ exercism submit common-lisp/word-count/word-count.lisp
           (scnr (create-scanner "[^\\w']+" :single-line-mode t)))
       (dolist (w (split scnr
                         (string-downcase
-                         (string-trim '(#\Space #\Tab #\Newline) sentence)))
+                         (string-trim '(#\Space #\Tab #\Newline #\,) sentence)))
                  set)
         (multiple-value-bind (neww newp)
             (regex-replace "'(\\w+)'" w "\\1")
@@ -14296,6 +14296,43 @@ exercism submit common-lisp/word-count/word-count.lisp
 #+begin_src sh :results output :exports results
 ccl -Q -l word-count-test.lisp -e '(quit)'
 #+end_src
+
+#+RESULTS:
+#+begin_example
+WITH-APOSTROPHES: 1 assertions passed, 0 failed.
+
+IGNORE-PUNCTUATION: 1 assertions passed, 0 failed.
+
+HANDLES-EXPANDED-LISTS: 1 assertions passed, 0 failed.
+
+INCLUDE-NUMBERS: 1 assertions passed, 0 failed.
+
+ALTERNATING-WORD-SEPARATORS-NOT-DETECTED-AS-A-WORD: 1 assertions passed, 0 failed.
+
+MULTIPLE-SPACES-NOT-DETECTED-AS-A-WORD: 1 assertions passed, 0 failed.
+
+COUNT-ONE-WORD: 1 assertions passed, 0 failed.
+
+HANDLES-CRAMPED-LISTS: 1 assertions passed, 0 failed.
+
+NORMALIZE-CASE: 1 assertions passed, 0 failed.
+
+SUBSTRINGS-FROM-THE-BEGINNING: 1 assertions passed, 0 failed.
+
+MULTIPLE-OCCURRENCES-OF-A-WORD: 1 assertions passed, 0 failed.
+
+WITH-QUOTATIONS: 1 assertions passed, 0 failed.
+
+COUNT-ONE-OF-EACH-WORD: 1 assertions passed, 0 failed.
+
+Unit Test Summary
+ | 13 assertions total
+ | 13 passed
+ | 0 failed
+ | 0 execution errors
+ | 0 missing tests
+
+#+end_example
 
 *** Common Lisp Word Count Tests
 #+caption:Common Lisp Word Count Test Code
