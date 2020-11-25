@@ -1,8 +1,8 @@
 # -*- mode:org; fill-column:79; -*-
 #+Title:Exercism Exercises
 #+Author:Pinecone062
-#+Date:Last updated 2020-11-25 01:18
-#+Macro: version Version 0.5.35
+#+Date:Last updated 2020-11-25 06:55
+#+Macro: version Version 0.5.36
 {{{title}}} {{{version}}} {{{date}}}
 * Exercism Home
 :PROPERTIES:
@@ -14278,7 +14278,7 @@ exercism submit common-lisp/word-count/word-count.lisp
 
   (defun count-words (sentence)
     (setf set ())
-    (dolist (w (split "[^\\w']" (string-downcase sentence)) set)
+    (dolist (w (split "[^\\w']+" (string-downcase sentence)) set)
       (multiple-value-bind (neww newp)
           (regex-replace "'(\\w+)'" w "\\1")
         (when newp (setf w neww)))
@@ -14292,6 +14292,51 @@ exercism submit common-lisp/word-count/word-count.lisp
 #+begin_src sh :results output :exports results
 ccl -Q -l word-count-test.lisp -e '(quit)'
 #+end_src
+
+#+RESULTS:
+#+begin_example
+WITH-APOSTROPHES: 1 assertions passed, 0 failed.
+
+IGNORE-PUNCTUATION: 1 assertions passed, 0 failed.
+
+HANDLES-EXPANDED-LISTS: 1 assertions passed, 0 failed.
+
+INCLUDE-NUMBERS: 1 assertions passed, 0 failed.
+
+ | Failed Form: (SORT (COPY-SEQ ACTUAL) #'STRING< :KEY #'CAR)
+ | Expected (("one" . 1) ("three" . 1) ("two" . 1)) 
+ | but saw (("" . 1) ("one" . 1) ("three" . 1) ("two" . 1))
+ |
+ALTERNATING-WORD-SEPARATORS-NOT-DETECTED-AS-A-WORD: 0 assertions passed, 1 failed.
+
+ | Failed Form: (SORT (COPY-SEQ ACTUAL) #'STRING< :KEY #'CAR)
+ | Expected (("multiple" . 1) ("whitespaces" . 1)) 
+ | but saw (("" . 1) ("multiple" . 1) ("whitespaces" . 1))
+ |
+MULTIPLE-SPACES-NOT-DETECTED-AS-A-WORD: 0 assertions passed, 1 failed.
+
+COUNT-ONE-WORD: 1 assertions passed, 0 failed.
+
+HANDLES-CRAMPED-LISTS: 1 assertions passed, 0 failed.
+
+NORMALIZE-CASE: 1 assertions passed, 0 failed.
+
+SUBSTRINGS-FROM-THE-BEGINNING: 1 assertions passed, 0 failed.
+
+MULTIPLE-OCCURRENCES-OF-A-WORD: 1 assertions passed, 0 failed.
+
+WITH-QUOTATIONS: 1 assertions passed, 0 failed.
+
+COUNT-ONE-OF-EACH-WORD: 1 assertions passed, 0 failed.
+
+Unit Test Summary
+ | 13 assertions total
+ | 11 passed
+ | 2 failed
+ | 0 execution errors
+ | 0 missing tests
+
+#+end_example
 
 *** Common Lisp Word Count Tests
 #+caption:Common Lisp Word Count Test Code
@@ -14425,11 +14470,15 @@ three")))
 * Exercism Makefile
 #+name:Exercism-Makefile
 #+begin_src makefile :tangle Makefile
+ORG := Exercism
 BASE_DIR := $(shell cat ~/.config/exercism/user.json | sed -n '/workspace/ s///p' | tr -d '": ')
-LANGUAGES = javascript typescript python perl5 ocaml bash elisp lisp
+LANGUAGES = javascript typescript python perl5 ocaml bash elisp common-lisp
 HTML_SRC = *.html
 TEXINFO_SRC = *.{texi,info,pdf}
 DVI_SRC = *.{aux,log,toc}
+
+open-org:
+	ecg $(ORG).org
 
 .phony : texinfo-clean
 texinfo-clean :
