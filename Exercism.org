@@ -1,8 +1,8 @@
 # -*- mode:org; fill-column:79; -*-
 #+Title:Exercism Exercises
 #+Author:Pinecone062
-#+Date:Last updated 2020-11-25 07:40
-#+Macro: version Version 0.5.38
+#+Date:Last updated 2020-11-30 03:07
+#+Macro: version Version 0.5.39
 {{{title}}} {{{version}}} {{{date}}}
 * Exercism Home
 :PROPERTIES:
@@ -14264,32 +14264,56 @@ exercism download --exercise=word-count --track=common-lisp
 #+begin_src sh
 exercism submit common-lisp/word-count/word-count.lisp
 #+end_src
+
+#+RESULTS:
+: https://exercism.io/my/solutions/14be464bd8ed4d109d986f50f3816626
+
 *** Common Lisp Word Count Code
 #+caption:Common Lisp Word Count Code
 #+name:common-lisp-word-count-code
 #+begin_src lisp :tangle common-lisp/word-count/word-count.lisp :mkdirp yes
-  (in-package #:cl-user)
-  (ql:quickload "cl-ppcre" :silent t)
-  (defpackage #:word-count
+  (defpackage #:make-split-words
     (:use #:cl)
-    (:import-from #:cl-ppcre #:split #:regex-replace #:create-scanner)
+    (:export #:make-words))
+  (in-package #:make-split-words)
+
+  (defparameter *words* ())
+
+  (defun split-words (sentence cur)
+    (cond ((zerop (length sentence)) *words*)
+          ((= cur (length sentence))
+           (push (string-right-trim '(#\') sentence) *words*))
+          ((or
+            (alphanumericp (char sentence cur))
+            (and (plusp cur)
+                 (char= #\' (char sentence cur))))
+           (split-words sentence (1+ cur)))
+          (t
+           (if (zerop cur)
+               (split-words (subseq sentence 1) 0)
+               (progn
+                 (push (string-right-trim '(#\') (subseq sentence 0 cur)) *words*)
+                 (split-words (subseq sentence cur) 0))))))
+
+  (defun make-words (sentence)
+    (setq *words* ())
+    (split-words (string-downcase sentence) 0)
+    (reverse *words*))
+
+  (defpackage #:word-count
+    (:use #:cl #:make-split-words)
     (:export #:count-words))
   (in-package #:word-count)
 
   (defun count-words (sentence)
-    (let ((set ())
-          (scnr (create-scanner "[^\\w']+" :single-line-mode t)))
-      (dolist (w (split scnr
-                        (string-downcase
-                         (string-trim '(#\Space #\Tab #\Newline #\,) sentence)))
-                 set)
-        (multiple-value-bind (neww newp)
-            (regex-replace "'(\\w+)'" w "\\1")
-          (when newp (setf w neww)))
-        (let ((e (assoc w set :test #'string=)))
-          (if (consp e)
-              (incf (cdr e))
-              (setf set (cons (cons w 1) set)))))))
+    (let ((words (make-words sentence))
+          (set ())
+          (el ()))
+      (dolist (word words set)
+        (let ((el (assoc word set :test #'string=)))
+          (if el
+              (incf (cdr el))
+              (setf set (acons word 1 set)))))))
 #+end_src
 
 #+header: :dir common-lisp/word-count
