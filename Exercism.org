@@ -1,8 +1,8 @@
 # -*- mode:org; fill-column:79; -*-
 #+Title:Exercism Exercises
 #+Author:Pinecone062
-#+Date:Last updated 2020-12-03 07:12
-#+Macro: version Version 0.5.40
+#+Date:Last updated 2020-12-03 07:43
+#+Macro: version Version 0.5.41
 {{{title}}} {{{version}}} {{{date}}}
 * Exercism Home
 :PROPERTIES:
@@ -14488,7 +14488,7 @@ three")))
 #+end_src
 ** Common Lisp Twelve Days
 *** Common Lisp Twelve Days Readme and Meta
-#+header: :mkdirp yes :tangle functional/twelve-days/common-lisp/README.md
+#+header: :mkdirp yes :tangle common-lisp/twelve-days/README.md
 #+begin_src markdown
 # Twelve Days
 
@@ -14576,7 +14576,7 @@ It's possible to submit an incomplete solution so you can see how others have co
 
 #+end_src
 **** Common Lisp Twelve Days Exercism Metadata
-#+header: :mkdirp yes :tangle functional/twelve-days/common-lisp/.exercism/metadata
+#+header: :mkdirp yes :tangle common-lisp/twelve-days/.exercism/metadata
 #+begin_src js
   {
       "track":"common-lisp",
@@ -14602,29 +14602,43 @@ exercism download --exercise=twelve-days --track=common-lisp
 exercism submit common-lisp/twelve-days/twelve-days.lisp
 #+end_src
 *** Common Lisp Twelve Days Code
-#+header: :mkdirp yes :tangle functional/common-lisp/twelve-days/twelve-days.lisp
+#+header: :mkdirp yes :tangle common-lisp/twelve-days/twelve-days.lisp
 #+begin_src lisp
-(in-package #:cl-user)
-(defpackage #:twelve-days
-  (:use #:cl)
-  (:export #:recite))
+  (in-package #:cl-user)
+  (defpackage #:twelve-days
+    (:use #:cl)
+    (:export #:recite))
 
-(in-package #:twelve-days)
+  (in-package #:twelve-days)
 
-(defun recite (&optional begin end)
-  "Returns a string of the requested verses for the 12 Days of Christmas."
-  )
+  (defconstant +GIFTS+
+    '("a Partridge in a Pear Tree"
+      "two Turtle Doves"
+      "three French Hens"
+      "four Calling Birds"
+      "five Gold Rings"
+      "six Geese-a-Laying"
+      "seven Swans-a-Swimming"
+      "eight Maids-a-Milking"
+      "nine Ladies Dancing"
+      "ten Lords-a-Leaping"
+      "eleven Pipers Piping"
+      "twelve Drummers Drumming"))
+
+  (defun recite (&optional begin end)
+    "Returns a string of the requested verses for the 12 Days of Christmas."
+    "")
 
 #+end_src
 
 #+header: :results output
 #+header: :dir common-lisp/twelve-days
 #+begin_src sh
-ccl -Q -l twelve-days-test.lisp
+ccl -l twelve-days-test.lisp -e '(quit)'
 #+end_src
 
 *** Common Lisp Twelve Days Tests
-#+header: :mkdirp yes :tangle common-lisp/twelve-days/twelve-days-tests.lisp
+#+header: :mkdirp yes :tangle common-lisp/twelve-days/twelve-days-test.lisp
 #+begin_src lisp
 (ql:quickload "lisp-unit")
 #-xlisp-test (load "twelve-days")
