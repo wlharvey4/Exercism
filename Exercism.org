@@ -1,8 +1,8 @@
 # -*- mode:org; fill-column:79; -*-
 #+Title:Exercism Exercises
 #+Author:Pinecone062
-#+Date:Last updated 2020-12-03 07:43
-#+Macro: version Version 0.5.41
+#+Date:Last updated 2020-12-06 21:53
+#+Macro: version Version 0.5.42
 {{{title}}} {{{version}}} {{{date}}}
 * Exercism Home
 :PROPERTIES:
@@ -14624,6 +14624,16 @@ exercism submit common-lisp/twelve-days/twelve-days.lisp
       "ten Lords-a-Leaping"
       "eleven Pipers Piping"
       "twelve Drummers Drumming"))
+
+  (defun gift (day)
+    "Given a number representing a day, return the corresponding gift
+  for that day."
+    (nth (1- day) +GIFTS+))
+
+  (defun dayth (day)
+    "Given  a number  representing  a  day, return  its  nth  form as  a
+    string."
+    "first")
 
   (defun recite (&optional begin end)
     "Returns a string of the requested verses for the 12 Days of Christmas."
