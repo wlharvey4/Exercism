@@ -1,8 +1,8 @@
 # -*- mode:org; fill-column:79; -*-
 #+Title:Exercism Exercises
 #+Author:Pinecone062
-#+Date:Last updated 2020-12-08 08:16
-#+Macro: version Version 0.5.43
+#+Date:Last updated 2020-12-08 08:17
+#+Macro: version Version 0.5.44
 {{{title}}} {{{version}}} {{{date}}}
 * Exercism Home
 :PROPERTIES:
@@ -14665,6 +14665,52 @@ exercism submit common-lisp/twelve-days/twelve-days.lisp
 #+begin_src sh
 ccl -l twelve-days-test.lisp -e '(quit)'
 #+end_src
+
+#+RESULTS:
+#+begin_example
+To load "lisp-unit":
+  Load 1 ASDF system:
+    lisp-unit
+; Loading "lisp-unit"
+
+TWELFTH_DAY_TWELVE_DRUMMERS_DRUMMING: 1 assertions passed, 0 failed.
+
+SEVENTH_DAY_SEVEN_SWANS_A_SWIMMING: 1 assertions passed, 0 failed.
+
+RECITES_FIRST_THREE_VERSES_OF_THE_SONG: 1 assertions passed, 0 failed.
+
+THIRD_DAY_THREE_FRENCH_HENS: 1 assertions passed, 0 failed.
+
+FOURTH_DAY_FOUR_CALLING_BIRDS: 1 assertions passed, 0 failed.
+
+SIXTH_DAY_SIX_GEESE_A_LAYING: 1 assertions passed, 0 failed.
+
+FIRST_DAY_A_PARTRIDGE_IN_A_PEAR_TREE: 1 assertions passed, 0 failed.
+
+RECITES_THE_WHOLE_SONG: 2 assertions passed, 0 failed.
+
+TENTH_DAY_TEN_LORDS_A_LEAPING: 1 assertions passed, 0 failed.
+
+RECITES_THREE_VERSES_FROM_THE_MIDDLE_OF_THE_SONG: 1 assertions passed, 0 failed.
+
+FIFTH_DAY_FIVE_GOLD_RINGS: 1 assertions passed, 0 failed.
+
+ELEVENTH_DAY_ELEVEN_PIPERS_PIPING: 1 assertions passed, 0 failed.
+
+NINTH_DAY_NINE_LADIES_DANCING: 1 assertions passed, 0 failed.
+
+EIGHTH_DAY_EIGHT_MAIDS_A_MILKING: 1 assertions passed, 0 failed.
+
+SECOND_DAY_TWO_TURTLE_DOVES: 1 assertions passed, 0 failed.
+
+Unit Test Summary
+ | 16 assertions total
+ | 16 passed
+ | 0 failed
+ | 0 execution errors
+ | 0 missing tests
+
+#+end_example
 
 *** Common Lisp Twelve Days Tests
 #+header: :mkdirp yes :tangle common-lisp/twelve-days/twelve-days-test.lisp
