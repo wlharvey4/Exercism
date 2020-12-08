@@ -1,8 +1,8 @@
 # -*- mode:org; fill-column:79; -*-
 #+Title:Exercism Exercises
 #+Author:Pinecone062
-#+Date:Last updated 2020-12-08 08:47
-#+Macro: version Version 0.5.46
+#+Date:Last updated 2020-12-08 08:58
+#+Macro: version Version 0.5.47
 {{{title}}} {{{version}}} {{{date}}}
 * Exercism Home
 :PROPERTIES:
@@ -14576,7 +14576,7 @@ It's possible to submit an incomplete solution so you can see how others have co
 
 #+end_src
 **** Common Lisp Twelve Days Exercism Metadata
-#+header: :mkdirp yes :tangle common-lisp/twelve-days/.exercism/metadata
+#+header: :mkdirp yes :tangle common-lisp/twelve-days/.exercism/metadata.json
 #+begin_src js
   {
       "track":"common-lisp",
@@ -14601,6 +14601,10 @@ exercism download --exercise=twelve-days --track=common-lisp
 #+begin_src sh
 exercism submit common-lisp/twelve-days/twelve-days.lisp
 #+end_src
+
+#+RESULTS:
+: https://exercism.io/my/solutions/76d50a3a72f4491cb24d98b5f5e36b7f
+
 *** Common Lisp Twelve Days Code
 #+header: :mkdirp yes :tangle common-lisp/twelve-days/twelve-days.lisp
 #+begin_src lisp
@@ -14644,7 +14648,7 @@ exercism submit common-lisp/twelve-days/twelve-days.lisp
        (do ((cur-day (1- start-day) (1- cur-day))
             (_and (if (= start-day 2) "and " "") (if (= cur-day 2) "and " "")))
           ((zerop cur-day) song)
-        (setq song (format nil "~A~A~A" song _and (gift cur-day))))))
+        (setf song (format nil "~A~A~A" song _and (gift cur-day))))))
 
   (defun recite (&optional begin end)
     "Returns a string of the requested verses for the 12 Days of
