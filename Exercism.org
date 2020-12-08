@@ -1,8 +1,8 @@
 # -*- mode:org; fill-column:79; -*-
 #+Title:Exercism Exercises
 #+Author:Pinecone062
-#+Date:Last updated 2020-12-08 08:17
-#+Macro: version Version 0.5.44
+#+Date:Last updated 2020-12-08 08:23
+#+Macro: version Version 0.5.45
 {{{title}}} {{{version}}} {{{date}}}
 * Exercism Home
 :PROPERTIES:
@@ -14626,7 +14626,6 @@ exercism submit common-lisp/twelve-days/twelve-days.lisp
       "twelve Drummers Drumming, "))
 
   (defconstant +BEGINNING+ "On the ~:R day of Christmas my true love gave to me: ~A")
-  (defparameter song "")
 
   (defun gift (day)
     "Given a number representing a day, return the corresponding gift
@@ -14636,14 +14635,14 @@ exercism submit common-lisp/twelve-days/twelve-days.lisp
   (defun beginning-day (day)
     "Given a number for day representing the first day of the song,
   return the string."
-    (setq song (format nil +BEGINNING+ day (gift day))))
+    (format nil +BEGINNING+ day (gift day)))
 
-  (defun one-iteration (num)
+  (defun one-iteration (start-day)
     "Given a number representing a start day, run through all of the
   iterations down to one."
-    (let ((song (beginning-day num))
+    (let ((song (beginning-day start-day))
           (_and ""))
-      (do ((cur-day (1- num) (1- cur-day)))
+      (do ((cur-day (1- start-day) (1- cur-day)))
           ((zerop cur-day) song)
         (when (= cur-day 1) (setf _and "and "))
         (setq song (format nil "~A~A~A" song _and (gift cur-day))))))
