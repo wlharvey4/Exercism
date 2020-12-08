@@ -1,8 +1,8 @@
 # -*- mode:org; fill-column:79; -*-
 #+Title:Exercism Exercises
 #+Author:Pinecone062
-#+Date:Last updated 2020-12-08 08:23
-#+Macro: version Version 0.5.45
+#+Date:Last updated 2020-12-08 08:47
+#+Macro: version Version 0.5.46
 {{{title}}} {{{version}}} {{{date}}}
 * Exercism Home
 :PROPERTIES:
@@ -14640,11 +14640,10 @@ exercism submit common-lisp/twelve-days/twelve-days.lisp
   (defun one-iteration (start-day)
     "Given a number representing a start day, run through all of the
   iterations down to one."
-    (let ((song (beginning-day start-day))
-          (_and ""))
-      (do ((cur-day (1- start-day) (1- cur-day)))
+    (let ((song (beginning-day start-day)))
+       (do ((cur-day (1- start-day) (1- cur-day))
+            (_and (if (= start-day 2) "and " "") (if (= cur-day 2) "and " "")))
           ((zerop cur-day) song)
-        (when (= cur-day 1) (setf _and "and "))
         (setq song (format nil "~A~A~A" song _and (gift cur-day))))))
 
   (defun recite (&optional begin end)
